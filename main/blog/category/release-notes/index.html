@@ -492,6 +492,8 @@
       
         
       
+        
+      
     
     
     
@@ -550,6 +552,29 @@
   
   <span class="md-ellipsis">
     Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Command line
     
   </span>
   
@@ -864,6 +889,8 @@
       
         
       
+        
+      
     
     
     
@@ -907,6 +934,29 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/visualize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Visualization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -1567,6 +1617,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#what-rapidocr-measured-and-what-we-changed-because-of-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      What RapidOCR measured, and what we changed because of it
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1621,6 +1680,15 @@
   <a href="#the-accuracy-cycle-the-recognizer-was-never-the-problem" class="md-nav__link">
     <span class="md-ellipsis">
       The accuracy cycle: the recognizer was never the problem
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-rapidocr-measured-and-what-we-changed-because-of-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      What RapidOCR measured, and what we changed because of it
     </span>
   </a>
   
@@ -1685,6 +1753,61 @@ from layout, ordering, and detector scale.</p>
     
       <nav class="md-post__action">
         <a href="../../2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/">
+          Continue reading
+        </a>
+      </nav>
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://github.com/ARBO-TEAM.png" alt="ARBO-TEAM">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2026-08-07 00:00:00+00:00">8/7/26</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="./" class="md-meta__link">Release notes</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              7 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="what-rapidocr-measured-and-what-we-changed-because-of-it"><a class="toclink" href="../../2026/08/07/what-rapidocr-measured-and-what-we-changed-because-of-it/">What RapidOCR measured, and what we changed because of it</a></h2>
+<p>RapidOCR publishes something most OCR projects do not: <strong>measured numbers</strong> for
+its engine choices and its parameter defaults. Peak RSS with and without the
+ONNXRuntime memory arena. CoreML against the CPU provider, per model. CUDA
+against CPU on two different GPUs. Not "we chose X because X is fast" — actual
+tables.</p>
+<p>We read those tables against arboOCR's source. Where RapidOCR had measured
+something and arboOCR had guessed, the measurement won. That is the entire
+selection criterion for this round of changes, and it is also why four things
+that look like obvious wins are <strong>not</strong> in it.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2026/08/07/what-rapidocr-measured-and-what-we-changed-because-of-it/">
           Continue reading
         </a>
       </nav>

@@ -13,6 +13,21 @@
     "language": "en",
     "items": [
         {
+            "id": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/what-rapidocr-measured-and-what-we-changed-because-of-it/",
+            "url": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/what-rapidocr-measured-and-what-we-changed-because-of-it/",
+            "title": "What RapidOCR measured, and what we changed because of it",
+            "content_html": "A gap analysis against RapidOCR: ten changes shipped, four backends declined, and every decision anchored to a number somebody already measured.",
+            "image": null,
+            "date_modified": "2026-08-07T14:43:48+00:00",
+            "date_published": "2026-08-07T00:00:00+00:00",
+            "authors": [
+                {
+                    "name": "ARBO-TEAM"
+                }
+            ],
+            "tags": null
+        },
+        {
             "id": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/",
             "url": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/",
             "title": "The accuracy cycle: the recognizer was never the problem",

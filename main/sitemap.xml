@@ -13,6 +13,10 @@
          <lastmod>2026-08-07</lastmod>
     </url>
     <url>
+         <loc>https://arbo-team.github.io/arbo-ocr-docs/main/cli/</loc>
+         <lastmod>2026-08-07</lastmod>
+    </url>
+    <url>
          <loc>https://arbo-team.github.io/arbo-ocr-docs/main/contributing/</loc>
          <lastmod>2026-08-07</lastmod>
     </url>
@@ -49,11 +53,19 @@
          <lastmod>2026-08-07</lastmod>
     </url>
     <url>
+         <loc>https://arbo-team.github.io/arbo-ocr-docs/main/api/visualize/</loc>
+         <lastmod>2026-08-07</lastmod>
+    </url>
+    <url>
          <loc>https://arbo-team.github.io/arbo-ocr-docs/main/blog/</loc>
          <lastmod>2026-08-07</lastmod>
     </url>
     <url>
          <loc>https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/</loc>
+         <lastmod>2026-08-07</lastmod>
+    </url>
+    <url>
+         <loc>https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/what-rapidocr-measured-and-what-we-changed-because-of-it/</loc>
          <lastmod>2026-08-07</lastmod>
     </url>
     <url>

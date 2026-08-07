@@ -6,37 +6,37 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Short answers to the questions that come up most often when integrating arboOCR — models, defaults, threading, and performance.">
+        <meta name="description" content="arboOCR is a standalone C++ OCR library — text detection, orientation classification, and recognition over PP-OCRv6 ONNX models via ONNXRuntime, running on CPU, CUDA, or TensorRT. Wrappers for Python, Go, Rust, and PHP.">
       
       
         <meta name="author" content="ARBO-TEAM">
       
       
-        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/faq/">
+        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/api/visualize/">
       
       
-        <link rel="prev" href="../cli/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../build/">
+        <link rel="next" href="../logging/">
       
       
-        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
-        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../feed_rss_updated.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../feed_rss_updated.xml">
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>FAQ - arboOCR Docs</title>
+        <title>Visualization - arboOCR Docs</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -84,9 +84,9 @@
       
     
     
-      <link rel="stylesheet" href="../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -112,7 +112,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#faq" class="md-skip">
+        <a href="#visualization" class="md-skip">
           Skip to content
         </a>
       
@@ -132,7 +132,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="arboOCR Docs" class="md-header__button md-logo" aria-label="arboOCR Docs" data-md-component="logo">
+    <a href="../.." title="arboOCR Docs" class="md-header__button md-logo" aria-label="arboOCR Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 4c0-1.1.9-2 2-2h4v2H4v4H2zm20 16c0 1.11-.89 2-2 2h-4v-2h4v-4h2zM4 22a2 2 0 0 1-2-2v-4h2v4h4v2zM20 2a2 2 0 0 1 2 2v4h-2V4h-4V2zM9 7v2h2v8h2V9h2V7z"/></svg>
@@ -152,7 +152,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              FAQ
+              Visualization
             
           </span>
         </div>
@@ -272,13 +272,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href=".." class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
           
   
   
@@ -300,7 +298,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../build/" class="md-tabs__link">
+        <a href="../../build/" class="md-tabs__link">
           
   
   
@@ -322,7 +320,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../models/" class="md-tabs__link">
+        <a href="../../models/" class="md-tabs__link">
           
   
   
@@ -340,11 +338,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../api/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -366,7 +366,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../wrappers/" class="md-tabs__link">
+        <a href="../../wrappers/" class="md-tabs__link">
           
   
   
@@ -388,7 +388,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../benchmarks/" class="md-tabs__link">
+        <a href="../../benchmarks/" class="md-tabs__link">
           
   
   
@@ -410,7 +410,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../blog/" class="md-tabs__link">
+        <a href="../../blog/" class="md-tabs__link">
           
   
   
@@ -452,7 +452,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="arboOCR Docs" class="md-nav__button md-logo" aria-label="arboOCR Docs" data-md-component="logo">
+    <a href="../.." title="arboOCR Docs" class="md-nav__button md-logo" aria-label="arboOCR Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 4c0-1.1.9-2 2-2h4v2H4v4H2zm20 16c0 1.11-.89 2-2 2h-4v-2h4v-4h2zM4 22a2 2 0 0 1-2-2v-4h2v4h4v2zM20 2a2 2 0 0 1 2 2v4h-2V4h-4V2zM9 7v2h2v8h2V9h2V7z"/></svg>
@@ -479,8 +479,6 @@
       
   
   
-    
-  
   
   
     
@@ -500,23 +498,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href=".." class="md-nav__link ">
+            <a href="../.." class="md-nav__link ">
               
   
   
@@ -529,13 +524,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             Home
@@ -551,7 +546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../quickstart/" class="md-nav__link">
+      <a href="../../quickstart/" class="md-nav__link">
         
   
   
@@ -574,7 +569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../../cli/" class="md-nav__link">
         
   
   
@@ -594,19 +589,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
         
   
   
@@ -617,7 +603,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -662,7 +647,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../build/" class="md-nav__link ">
+            <a href="../../build/" class="md-nav__link ">
               
   
   
@@ -697,7 +682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../build/jetson/" class="md-nav__link">
+      <a href="../../build/jetson/" class="md-nav__link">
         
   
   
@@ -758,7 +743,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../models/" class="md-nav__link ">
+            <a href="../../models/" class="md-nav__link ">
               
   
   
@@ -793,7 +778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/sizes/" class="md-nav__link">
+      <a href="../../models/sizes/" class="md-nav__link">
         
   
   
@@ -816,7 +801,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/languages/" class="md-nav__link">
+      <a href="../../models/languages/" class="md-nav__link">
         
   
   
@@ -839,7 +824,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/clahe/" class="md-nav__link">
+      <a href="../../models/clahe/" class="md-nav__link">
         
   
   
@@ -862,7 +847,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/accuracy-defaults/" class="md-nav__link">
+      <a href="../../models/accuracy-defaults/" class="md-nav__link">
         
   
   
@@ -889,6 +874,8 @@
       
   
   
+    
+  
   
   
     
@@ -910,20 +897,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../api/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -936,13 +926,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             API
@@ -955,10 +945,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../api/visualize/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Visualization
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -969,6 +981,80 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#colours-mean-something" class="md-nav__link">
+    <span class="md-ellipsis">
+      Colours mean something
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#never-throws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Never throws
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#it-does-not-render-the-recognized-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      It does not render the recognized text
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      From the CLI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -981,7 +1067,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/logging/" class="md-nav__link">
+      <a href="../logging/" class="md-nav__link">
         
   
   
@@ -1004,7 +1090,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/custom-pipeline/" class="md-nav__link">
+      <a href="../custom-pipeline/" class="md-nav__link">
         
   
   
@@ -1027,7 +1113,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/downloader/" class="md-nav__link">
+      <a href="../downloader/" class="md-nav__link">
         
   
   
@@ -1088,7 +1174,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../wrappers/" class="md-nav__link ">
+            <a href="../../wrappers/" class="md-nav__link ">
               
   
   
@@ -1123,7 +1209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wrappers/python/" class="md-nav__link">
+      <a href="../../wrappers/python/" class="md-nav__link">
         
   
   
@@ -1146,7 +1232,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wrappers/go/" class="md-nav__link">
+      <a href="../../wrappers/go/" class="md-nav__link">
         
   
   
@@ -1169,7 +1255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wrappers/rust/" class="md-nav__link">
+      <a href="../../wrappers/rust/" class="md-nav__link">
         
   
   
@@ -1192,7 +1278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../wrappers/php/" class="md-nav__link">
+      <a href="../../wrappers/php/" class="md-nav__link">
         
   
   
@@ -1275,7 +1361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../benchmarks/" class="md-nav__link">
+      <a href="../../benchmarks/" class="md-nav__link">
         
   
   
@@ -1298,7 +1384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../../architecture/" class="md-nav__link">
         
   
   
@@ -1321,7 +1407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributing/" class="md-nav__link">
+      <a href="../../contributing/" class="md-nav__link">
         
   
   
@@ -1344,7 +1430,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../license/" class="md-nav__link">
+      <a href="../../license/" class="md-nav__link">
         
   
   
@@ -1401,7 +1487,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../blog/" class="md-nav__link ">
+            <a href="../../blog/" class="md-nav__link ">
               
   
   
@@ -1483,7 +1569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../blog/archive/2026/" class="md-nav__link">
+      <a href="../../blog/archive/2026/" class="md-nav__link">
         
   
   
@@ -1561,7 +1647,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../blog/category/release-notes/" class="md-nav__link">
+      <a href="../../blog/category/release-notes/" class="md-nav__link">
         
   
   
@@ -1612,6 +1698,68 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#colours-mean-something" class="md-nav__link">
+    <span class="md-ellipsis">
+      Colours mean something
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#never-throws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Never throws
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#it-does-not-render-the-recognized-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      It does not render the recognized text
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      From the CLI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1626,7 +1774,7 @@
 
 
   
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/faq.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/api/visualize.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
     </a>
@@ -1635,150 +1783,117 @@
     
       
     
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/faq.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/api/visualize.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
     </a>
   
 
 
-<h1 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h1>
-<p>Short answers with a link to the page that has the full one.</p>
-<details class="question">
-<summary>Which model files do I actually need?</summary>
-<p>Four filenames live under <code>modelsDir</code>, but you rarely need all of them:</p>
-<ul>
-<li><code>PP-OCRv6_det.onnx</code> — text detection. <strong>One file, no size variants.</strong>
-  <code>modelType</code> does not select a detector.</li>
-<li><code>PP-OCRv6_rec_&lt;size&gt;.onnx</code> — recognition, one per size
-  (<code>tiny</code> | <code>small</code> | <code>medium</code>).</li>
-<li><code>PP-OCRv6_rec_&lt;size&gt;_dict.txt</code> — character dict, <strong>only</strong> if the
-  character list is not embedded in the ONNX metadata.</li>
-<li><code>PP-OCRv6_cls.onnx</code> — angle classification, <strong>only</strong> needed if
-  <code>useAngleCls</code> is on.</li>
-</ul>
-<p>See <a href="../models/">Models</a> for the directory layout and the two ways
-to obtain the files.</p>
-</details>
-<details class="question">
-<summary>Why is there no default model download URL?</summary>
-<p>Because PP-OCR model hosting locations are not stable across mirrors, so
-arboOCR makes the caller pick the source rather than baking in a URL that
-rots. <code>downloadOcrModels()</code> takes a <code>baseUrl</code> you supply; there is no
-built-in default.</p>
-<p>See <a href="../models/">Models</a> and the
-<a href="../api/downloader/">model downloader</a>.</p>
-</details>
-<details class="question">
-<summary>Should I use tiny, small or medium?</summary>
-<p><code>small</code> is the default and the right starting point on CPU. On the SROIE
-smoke set (warm Python <code>Engine</code>, CPU, 5 receipts):</p>
+<h1 id="visualization">Visualization<a class="headerlink" href="#visualization" title="Permanent link">&para;</a></h1>
+<p>One function, for the moment when the JSON looks plausible but you need to see
+where the boxes actually landed.</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/visualize.hpp&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="w"> </span><span class="nf">drawResult</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="w"> </span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">PagePrediction</span><span class="o">&amp;</span><span class="w"> </span><span class="n">page</span><span class="p">);</span>
+</span></code></pre></div>
+<p>It returns a <strong>copy</strong> of <code>image</code> with every line's polygon outlined. The
+caller's <code>Mat</code> is never modified and the result never shares its buffer, so
+there is no aliasing surprise if you keep drawing on it or hand it to another
+thread.</p>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/engine.hpp&gt;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/visualize.hpp&gt;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;opencv2/imgcodecs.hpp&gt;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">EngineConfig</span><span class="w"> </span><span class="n">cfg</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">Engine</span><span class="w"> </span><span class="nf">engine</span><span class="p">(</span><span class="n">cfg</span><span class="p">);</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;receipt.jpg&quot;</span><span class="p">;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">auto</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine</span><span class="p">.</span><span class="n">recognize</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">cv</span><span class="o">::</span><span class="n">imwrite</span><span class="p">(</span><span class="s">&quot;receipt.boxes.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">drawResult</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">page</span><span class="p">));</span>
+</span></code></pre></div>
+<p><code>drawResult</code> takes the image separately because <code>PagePrediction</code> carries only
+the filename, not the pixels — the engine does not hold your image alive after
+the call. If you recognized from a <code>cv::Mat</code> or from
+<a href="../#three-ways-in-path-cvmat-encoded-bytes">encoded bytes</a>, pass the Mat
+you already have (or <code>decodeImageBytes()</code> on the buffer); there is no path to
+re-read.</p>
+<h2 id="colours-mean-something">Colours mean something<a class="headerlink" href="#colours-mean-something" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>modelType</th>
-<th>Size</th>
-<th>CPU latency</th>
-<th>Full-page sim</th>
+<th>Colour</th>
+<th>Condition</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>tiny</code></td>
-<td>4.3 MB</td>
-<td>~165 ms</td>
-<td>~93.3%</td>
+<td>Green</td>
+<td>Line recognition score <strong>at or above</strong> <code>0.5</code></td>
 </tr>
 <tr>
-<td><code>small</code> (<strong>default</strong>)</td>
-<td>~20 MB</td>
-<td>~530 ms</td>
-<td>~94.4%</td>
-</tr>
-<tr>
-<td><code>medium</code></td>
-<td>73 MB</td>
-<td>~2120 ms</td>
-<td>~94.8%</td>
+<td>Red</td>
+<td>Line recognition score <strong>below</strong> <code>0.5</code></td>
 </tr>
 </tbody>
 </table>
-<p>Medium costs roughly <strong>4x the CPU latency for ~+0.4 pts</strong>. Prefer <code>tiny</code>
-for throughput; reach for <code>medium</code> only with GPU/TensorRT headroom <em>and</em> a
-measured win on your own data.</p>
-<p>See <a href="../models/sizes/">Model sizes</a>.</p>
-</details>
-<details class="question">
-<summary>Does it support language X?</summary>
-<p>Probably, without any configuration. The default PP-OCRv6 recognition
-models are <strong>already multi-language in a single ONNX file</strong> — medium and
-small cover 50 languages including Chinese, English, Japanese and 46
-Latin-script languages; tiny is similar but without Japanese. arboOCR has
-<strong>no <code>language</code> config</strong>: load the default models and you get that
-coverage.</p>
-<p>For scripts outside the model's training set, point <code>recModelPath</code> (and
-<code>dictPath</code>, if your ONNX has no embedded character list) at your own files.</p>
-<p>See <a href="../models/languages/">Languages</a>.</p>
-</details>
-<details class="question">
-<summary>Why did my line order change after upgrading?</summary>
-<p><code>page.lines</code> is now <strong>always sorted by centroid — y first, then x</strong> —
-rather than emitted in raw detector order. Full-page string metrics and
-human reading both depend on order, so the sort is unconditional.</p>
-<p>Anything that assumed detector emission order, or that matched boxes by
-index against an older dump, needs to use polygon geometry or re-sort the
-same way.</p>
-<p>See <a href="../models/accuracy-defaults/">Accuracy defaults</a>.</p>
-</details>
-<details class="question">
-<summary>Why are some lines missing from the output?</summary>
-<p><code>minimumConfidence</code> defaults to <strong><code>0.5</code></strong> and drops low-confidence lines
-(PaddleOCR's <code>drop_score</code>). Low-contrast logos, rules read as <code>+-</code>, and
-weak boxes disappear from <code>page.lines</code>.</p>
-<p>Set <code>minimumConfidence = 0</code> to keep every box — that is the right setting
-for audit dumps. Pure symbol lines may need it raised to <code>0.8</code> instead.</p>
-<p>See <a href="../models/accuracy-defaults/">Accuracy defaults</a>.</p>
-</details>
-<details class="question">
-<summary>Does <code>recognize()</code> throw?</summary>
-<p><strong>Never.</strong> A missing or unreadable image, or an inference error, degrades
-to an empty-lines result with <code>elapsedMs</code> still set. Check
-<code>page.lines.empty()</code> to detect that case — there is no exception to catch.</p>
-<p>Log callbacks are equally defensive: a callback that throws is swallowed,
-so a broken sink cannot crash OCR.</p>
-<p>See the <a href="../api/">API reference</a> and <a href="../api/logging/">logging</a>.</p>
-</details>
-<details class="question">
-<summary>Can I call <code>recognizeAsync()</code> concurrently on one Engine?</summary>
-<p>No. The async variants are <strong>not safe for concurrent use on the same
-<code>Engine</code></strong> — keep one outstanding call at a time, or give each worker its
-own <code>Engine</code>.</p>
-<p>See the <a href="../api/">API reference</a>.</p>
-</details>
-<details class="question">
-<summary>Why is batched recognition slower on my CPU?</summary>
-<p>Because CPU has <strong>no real parallelism across the batch dimension</strong>, so
-padding every crop to a shared width is wasted computation. Measured on
-one page: CPU went from ~3.9s to ~5.0s <em>with</em> batching, while TensorRT
-went from ~456 ms to ~340–460 ms.</p>
-<p>Recognition batches up to <code>recBatchNum</code> crops per inference call (default
-6) and batching is always on — there is currently no flag to disable it
-for CPU-only deployments.</p>
-<p>See <a href="../benchmarks/">Benchmarks</a>.</p>
-</details>
-<details class="question">
-<summary>How do I use arboOCR from Python?</summary>
-<p>Via the pybind11 <code>Engine</code> facade, which runs on the same native backends
-as C++. It is <strong>off by default</strong> (<code>ARBOOCR_BUILD_PYTHON=OFF</code>) — enable it
-when you have Python 3 development headers.</p>
-<p>Caveats for v1: <strong>no published wheels</strong>, so you build the extension
-against your local <code>arboOCR</code> library; NumPy images must be <strong>HxWx3 uint8
-BGR</strong> (OpenCV layout); and there are no async or low-level
-<code>Detector</code>/<code>Recognizer</code> bindings. If you just want text out of an image,
-the bundled CLI (<code>arboocr_demo --image page.jpg --models-dir models</code>)
-needs no bindings at all.</p>
-<p>See <a href="../wrappers/">Wrappers</a> and <a href="../wrappers/python/">Python</a>.</p>
-</details>
+<p><code>0.5</code> is not a new number invented for the overlay. It is
+<a href="../#engineconfig-field-reference"><code>EngineConfig::minimumConfidence</code></a>'s
+default — the bar the pipeline itself uses to drop lines.</p>
+<div class="admonition tip">
+<p class="admonition-title">A red box means you lowered the filter</p>
+<p>With default config you will <strong>never</strong> see red: those lines were already
+discarded before they reached <code>page.lines</code>. Red only appears once you have
+lowered or disabled <code>minimumConfidence</code>, which is exactly when you are
+debugging "why did this line disappear". Green-vs-red then reads directly
+as "kept by default" vs "would have been dropped".</p>
+</div>
+<p>A 1-channel input is promoted to BGR so those two colours stay
+distinguishable — on a grayscale <code>Mat</code> both would collapse into channel 0 and
+the whole point would be lost. Any other input yields a <code>Mat</code> of the same size
+and type.</p>
+<h2 id="never-throws">Never throws<a class="headerlink" href="#never-throws" title="Permanent link">&para;</a></h2>
+<p>Consistent with the rest of the library:</p>
+<ul>
+<li>An empty <code>image</code> returns an empty <code>Mat</code>.</li>
+<li>Empty <code>page.lines</code> returns a plain copy.</li>
+<li>Polygons with fewer than 2 points are skipped.</li>
+<li>Off-image coordinates are clipped by OpenCV's own drawing code.</li>
+</ul>
+<h2 id="it-does-not-render-the-recognized-text">It does not render the recognized text<a class="headerlink" href="#it-does-not-render-the-recognized-text" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Boxes only — no text overlay, by design</p>
+<p><code>drawResult</code> draws polygons and nothing else. <code>cv::putText</code> cannot render
+CJK (the Hershey fonts OpenCV ships are a Latin subset), and arboOCR's
+PP-OCRv6 models are <strong>multilingual by default</strong> — so a text overlay would
+be silently wrong or blank for a large share of real input, which is worse
+than no overlay at all.</p>
+<p>Doing it properly requires <code>opencv_freetype</code> plus a bundled TTF with the
+coverage to match. RapidOCR solves this by downloading a font at runtime;
+that is not a dependency arboOCR takes.</p>
+</div>
+<p>If you need labelled output, build it in your own code: you already have
+<code>line.text</code>, <code>line.score</code> and <code>line.polygon</code>, so draw on top of <code>drawResult</code>'s
+return value with whatever text stack your application already links —
+<code>opencv_freetype</code>, Pango, Skia, or an HTML/SVG overlay if the result is headed
+for a browser anyway. Rendering in the browser is usually the least work: the
+polygon coordinates are already in source-image space.</p>
+<p>For per-word rather than per-line geometry, enable
+<a href="../#word-boxes"><code>returnWordBoxes</code></a> and draw <code>line.words</code> yourself —
+<code>drawResult</code> outlines lines only. Read the accuracy caveat on that page first;
+word polygons are approximate.</p>
+<h2 id="from-the-cli">From the CLI<a class="headerlink" href="#from-the-cli" title="Permanent link">&para;</a></h2>
+<p>The demo CLI exposes this as <code>--draw &lt;path&gt;</code>, which writes the overlay next to
+whatever else you asked for (it composes with <code>--json</code>). See the
+<a href="../../cli/">CLI reference</a>.</p>
+<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../#arboocrengine">API Reference</a> — <code>Engine</code>, <code>PagePrediction</code>, and the JSON schema.</li>
+<li><a href="../logging/">Logging</a> — the other half of debugging a pipeline that returns nothing.</li>
+</ul>
 
 
 
@@ -1801,7 +1916,7 @@ needs no bindings at all.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
   </span>
 
     
@@ -1811,7 +1926,7 @@ needs no bindings at all.</p>
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
   </span>
 
     
@@ -1871,7 +1986,7 @@ needs no bindings at all.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../cli/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Command line">
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: API Reference">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
@@ -1881,20 +1996,20 @@ needs no bindings at all.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Command line
+                API Reference
               </div>
             </div>
           </a>
         
         
           
-          <a href="../build/" class="md-footer__link md-footer__link--next" aria-label="Next: Build">
+          <a href="../logging/" class="md-footer__link md-footer__link--next" aria-label="Next: Logging">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Build
+                Logging
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1983,10 +2098,10 @@ needs no bindings at all.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["announce.dismiss", "content.tooltips", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit", "content.action.view", "content.footnote.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.footer", "navigation.indexes", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.tooltips", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit", "content.action.view", "content.footnote.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.footer", "navigation.indexes", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
     
   </body>

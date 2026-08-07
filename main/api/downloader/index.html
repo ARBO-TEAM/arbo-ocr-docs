@@ -492,6 +492,8 @@
       
         
       
+        
+      
     
     
     
@@ -550,6 +552,29 @@
   
   <span class="md-ellipsis">
     Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Command line
     
   </span>
   
@@ -866,6 +891,8 @@
       
         
       
+        
+      
     
     
     
@@ -912,6 +939,29 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visualize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Visualization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -1020,6 +1070,15 @@
   <a href="#what-downloadocrmodels-actually-writes" class="md-nav__link">
     <span class="md-ellipsis">
       What downloadOcrModels actually writes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking results
     </span>
   </a>
   
@@ -1628,6 +1687,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#checking-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       See also
@@ -1671,11 +1739,22 @@
 <h1 id="model-downloader">Model downloader<a class="headerlink" href="#model-downloader" title="Permanent link">&para;</a></h1>
 <p>arboOCR does not bundle model files. If you would rather fetch them at
 deploy time than ship them in your image, <code>model_downloader.hpp</code> gives you
-two functions:</p>
-<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">DownloadResult</span><span class="w"> </span><span class="nf">downloadFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">destPath</span><span class="p">);</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DownloadResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">downloadOcrModels</span><span class="p">(</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">baseUrl</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ocrVersion</span><span class="p">,</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelType</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelsDir</span><span class="p">);</span>
+three functions:</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">DownloadResult</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">bytesWritten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">};</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">DownloadResult</span><span class="w"> </span><span class="nf">downloadFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">destPath</span><span class="p">);</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ocrModelFileNames</span><span class="p">(</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ocrVersion</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelType</span><span class="p">);</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DownloadResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">downloadOcrModels</span><span class="p">(</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">baseUrl</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ocrVersion</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelType</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelsDir</span><span class="p">);</span>
 </span></code></pre></div>
 <p>Typical use:</p>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">downloadOcrModels</span><span class="p">(</span>
@@ -1693,11 +1772,42 @@ means you control integrity, availability, and the license question of
 where those weights came from.</p>
 </div>
 <h2 id="what-downloadocrmodels-actually-writes">What <code>downloadOcrModels</code> actually writes<a class="headerlink" href="#what-downloadocrmodels-actually-writes" title="Permanent link">&para;</a></h2>
-<p>It writes <strong>only the default flat filenames</strong> — the same layout the
-<code>EngineConfig</code> path derivation expects when <code>detModelPath</code>, <code>clsModelPath</code>,
-<code>recModelPath</code> and <code>dictPath</code> are left empty. Given <code>ocrVersion</code>, <code>modelType</code>
-and <code>modelsDir</code>, it fetches the set that pairs with them and drops it into
-<code>modelsDir</code> with no subdirectories and no renaming hooks.</p>
+<p><strong>Four files</strong> — the three ONNX models <em>and</em> the recognizer dictionary. They
+are exactly the default flat filenames the <code>EngineConfig</code> path derivation
+expects when <code>detModelPath</code>, <code>clsModelPath</code>, <code>recModelPath</code> and <code>dictPath</code> are
+left empty, dropped into <code>modelsDir</code> with no subdirectories and no renaming
+hooks.</p>
+<p><code>ocrModelFileNames(ocrVersion, modelType)</code> returns that list, and both the URL
+(<code>baseUrl + name</code>) and the destination (<code>modelsDir/name</code>) are derived from it.
+Call it when you want to check what will land on disk, pre-seed a cache, or
+write a manifest, without performing a download:</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">ocrModelFileNames</span><span class="p">(</span><span class="s">&quot;PP-OCRv6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;medium&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">}</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">// PP-OCRv6_det.onnx</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">// PP-OCRv6_cls.onnx</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">// PP-OCRv6_rec_medium.onnx</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">// PP-OCRv6_rec_medium_dict.txt</span>
+</span></code></pre></div>
+<p><code>downloadOcrModels</code> returns <strong>one <code>DownloadResult</code> per name, always four
+entries, always in that same order</strong> — index 0 detector, 1 classifier, 2
+recognizer, 3 dictionary. The vector length does not vary with success or
+failure, so you can index it positionally.</p>
+<div class="admonition warning">
+<p class="admonition-title">The dictionary is best-effort — index 3 may be <code>ok=false</code> and still fine</p>
+<p>A recognizer that embeds its charset in the ONNX <code>character</code> metadata key
+needs no dict file at all, and repos hosting such models often do not
+publish one. A 404 there is therefore <strong>not</strong> promoted to an error for the
+whole call: the fourth <code>DownloadResult</code> keeps the normal shape, comes back
+<code>ok=false</code>, and has its <code>errorMessage</code> suffixed to say the failure may be
+ignorable — that the dict is only needed when the rec model does not embed
+its charset in the ONNX <code>character</code> metadata key.</p>
+<p>You are not lied to (<code>ok</code> is still <code>false</code>) and you are not forced to guess
+what it means. Treat the first three failing as fatal; treat the fourth as
+a prompt to check whether your recognizer carries its own charset. If it
+does not, and the dict did not download, <code>Engine</code> will produce
+empty-lines pages rather than throwing.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Custom or fine-tuned models: use <code>downloadFile</code></p>
 <p>If your weights do not follow the default naming — a fine-tuned
@@ -1707,10 +1817,16 @@ destination paths, then point the matching <code>EngineConfig::*ModelPath</code>
 <code>dictPath</code> field at each one. <code>downloadOcrModels</code> has no escape hatch for
 that; it is a convenience for the stock layout only.</p>
 </div>
-<p>Both functions return <code>DownloadResult</code>. Check it. A partial download leaves
-you with a file that exists and does not load, and by the time <code>Engine</code> sees
-it you get an empty-lines page rather than an exception — see the
+<h2 id="checking-results">Checking results<a class="headerlink" href="#checking-results" title="Permanent link">&para;</a></h2>
+<p>Both download functions return <code>DownloadResult</code>. Check it. A partial download
+leaves you with a file that exists and does not load, and by the time <code>Engine</code>
+sees it you get an empty-lines page rather than an exception — see the
 <a href="../#arboocrengine">API Reference</a>.</p>
+<p>Neither function throws: an unreachable host or an HTTP error comes back as
+<code>ok=false</code> with a message. <code>downloadFile</code> <strong>skips</strong> a destination that already
+exists and is non-empty, returning <code>ok=true</code> with <code>bytesWritten = 0</code> — so
+re-running a provisioning step is cheap and idempotent, and <code>bytesWritten == 0</code>
+means "already had it", not "wrote nothing useful".</p>
 <h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../models/">Models</a> — the expected layout, and how to get the files without downloading.</li>
@@ -1738,7 +1854,7 @@ it you get an empty-lines page rather than an exception — see the
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
   </span>
 
     

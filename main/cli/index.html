@@ -6,19 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Short answers to the questions that come up most often when integrating arboOCR — models, defaults, threading, and performance.">
+        <meta name="description" content="Full flag reference for arboocr_demo — the binary every arboOCR language wrapper spawns. Defaults, exit codes, the --json contract, and tuning recipes.">
       
       
         <meta name="author" content="ARBO-TEAM">
       
       
-        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/faq/">
+        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/cli/">
       
       
-        <link rel="prev" href="../cli/">
+        <link rel="prev" href="../quickstart/">
       
       
-        <link rel="next" href="../build/">
+        <link rel="next" href="../faq/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
@@ -29,7 +29,7 @@
     
     
       
-        <title>FAQ - arboOCR Docs</title>
+        <title>Command line - arboOCR Docs</title>
       
     
     
@@ -112,7 +112,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#faq" class="md-skip">
+        <a href="#command-line" class="md-skip">
           Skip to content
         </a>
       
@@ -152,7 +152,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              FAQ
+              Command line
             
           </span>
         </div>
@@ -571,29 +571,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Command line
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -606,7 +583,159 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Command line
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Command line
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#input-and-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input and output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model selection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detection tuning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recognition-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recognition tuning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnostics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exit-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exit codes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-json-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      The JSON contract
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The JSON contract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-draw-composes-with-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      --draw composes with --json
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
         
   
   
@@ -617,7 +746,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1612,6 +1740,110 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#input-and-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input and output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model selection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detection tuning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recognition-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recognition tuning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnostics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exit-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exit codes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-json-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      The JSON contract
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The JSON contract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-draw-composes-with-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      --draw composes with --json
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1626,7 +1858,7 @@
 
 
   
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/faq.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/cli.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
     </a>
@@ -1635,150 +1867,512 @@
     
       
     
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/faq.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/cli.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
     </a>
   
 
 
-<h1 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h1>
-<p>Short answers with a link to the page that has the full one.</p>
-<details class="question">
-<summary>Which model files do I actually need?</summary>
-<p>Four filenames live under <code>modelsDir</code>, but you rarely need all of them:</p>
-<ul>
-<li><code>PP-OCRv6_det.onnx</code> — text detection. <strong>One file, no size variants.</strong>
-  <code>modelType</code> does not select a detector.</li>
-<li><code>PP-OCRv6_rec_&lt;size&gt;.onnx</code> — recognition, one per size
-  (<code>tiny</code> | <code>small</code> | <code>medium</code>).</li>
-<li><code>PP-OCRv6_rec_&lt;size&gt;_dict.txt</code> — character dict, <strong>only</strong> if the
-  character list is not embedded in the ONNX metadata.</li>
-<li><code>PP-OCRv6_cls.onnx</code> — angle classification, <strong>only</strong> needed if
-  <code>useAngleCls</code> is on.</li>
-</ul>
-<p>See <a href="../models/">Models</a> for the directory layout and the two ways
-to obtain the files.</p>
-</details>
-<details class="question">
-<summary>Why is there no default model download URL?</summary>
-<p>Because PP-OCR model hosting locations are not stable across mirrors, so
-arboOCR makes the caller pick the source rather than baking in a URL that
-rots. <code>downloadOcrModels()</code> takes a <code>baseUrl</code> you supply; there is no
-built-in default.</p>
-<p>See <a href="../models/">Models</a> and the
-<a href="../api/downloader/">model downloader</a>.</p>
-</details>
-<details class="question">
-<summary>Should I use tiny, small or medium?</summary>
-<p><code>small</code> is the default and the right starting point on CPU. On the SROIE
-smoke set (warm Python <code>Engine</code>, CPU, 5 receipts):</p>
+<h1 id="command-line">Command line<a class="headerlink" href="#command-line" title="Permanent link">&para;</a></h1>
+<p><code>arboocr_demo</code> is the binary that ships in every arboOCR release. It looks like
+a demo, and for a C++ user it is one. For everyone else it is <strong>the public
+API</strong>: all four wrappers — <a href="../wrappers/python/">Python</a>, <a href="../wrappers/go/">Go</a>,
+<a href="../wrappers/rust/">Rust</a>, <a href="../wrappers/php/">PHP</a> — spawn this exact executable
+as a subprocess and parse its stdout. <code>subprocess</code>, <code>os/exec</code>,
+<code>std::process::Command</code>, <code>proc_open</code>: different words, one binary.</p>
+<p>That is why this page matters more than a demo page should. Until recently the
+CLI exposed no accuracy knobs at all — no detection thresholds, no
+<code>--min-confidence</code>, no <code>--clahe</code>. Every wrapper was therefore locked out of the
+library's own tuning story: you could read
+<a href="../models/accuracy-defaults/">Accuracy defaults</a>, agree with all of it, and
+have no way to act on it from Python. The flags below close that gap. A knob
+that exists here exists in all four languages.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>arboocr_demo --image &lt;path&gt; [options]
+</span></code></pre></div>
+<p><code>--image</code> is required. Without it the binary prints usage and exits <code>1</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Boolean flags</p>
+<p>Every <code>bool</code> option is a presence switch: writing <code>--clahe</code> sets it true.
+The one that needs care is <code>--fp16</code>, which <strong>defaults to true</strong> — to turn it
+off you must write <code>--fp16=false</code>, not omit it.</p>
+</div>
+<h2 id="input-and-output">Input and output<a class="headerlink" href="#input-and-output" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>modelType</th>
-<th>Size</th>
-<th>CPU latency</th>
-<th>Full-page sim</th>
+<th>Flag</th>
+<th>Default</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>tiny</code></td>
-<td>4.3 MB</td>
-<td>~165 ms</td>
-<td>~93.3%</td>
+<td><code>--image &lt;path&gt;</code></td>
+<td><em>(required)</em></td>
+<td>Image to recognize. Any format OpenCV can decode.</td>
 </tr>
 <tr>
-<td><code>small</code> (<strong>default</strong>)</td>
-<td>~20 MB</td>
-<td>~530 ms</td>
-<td>~94.4%</td>
+<td><code>--json</code></td>
+<td>off</td>
+<td>Emit machine-readable JSON and nothing else on stdout. See <a href="#the-json-contract">the contract</a>.</td>
 </tr>
 <tr>
-<td><code>medium</code></td>
-<td>73 MB</td>
-<td>~2120 ms</td>
-<td>~94.8%</td>
+<td><code>--draw &lt;path&gt;</code></td>
+<td><em>(unset)</em></td>
+<td>Write a copy of the image with every detected polygon outlined to <code>&lt;path&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>--word-boxes</code></td>
+<td>off</td>
+<td>Also emit a polygon per word (per character for CJK). Adds <code>"words"</code> to each line.</td>
 </tr>
 </tbody>
 </table>
-<p>Medium costs roughly <strong>4x the CPU latency for ~+0.4 pts</strong>. Prefer <code>tiny</code>
-for throughput; reach for <code>medium</code> only with GPU/TensorRT headroom <em>and</em> a
-measured win on your own data.</p>
-<p>See <a href="../models/sizes/">Model sizes</a>.</p>
-</details>
-<details class="question">
-<summary>Does it support language X?</summary>
-<p>Probably, without any configuration. The default PP-OCRv6 recognition
-models are <strong>already multi-language in a single ONNX file</strong> — medium and
-small cover 50 languages including Chinese, English, Japanese and 46
-Latin-script languages; tiny is similar but without Japanese. arboOCR has
-<strong>no <code>language</code> config</strong>: load the default models and you get that
-coverage.</p>
-<p>For scripts outside the model's training set, point <code>recModelPath</code> (and
-<code>dictPath</code>, if your ONNX has no embedded character list) at your own files.</p>
-<p>See <a href="../models/languages/">Languages</a>.</p>
-</details>
-<details class="question">
-<summary>Why did my line order change after upgrading?</summary>
-<p><code>page.lines</code> is now <strong>always sorted by centroid — y first, then x</strong> —
-rather than emitted in raw detector order. Full-page string metrics and
-human reading both depend on order, so the sort is unconditional.</p>
-<p>Anything that assumed detector emission order, or that matched boxes by
-index against an older dump, needs to use polygon geometry or re-sort the
-same way.</p>
-<p>See <a href="../models/accuracy-defaults/">Accuracy defaults</a>.</p>
-</details>
-<details class="question">
-<summary>Why are some lines missing from the output?</summary>
-<p><code>minimumConfidence</code> defaults to <strong><code>0.5</code></strong> and drops low-confidence lines
-(PaddleOCR's <code>drop_score</code>). Low-contrast logos, rules read as <code>+-</code>, and
-weak boxes disappear from <code>page.lines</code>.</p>
-<p>Set <code>minimumConfidence = 0</code> to keep every box — that is the right setting
-for audit dumps. Pure symbol lines may need it raised to <code>0.8</code> instead.</p>
-<p>See <a href="../models/accuracy-defaults/">Accuracy defaults</a>.</p>
-</details>
-<details class="question">
-<summary>Does <code>recognize()</code> throw?</summary>
-<p><strong>Never.</strong> A missing or unreadable image, or an inference error, degrades
-to an empty-lines result with <code>elapsedMs</code> still set. Check
-<code>page.lines.empty()</code> to detect that case — there is no exception to catch.</p>
-<p>Log callbacks are equally defensive: a callback that throws is swallowed,
-so a broken sink cannot crash OCR.</p>
-<p>See the <a href="../api/">API reference</a> and <a href="../api/logging/">logging</a>.</p>
-</details>
-<details class="question">
-<summary>Can I call <code>recognizeAsync()</code> concurrently on one Engine?</summary>
-<p>No. The async variants are <strong>not safe for concurrent use on the same
-<code>Engine</code></strong> — keep one outstanding call at a time, or give each worker its
-own <code>Engine</code>.</p>
-<p>See the <a href="../api/">API reference</a>.</p>
-</details>
-<details class="question">
-<summary>Why is batched recognition slower on my CPU?</summary>
-<p>Because CPU has <strong>no real parallelism across the batch dimension</strong>, so
-padding every crop to a shared width is wasted computation. Measured on
-one page: CPU went from ~3.9s to ~5.0s <em>with</em> batching, while TensorRT
-went from ~456 ms to ~340–460 ms.</p>
-<p>Recognition batches up to <code>recBatchNum</code> crops per inference call (default
-6) and batching is always on — there is currently no flag to disable it
-for CPU-only deployments.</p>
-<p>See <a href="../benchmarks/">Benchmarks</a>.</p>
-</details>
-<details class="question">
-<summary>How do I use arboOCR from Python?</summary>
-<p>Via the pybind11 <code>Engine</code> facade, which runs on the same native backends
-as C++. It is <strong>off by default</strong> (<code>ARBOOCR_BUILD_PYTHON=OFF</code>) — enable it
-when you have Python 3 development headers.</p>
-<p>Caveats for v1: <strong>no published wheels</strong>, so you build the extension
-against your local <code>arboOCR</code> library; NumPy images must be <strong>HxWx3 uint8
-BGR</strong> (OpenCV layout); and there are no async or low-level
-<code>Detector</code>/<code>Recognizer</code> bindings. If you just want text out of an image,
-the bundled CLI (<code>arboocr_demo --image page.jpg --models-dir models</code>)
-needs no bindings at all.</p>
-<p>See <a href="../wrappers/">Wrappers</a> and <a href="../wrappers/python/">Python</a>.</p>
-</details>
+<p><code>--draw</code> colours boxes by recognition confidence: green at or above <code>0.5</code>, red
+below. <code>0.5</code> is not a new number — it is the <code>--min-confidence</code> default, so a
+red box is one the default config would have thrown away. You only ever see one
+after lowering that filter, which is exactly when you are debugging.</p>
+<h2 id="model-selection">Model selection<a class="headerlink" href="#model-selection" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--models-dir &lt;dir&gt;</code></td>
+<td><code>models</code></td>
+<td>Directory holding the ONNX files.</td>
+</tr>
+<tr>
+<td><code>--ocr-version &lt;str&gt;</code></td>
+<td><code>PP-OCRv6</code></td>
+<td>Model family; used as the filename prefix.</td>
+</tr>
+<tr>
+<td><code>--model-type &lt;str&gt;</code></td>
+<td><code>small</code></td>
+<td>Recognizer size — <code>tiny</code>, <code>small</code>, or <code>medium</code>.</td>
+</tr>
+<tr>
+<td><code>--det-model &lt;path&gt;</code></td>
+<td><em>(none)</em></td>
+<td>Override the resolved detector path.</td>
+</tr>
+<tr>
+<td><code>--cls-model &lt;path&gt;</code></td>
+<td><em>(none)</em></td>
+<td>Override the resolved classifier path.</td>
+</tr>
+<tr>
+<td><code>--rec-model &lt;path&gt;</code></td>
+<td><em>(none)</em></td>
+<td>Override the resolved recognizer path.</td>
+</tr>
+<tr>
+<td><code>--dict &lt;path&gt;</code></td>
+<td><em>(none)</em></td>
+<td>Override the character dictionary path.</td>
+</tr>
+</tbody>
+</table>
+<p>Unless overridden, paths are assembled from the three values above:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;models-dir&gt;/&lt;ocr-version&gt;_det.onnx
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&lt;models-dir&gt;/&lt;ocr-version&gt;_cls.onnx
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>&lt;models-dir&gt;/&lt;ocr-version&gt;_rec_&lt;model-type&gt;.onnx
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>&lt;models-dir&gt;/&lt;ocr-version&gt;_rec_&lt;model-type&gt;_dict.txt
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title"><code>--model-type</code> sizes the recognizer, not the detector</p>
+<p>The detector path is always <code>&lt;ocr-version&gt;_det.onnx</code> — the <code>_type</code> suffix
+is only applied to the recognizer and its dictionary. If your models
+directory contains <code>PP-OCRv6_det_tiny.onnx</code>, nothing loads it unless you
+pass <code>--det-model</code> explicitly. See <a href="../models/sizes/">Model sizes</a>.</p>
+</div>
+<p>Two more resolution details worth knowing before you debug a load failure. The
+classifier is only opened when <code>--angle</code> is set, so a missing <code>_cls.onnx</code> is
+harmless otherwise. And <code>--dict</code> is a <strong>fallback</strong>: the recognizer first tries
+to read its character set from the ONNX file's own metadata and only touches
+the <code>.txt</code> when that is absent. Run with <code>--log-level debug</code> to see which of
+the two paths was taken.</p>
+<h2 id="detection-tuning">Detection tuning<a class="headerlink" href="#detection-tuning" title="Permanent link">&para;</a></h2>
+<p>These map one-to-one onto <code>EngineConfig</code>; the reasoning behind each default
+lives in <a href="../models/accuracy-defaults/">Accuracy defaults</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--det-limit-side-len &lt;int&gt;</code></td>
+<td><code>960</code></td>
+<td>Longest image side for the detection resize. Raise for dense small text, at a latency cost.</td>
+</tr>
+<tr>
+<td><code>--det-thresh &lt;float&gt;</code></td>
+<td><code>0.3</code></td>
+<td>Probability-map binarization threshold.</td>
+</tr>
+<tr>
+<td><code>--det-box-thresh &lt;float&gt;</code></td>
+<td><code>0.5</code></td>
+<td>Minimum mean score for a detected box to survive. Lower it to recover faint boxes.</td>
+</tr>
+<tr>
+<td><code>--det-unclip-ratio &lt;float&gt;</code></td>
+<td><code>1.6</code></td>
+<td>Box expansion applied after binarization. Raise it when crops clip ascenders/descenders.</td>
+</tr>
+<tr>
+<td><code>--split-overmerged</code></td>
+<td>off</td>
+<td>Split wide detection boxes that fused two side-by-side fields, using an ink-gap heuristic.</td>
+</tr>
+</tbody>
+</table>
+<p><code>--split-overmerged</code> is the one to reach for on forms and tables, where a
+<code>label</code> and its <code>value</code> sit on the same baseline and the detector happily
+draws one box around both.</p>
+<h2 id="recognition-tuning">Recognition tuning<a class="headerlink" href="#recognition-tuning" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--rec-batch-num &lt;int&gt;</code></td>
+<td><code>6</code></td>
+<td>Crops per recognition inference call. Clamped to <code>&gt;= 1</code>.</td>
+</tr>
+<tr>
+<td><code>--min-confidence &lt;float&gt;</code></td>
+<td><code>0.5</code></td>
+<td>Drop lines below this recognition confidence. <code>0</code> disables filtering entirely.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title"><code>--min-confidence 0</code> is a diagnostic, not a setting</p>
+<p>When text is missing from the output, run once with <code>--min-confidence 0
+--draw out.png</code>. If the line appears in red, the detector found it and the
+filter discarded it — a recognition problem. If it does not appear at all,
+the detector never saw it, and no recognizer setting will help; go tune
+detection or reach for <a href="../models/clahe/"><code>--clahe</code></a>.</p>
+</div>
+<h2 id="backend">Backend<a class="headerlink" href="#backend" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--cuda</code></td>
+<td>off</td>
+<td>Request the CUDA execution provider.</td>
+</tr>
+<tr>
+<td><code>--tensorrt</code></td>
+<td>off</td>
+<td>Request TensorRT. Implies CUDA as the fallback tier.</td>
+</tr>
+<tr>
+<td><code>--fp16</code></td>
+<td><strong>on</strong></td>
+<td>TensorRT FP16. Only consulted with <code>--tensorrt</code>. Disable with <code>--fp16=false</code>.</td>
+</tr>
+<tr>
+<td><code>--trt-cache-dir &lt;dir&gt;</code></td>
+<td><code>models/trt_engines</code></td>
+<td>Where TensorRT caches built engines. Only used with <code>--tensorrt</code>.</td>
+</tr>
+<tr>
+<td><code>--angle</code></td>
+<td>off</td>
+<td>Enable orientation classification (0°/180°). Loads <code>_cls.onnx</code>.</td>
+</tr>
+<tr>
+<td><code>--clahe</code></td>
+<td>off</td>
+<td>CLAHE contrast enhancement before detection — for faded/low-contrast scans.</td>
+</tr>
+</tbody>
+</table>
+<p>Requests are requests, not guarantees. The engine probes
+<code>Ort::GetAvailableProviders()</code> and degrades TensorRT → CUDA → CPU silently, so
+<code>--tensorrt</code> on a machine without it still runs. The <code>"backend"</code> field in
+<code>--json</code> output (and the <code>Backend:</code> line otherwise) reports what was <em>actually</em>
+selected — check it before you trust a benchmark.</p>
+<div class="admonition warning">
+<p class="admonition-title">Changing <code>--fp16</code> or <code>--rec-batch-num</code> invalidates cached TRT engines</p>
+<p>TensorRT engines under <code>--trt-cache-dir</code> are built for a specific precision
+and a specific recognizer batch size — <code>--rec-batch-num</code> is applied <em>before</em>
+model load precisely so the TRT optimization profile matches the runtime
+batch shape. The cache directory is not keyed on either value, so flipping
+<code>--fp16=false</code> or moving <code>--rec-batch-num</code> from <code>6</code> to <code>12</code> against a
+populated cache makes TensorRT load a mismatched engine. Clear the directory
+or point <code>--trt-cache-dir</code> at a separate path per configuration.</p>
+</div>
+<h2 id="diagnostics">Diagnostics<a class="headerlink" href="#diagnostics" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--log-level &lt;level&gt;</code></td>
+<td><em>(silent)</em></td>
+<td>Log engine events to stderr: <code>debug</code>, <code>info</code>, <code>warn</code>, or <code>error</code>.</td>
+</tr>
+<tr>
+<td><code>-h</code>, <code>--help</code></td>
+<td>—</td>
+<td>Print usage and exit.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Logging is opt-in — this is a behaviour change</p>
+<p>Without <code>--log-level</code> the library installs <strong>no log callback at all</strong> and
+writes nothing to stderr. It previously always logged. If you had a wrapper
+or a shell pipeline reading engine diagnostics off stderr, it now reads
+nothing until you pass the flag. An unrecognized level (<code>--log-level
+verbose</code>) is a usage error, not a silent fallback: it prints the accepted
+set and exits <code>1</code>.</p>
+</div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ arboocr_demo --image page.jpg --models-dir models --log-level debug
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>[arboOCR][INFO] Engine backend: cpu
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>[arboOCR][DEBUG] Model paths det=models\PP-OCRv6_det.onnx cls=models\PP-OCRv6_cls.onnx rec=models\PP-OCRv6_rec_small.onnx dict=models\PP-OCRv6_rec_small_dict.txt
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>[arboOCR][DEBUG] Recognizer keys: loaded from model metadata
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>[arboOCR][DEBUG] recognize: 3 lines
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">arboOCR is silent; ONNX Runtime is not always</p>
+<p>"Silent by default" is a promise about <em>arboOCR's</em> logging. ONNX Runtime
+writes its own diagnostics to stderr independently — some vcpkg Windows
+builds emit a wall of <code>Schema error: Trying to register schema ...</code> lines
+on every start, which are harmless duplicate-registration warnings from
+onnx itself. A wrapper that treats "any stderr output" as failure will
+misfire on those. Key on the <strong>exit code</strong> instead.</p>
+</div>
+<h2 id="exit-codes">Exit codes<a class="headerlink" href="#exit-codes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Success.</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Usage or parse error, or (default output mode) no text found.</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Model load failure, or an unexpected recognition error.</td>
+</tr>
+</tbody>
+</table>
+<p>Wrappers should treat any non-zero code as failure. <code>2</code> is the one worth
+special-casing: it means the engine could not be <em>built</em> — a missing, corrupt,
+or unreadable ONNX file — or that inference itself threw. Nothing about the
+input image or the flags can be fixed by retrying; on <code>2</code> the binary prints the
+four resolved model paths to stderr so you can see exactly which file it went
+looking for.</p>
+<p><code>1</code> covers a wider range: an unrecognized flag, a missing <code>--image</code>, a bad
+<code>--log-level</code> value, and — in the default human-readable mode — a page that
+produced zero lines.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>--json</code> reports an empty page as success</p>
+<p>The empty-page case is the one asymmetry between the two output modes. In
+<code>--json</code> mode a page with no text exits <strong><code>0</code></strong> with <code>"lines":[]</code>, because
+an empty result set is a valid result, and wrappers need to distinguish "the
+scan is blank" from "the binary broke". The same is true of an unreadable or
+missing image file — <code>recognize()</code> never throws, so it degrades to empty
+lines rather than an error. If your wrapper must reject empty pages, check
+<code>len(lines) == 0</code> yourself; do not expect a non-zero exit.</p>
+</div>
+<h2 id="the-json-contract">The JSON contract<a class="headerlink" href="#the-json-contract" title="Permanent link">&para;</a></h2>
+<p>With <code>--json</code>, stdout carries <strong>pure JSON and nothing else</strong> — one compact
+object, one trailing newline. This is load-bearing: wrappers pipe the entire
+stream into a JSON parser without pre-filtering it, so a single stray
+<code>printf</code> would break all four languages at once. Everything that is not the
+result — engine logs, <code>--draw</code> confirmations, <code>--draw</code> failures — goes to
+stderr.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;backend&quot;</span><span class="p">:</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="s2">&quot;page.jpg&quot;</span><span class="p">,</span><span class="nt">&quot;elapsedMs&quot;</span><span class="p">:</span><span class="mf">66.3257</span><span class="p">,</span><span class="nt">&quot;lines&quot;</span><span class="p">:[{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="s2">&quot;INVOICE&quot;</span><span class="p">,</span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="mf">0.999803</span><span class="p">,</span><span class="nt">&quot;detScore&quot;</span><span class="p">:</span><span class="mf">0.857679</span><span class="p">,</span><span class="nt">&quot;polygon&quot;</span><span class="p">:[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">43</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">27</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">285</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">284</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">91</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">43</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">89</span><span class="p">}]}]}</span>
+</span></code></pre></div>
+<p>The same payload, re-indented for reading (the wire format is always the single
+line above):</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;backend&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;page.jpg&quot;</span><span class="p">,</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">&quot;elapsedMs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">66.3257</span><span class="p">,</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nt">&quot;lines&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INVOICE&quot;</span><span class="p">,</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">      </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.999803</span><span class="p">,</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">      </span><span class="nt">&quot;detScore&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.857679</span><span class="p">,</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">      </span><span class="nt">&quot;polygon&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">285</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">},</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">284</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">91</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">89</span><span class="p">}</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">      </span><span class="p">]</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend</code></td>
+<td>string</td>
+<td><code>cpu</code>, <code>cuda</code>, or <code>tensorrt</code> — what was actually selected, not what was requested.</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>string</td>
+<td>The <strong>file name</strong> of the input, not the path you passed.</td>
+</tr>
+<tr>
+<td><code>elapsedMs</code></td>
+<td>number</td>
+<td>Wall-clock pipeline time. Set even when <code>lines</code> is empty.</td>
+</tr>
+<tr>
+<td><code>lines[].text</code></td>
+<td>string</td>
+<td>Decoded text. UTF-8; wrappers must decode it as such.</td>
+</tr>
+<tr>
+<td><code>lines[].score</code></td>
+<td>number</td>
+<td>Mean CTC character confidence.</td>
+</tr>
+<tr>
+<td><code>lines[].detScore</code></td>
+<td>number</td>
+<td>Detector box score for this polygon.</td>
+</tr>
+<tr>
+<td><code>lines[].polygon</code></td>
+<td>array</td>
+<td>Four <code>{x, y}</code> points in source-image coordinates.</td>
+</tr>
+<tr>
+<td><code>lines[].words</code></td>
+<td>array</td>
+<td><strong>Only present with <code>--word-boxes</code></strong>, and only on lines that produced words.</td>
+</tr>
+</tbody>
+</table>
+<p><code>lines</code> is sorted top→bottom, left→right by centroid — not raw detector order.
+Floats are serialized at 6 significant digits, so <code>0.9f</code> reads as <code>0.9</code> rather
+than binary noise.</p>
+<p>The <code>"words"</code> omission is deliberate rather than an oversight: leaving the key
+out entirely when empty means the JSON shape is byte-for-byte unchanged for
+every caller that never asks for word boxes, so adding the feature broke no
+existing wrapper. Treat <code>words</code> as optional in your parser.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">&quot;words&quot;</span><span class="p">:[{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="s2">&quot;PT.&quot;</span><span class="p">,</span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="mf">0.999931</span><span class="p">,</span><span class="nt">&quot;polygon&quot;</span><span class="p">:[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">58.2754</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">105.116</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">110.101</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">105.464</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">110.101</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">157.464</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">58.2754</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">157.116</span><span class="p">}]},{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="s2">&quot;Angin&quot;</span><span class="p">,</span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="mf">0.99997</span><span class="p">,</span><span class="nt">&quot;polygon&quot;</span><span class="p">:[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">127.377</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">105.58</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">222.391</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">106.217</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">222.391</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">158.217</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">127.377</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">157.58</span><span class="p">}]}]</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Word polygons are alignment-derived, not supervised</p>
+<p>They come from CTC timestep alignment, a by-product of recognition. CTC
+peaks partway through a glyph, so boxes run roughly half a character wide of
+true extents and lag consistently right. Good enough for highlighting,
+search hit-marking and reading-order reconstruction; not good enough to crop
+a glyph from.</p>
+</div>
+<h3 id="-draw-composes-with-json"><code>--draw</code> composes with <code>--json</code><a class="headerlink" href="#-draw-composes-with-json" title="Permanent link">&para;</a></h3>
+<p>They are not exclusive. The overlay is written <em>before</em> the JSON is emitted, and
+its confirmation and error messages go to stderr, so stdout stays a single
+parseable object:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--json<span class="w"> </span>--draw<span class="w"> </span>overlay.png<span class="w"> </span>&gt;<span class="w"> </span>page.json
+</span></code></pre></div>
+<p><code>page.json</code> is valid JSON; <code>overlay.png</code> is on disk. This is the shape you want
+in a debugging pipeline that also needs the structured result.</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Simplest run</label><label for="__tabbed_1_2">Driving it from a wrapper</label><label for="__tabbed_1_3">Faded receipts</label><label for="__tabbed_1_4">Debugging</label><label for="__tabbed_1_5">GPU</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Backend: cpu
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Image: page.jpg
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Lines: 3 (63.9146 ms)
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  [0] &quot;INVOICE&quot; (score=0.999803 detScore=0.857679) poly=[(43,27), (285,30), (284,91), (43,89)]
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  [1] &quot;PT. Angin Sepoi&quot; (score=0.997808 detScore=0.846785) poly=[(41,105), (339,107), (339,159), (41,157)]
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  [2] &quot;Total 1250000&quot; (score=0.999852 detScore=0.854063) poly=[(44,177), (303,174), (303,223), (44,226)]
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--json<span class="w"> </span>--word-boxes
+</span></code></pre></div>
+<p>One compact JSON object on stdout, exit <code>0</code>. This is the invocation every
+wrapper builds internally — see <a href="../wrappers/">Wrappers</a>.</p>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>receipt.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>--clahe<span class="w"> </span>--min-confidence<span class="w"> </span><span class="m">0</span><span class="w"> </span>--split-overmerged
+</span></code></pre></div>
+<p><code>--clahe</code> rescues boxes the detector would otherwise miss on thermal-printer
+output; <code>--min-confidence 0</code> keeps every line so you can judge for yourself
+what the filter would have eaten; <code>--split-overmerged</code> separates the
+item-name and price columns that a receipt's tight layout fuses into one
+box.</p>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>--log-level<span class="w"> </span>debug<span class="w"> </span>--min-confidence<span class="w"> </span><span class="m">0</span><span class="w"> </span>--draw<span class="w"> </span>boxes.png
+</span></code></pre></div>
+<p>stderr tells you which model files were opened and which backend loaded;
+<code>boxes.png</code> tells you what the detector actually saw. Red boxes are the
+lines the default <code>0.5</code> filter would have dropped.</p>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>--tensorrt<span class="w"> </span>--trt-cache-dir<span class="w"> </span>cache/trt-fp16-b6<span class="w"> </span>--rec-batch-num<span class="w"> </span><span class="m">6</span>
+</span></code></pre></div>
+<p>First run pays the engine build; later runs load from the cache. Note the
+cache path encodes the precision and batch size — see the
+<a href="#backend">warning above</a>.</p>
+</div>
+</div>
+</div>
+<hr />
+<p>Next: <a href="../wrappers/">Wrappers</a> to call this from Python, Go, Rust or PHP,
+<a href="../models/accuracy-defaults/">Accuracy defaults</a> for what the tuning flags
+actually do, or the <a href="../api/">API reference</a> if you would rather link the
+library than spawn it.</p>
 
 
 
@@ -1801,7 +2395,7 @@ needs no bindings at all.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
   </span>
 
     
@@ -1811,7 +2405,7 @@ needs no bindings at all.</p>
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
   </span>
 
     
@@ -1871,7 +2465,7 @@ needs no bindings at all.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../cli/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Command line">
+          <a href="../quickstart/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quickstart">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
@@ -1881,20 +2475,20 @@ needs no bindings at all.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Command line
+                Quickstart
               </div>
             </div>
           </a>
         
         
           
-          <a href="../build/" class="md-footer__link md-footer__link--next" aria-label="Next: Build">
+          <a href="../faq/" class="md-footer__link md-footer__link--next" aria-label="Next: FAQ">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Build
+                FAQ
               </div>
             </div>
             <div class="md-footer__button md-icon">

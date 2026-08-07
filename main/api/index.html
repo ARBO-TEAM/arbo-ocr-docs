@@ -18,7 +18,7 @@
         <link rel="prev" href="../models/accuracy-defaults/">
       
       
-        <link rel="next" href="logging/">
+        <link rel="next" href="visualize/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
@@ -492,6 +492,8 @@
       
         
       
+        
+      
     
     
     
@@ -550,6 +552,29 @@
   
   <span class="md-ellipsis">
     Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Command line
     
   </span>
   
@@ -866,6 +891,8 @@
       
         
       
+        
+      
     
     
     
@@ -912,6 +939,29 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="visualize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Visualization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -1568,6 +1618,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#three-ways-in-path-cvmat-encoded-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Three ways in: path, cv::Mat, encoded bytes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#behaviour-you-must-know" class="md-nav__link">
     <span class="md-ellipsis">
       Behaviour you must know
@@ -1580,6 +1639,30 @@
   <a href="#result-types" class="md-nav__link">
     <span class="md-ellipsis">
       Result types
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Result types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#word-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Word boxes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#json-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      JSON output
     </span>
   </a>
   
@@ -1636,18 +1719,20 @@
 
 
 <h1 id="api-reference">API Reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
-<p>Six headers. Most integrations only ever include the first one.</p>
+<p>Seven headers. Most integrations only ever include the first one.</p>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/engine.hpp&gt;</span><span class="c1">       // Engine, EngineConfig — start here</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/detector.hpp&gt;</span><span class="c1">     // Detector — text region detection</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/classifier.hpp&gt;</span><span class="c1">   // Classifier — orientation (0°/180°)</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/recognizer.hpp&gt;</span><span class="c1">   // Recognizer — CRNN text recognition</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/logging.hpp&gt;</span><span class="c1">      // optional log callback (default: silent)</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/model_downloader.hpp&gt;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/visualize.hpp&gt;</span><span class="c1">    // drawResult — outline boxes on a copy</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/logging.hpp&gt;</span><span class="c1">      // optional log callback (default: silent)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/model_downloader.hpp&gt;</span>
 </span></code></pre></div>
-<p>On this page: the <code>Engine</code> facade and its config, the result types, and the
-behavioural guarantees you need to know before you wire this into a service.
-The stage-level classes are covered in
-<a href="custom-pipeline/">Building a custom pipeline</a>.</p>
+<p>On this page: the <code>Engine</code> facade and its config, the three ways to feed it an
+image, the result types, the JSON schema, and the behavioural guarantees you
+need to know before you wire this into a service. The stage-level classes are
+covered in <a href="custom-pipeline/">Building a custom pipeline</a>; the debug overlay
+in <a href="visualize/">Visualization</a>.</p>
 <h3 id="arboocrengine"><code>arbo::ocr::Engine</code><a class="headerlink" href="#arboocrengine" title="Permanent link">&para;</a></h3>
 <p>The facade. Construct once with an <code>EngineConfig</code>, call <code>recognize()</code> per
 image.</p>
@@ -1666,30 +1751,86 @@ image.</p>
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">useClahe</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">     </span><span class="c1">// CLAHE contrast boost before detection (faded/low-contrast docs)</span>
 </span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">splitOvermerged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// ink-gap split of wide fused det boxes (opt-in)</span>
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="kt">float</span><span class="w">       </span><span class="n">minimumConfidence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">;</span><span class="w"> </span><span class="c1">// drop low-conf lines (0 = keep all)</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">trtCacheDir</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models/trt_engines&quot;</span><span class="p">;</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">modelsDir</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">;</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">detModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_det.onnx</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">clsModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_cls.onnx</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">recModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_rec_modelType.onnx</span>
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">dictPath</span><span class="p">;</span><span class="w">       </span><span class="c1">// empty = modelsDir/ocrVersion_rec_modelType_dict.txt</span>
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="p">};</span>
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="k">class</span><span class="w"> </span><span class="nc">Engine</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="k">public</span><span class="o">:</span>
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Engine</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EngineConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">config</span><span class="p">);</span>
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">backend</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">                       </span><span class="c1">// &quot;tensorrt&quot; | &quot;cuda&quot; | &quot;cpu&quot;</span>
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognize</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imagePath</span><span class="p">);</span>
-</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognize</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="w"> </span><span class="n">image</span><span class="p">);</span><span class="w">    </span><span class="c1">// in-memory (no disk I/O)</span>
-</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imagePath</span><span class="p">);</span>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="w"> </span><span class="n">image</span><span class="p">);</span>
-</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="p">};</span>
-</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>
-</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="n">ModelPaths</span><span class="w"> </span><span class="nf">resolveModelPaths</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EngineConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cfg</span><span class="p">);</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">returnWordBoxes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">  </span><span class="c1">// per-word polygons in LinePrediction::words</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">trtCacheDir</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models/trt_engines&quot;</span><span class="p">;</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">modelsDir</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">;</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">detModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_det.onnx</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">clsModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_cls.onnx</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">recModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_rec_modelType.onnx</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">dictPath</span><span class="p">;</span><span class="w">       </span><span class="c1">// empty = modelsDir/ocrVersion_rec_modelType_dict.txt</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="p">};</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="k">class</span><span class="w"> </span><span class="nc">Engine</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="k">public</span><span class="o">:</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Engine</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EngineConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">config</span><span class="p">);</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">backend</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">                       </span><span class="c1">// &quot;tensorrt&quot; | &quot;cuda&quot; | &quot;cpu&quot;</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognize</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imagePath</span><span class="p">);</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognize</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="w"> </span><span class="n">image</span><span class="p">);</span><span class="w">    </span><span class="c1">// in-memory (no disk I/O)</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognizeEncoded</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">  </span><span class="c1">// PNG/JPEG bytes</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imagePath</span><span class="p">);</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="w"> </span><span class="n">image</span><span class="p">);</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeEncodedAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="p">};</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="n">ModelPaths</span><span class="w"> </span><span class="nf">resolveModelPaths</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EngineConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cfg</span><span class="p">);</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="w"> </span><span class="nf">decodeImageBytes</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
 </span></code></pre></div>
 <p><code>backend()</code> reports what actually got selected — <code>"tensorrt"</code>, <code>"cuda"</code> or
 <code>"cpu"</code> — not what you asked for. Log it at startup; a config that requested
 TensorRT but silently fell back to CPU is the single most common cause of
 "why is this 10× slower than the benchmark".</p>
+<h3 id="three-ways-in-path-cvmat-encoded-bytes">Three ways in: path, <code>cv::Mat</code>, encoded bytes<a class="headerlink" href="#three-ways-in-path-cvmat-encoded-bytes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Call</th>
+<th>Use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>File path</td>
+<td><code>recognize(const std::string&amp;)</code></td>
+<td>The image is already on disk and you want <code>page.image</code> populated with the filename.</td>
+</tr>
+<tr>
+<td>Decoded pixels</td>
+<td><code>recognize(const cv::Mat&amp;)</code></td>
+<td>You already hold a BGR frame — camera capture, a page you rasterized yourself, output of your own preprocessing.</td>
+</tr>
+<tr>
+<td>Encoded bytes</td>
+<td><code>recognizeEncoded(const uint8_t*, size_t)</code></td>
+<td>You hold a still-encoded PNG/JPEG: an HTTP multipart upload, a socket read, a blob from object storage, an FFI buffer.</td>
+</tr>
+</tbody>
+</table>
+<p><code>recognizeEncoded()</code> exists so web and API pipelines stop writing a temp file
+per request purely to hand the library bytes they already have in memory. That
+temp file is not free — it is a syscall pair, a disk write, a cleanup path, and
+a race condition per request under concurrency.</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// std::vector&lt;uint8_t&gt;, std::string, std::span, or a raw FFI buffer — all bind</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">// to pointer + size with no copy at the boundary.</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">upload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">readRequestBody</span><span class="p">();</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">auto</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine</span><span class="p">.</span><span class="n">recognizeEncoded</span><span class="p">(</span><span class="n">upload</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">upload</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></code></pre></div>
+<p>It is named <code>recognizeEncoded</code> rather than a third <code>recognize()</code> overload
+deliberately: a bytes overload sitting next to <code>recognize(const cv::Mat&amp;)</code>
+reads as "raw pixels" to everyone who skims the call site, and the two mean
+very different things.</p>
+<p><code>decodeImageBytes()</code> is the same decode step exposed as a free function, for
+when you want the <code>cv::Mat</code> for your own reasons (thumbnailing, dimension
+checks, your own preprocessing) before handing it to <code>recognize()</code>. It is a
+free function rather than an <code>Engine</code> member so the contract is testable
+without ONNX files on disk.</p>
+<div class="admonition note">
+<p class="admonition-title"><code>page.image</code> is empty for byte and <code>cv::Mat</code> input</p>
+<p>A byte buffer has no filename, so <code>PagePrediction::image</code> is left empty and
+the JSON emits <code>"image":""</code>. Same for the <code>cv::Mat</code> overload. If you need
+to correlate results with a request or document ID, carry it yourself —
+the library will not invent one.</p>
+</div>
 <h2 id="behaviour-you-must-know">Behaviour you must know<a class="headerlink" href="#behaviour-you-must-know" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title"><code>recognize()</code> never throws</p>
@@ -1698,6 +1839,13 @@ empty-lines result with <code>elapsedMs</code> still set. There is no exception 
 catch and no error code to read — check <code>page.lines.empty()</code> for that
 case. An empty page is indistinguishable from a genuinely blank image,
 which is deliberate: the caller decides what "no text" means.</p>
+<p><code>recognizeEncoded()</code> holds the same contract against hostile input: a null
+pointer, a zero size, a buffer larger than <code>INT_MAX</code>, and undecodable
+garbage all degrade to the same empty-lines page. <code>decodeImageBytes()</code>
+returns an empty <code>cv::Mat</code> for those four cases. This is load-bearing, not
+defensive noise — <code>cv::imdecode</code> asserts (and throws) on an empty buffer
+rather than returning empty, so an unguarded pass-through would crash on
+an empty upload.</p>
 </div>
 <div class="admonition danger">
 <p class="admonition-title">Async variants are not safe for concurrent use on the same <code>Engine</code></p>
@@ -1705,26 +1853,196 @@ which is deliberate: the caller decides what "no text" means.</p>
 <code>recognizeAsync()</code> calls at the same <code>Engine</code> and waiting on both futures
 is undefined behaviour, not a slow path. Pool <code>Engine</code> instances if you
 need parallelism — each one holds its own session state.</p>
+<p>Buffer lifetime is not part of that hazard: <code>recognizeEncodedAsync()</code>
+<strong>copies</strong> the byte buffer before launching (as the <code>cv::Mat</code> overload
+clones the image), so you may free or reuse your buffer the moment the call
+returns. You do not have to keep the upload alive until the future
+resolves.</p>
 </div>
 <h2 id="result-types">Result types<a class="headerlink" href="#result-types" title="Permanent link">&para;</a></h2>
-<div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">LinePrediction</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Polygon</span><span class="w"> </span><span class="n">polygon</span><span class="p">;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">text</span><span class="p">;</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">score</span><span class="p">;</span><span class="w"> </span><span class="p">};</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">struct</span><span class="w"> </span><span class="nc">PagePrediction</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">image</span><span class="p">;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LinePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="p">;</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">elapsedMs</span><span class="p">;</span><span class="w"> </span><span class="p">};</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">toJson</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PagePrediction</span><span class="o">&amp;</span><span class="w"> </span><span class="n">page</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">pretty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">toJson</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">LinePrediction</span><span class="o">&amp;</span><span class="w"> </span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">pretty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Point2f</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="p">};</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">using</span><span class="w"> </span><span class="n">Polygon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point2f</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">struct</span><span class="w"> </span><span class="nc">TokenSpan</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">end</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">};</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">struct</span><span class="w"> </span><span class="nc">WordBox</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="n">Polygon</span><span class="w"> </span><span class="n">polygon</span><span class="p">;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">text</span><span class="p">;</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span><span class="w">   </span><span class="c1">// mean CTC confidence over this word&#39;s characters</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="p">};</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="k">struct</span><span class="w"> </span><span class="nc">LinePrediction</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="n">Polygon</span><span class="w"> </span><span class="n">polygon</span><span class="p">;</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">text</span><span class="p">;</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span><span class="w">      </span><span class="c1">// mean CTC character confidence (0 if no chars)</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">detScore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span><span class="w">   </span><span class="c1">// detector box score (0 if unknown)</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">WordBox</span><span class="o">&gt;</span><span class="w"> </span><span class="n">words</span><span class="p">;</span><span class="w">  </span><span class="c1">// empty unless EngineConfig::returnWordBoxes</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="p">};</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="k">struct</span><span class="w"> </span><span class="nc">PagePrediction</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">image</span><span class="p">;</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LinePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="p">;</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">elapsedMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="p">};</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">toJson</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PagePrediction</span><span class="o">&amp;</span><span class="w"> </span><span class="n">page</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">pretty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">toJson</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PagePrediction</span><span class="o">&amp;</span><span class="w"> </span><span class="n">page</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">backend</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">pretty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">toJson</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">LinePrediction</span><span class="o">&amp;</span><span class="w"> </span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">pretty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title"><code>score</code> changed meaning — read this if you are upgrading</p>
 <p><code>LinePrediction.score</code> is now the <strong>recognizer's mean CTC confidence</strong>. A
-separate <code>detScore</code> holds the detector box score (<code>det_score</code> in JSON and
-the Python binding). If your code treated <code>score</code> as detector confidence,
-switch to <code>detScore</code> / <code>det_score</code>. See
+separate <code>detScore</code> holds the detector box score (<code>detScore</code> in JSON,
+<code>det_score</code> in the Python binding). If your code treated <code>score</code> as
+detector confidence, switch to <code>detScore</code> / <code>det_score</code>. See
 <a href="../models/accuracy-defaults/">Accuracy defaults</a> for the full list of
 breaking changes in that cycle.</p>
 </div>
 <p><code>page.lines</code> is sorted top→bottom, left→right (centroid y then x) — <strong>not</strong>
 raw detector order. Anything that matched boxes by index against an old dump
 must use polygon geometry instead.</p>
+<p><code>Polygon</code> is a <code>std::vector&lt;Point2f&gt;</code> in <strong>source-image</strong> coordinates, using
+arboOCR's own <code>Point2f</code> rather than OpenCV's so callers do not need OpenCV
+types at the API boundary.</p>
+<h3 id="word-boxes">Word boxes<a class="headerlink" href="#word-boxes" title="Permanent link">&para;</a></h3>
+<p>Set <code>EngineConfig::returnWordBoxes = true</code> and every <code>LinePrediction</code> also
+carries <code>words</code>: one <code>WordBox</code> per word for space-delimited scripts, one per
+character for CJK, which has no space to split on. This mirrors RapidOCR's
+<code>return_word_box</code> behaviour.</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">EngineConfig</span><span class="w"> </span><span class="n">cfg</span><span class="p">;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">cfg</span><span class="p">.</span><span class="n">returnWordBoxes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">Engine</span><span class="w"> </span><span class="nf">engine</span><span class="p">(</span><span class="n">cfg</span><span class="p">);</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">engine</span><span class="p">.</span><span class="n">recognize</span><span class="p">(</span><span class="s">&quot;receipt.jpg&quot;</span><span class="p">).</span><span class="n">lines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="n">words</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="c1">// w.polygon — source-image coordinates</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">        </span><span class="c1">// w.text, w.score</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>It is off by default for a reason worth stating: the <code>TokenSpan</code> values it is
+built from are nearly free to compute, but <em>carrying</em> a polygon for every word
+of every line of every page is not, and most callers only want line-level
+output.</p>
+<p><code>TokenSpan</code> is the underlying primitive — the horizontal extent of one CTC
+token as fractions of the recognizer crop's <em>content</em> width, so batch padding
+is already divided out. <code>begin</code>/<code>end</code> are in <code>[0,1]</code> with <code>begin &lt;= end</code>. You
+only meet it directly on <code>RawTextLine</code> when driving the
+<a href="custom-pipeline/">recognizer stage yourself</a>; <code>words</code> is the resolved,
+source-image-coordinate form.</p>
+<div class="admonition warning">
+<p class="admonition-title">Word polygons are approximate — do not crop glyphs from them</p>
+<p>The polygons are derived from <strong>CTC timestep alignment</strong>, which is a
+by-product of recognition, not a supervised output. CTC peaks partway
+through a glyph rather than at its edges, so boxes run roughly <strong>half a
+character wide of true glyph extents</strong> — measured against synthetic text,
+<strong>consistently lagging right</strong>.</p>
+<p>That is good enough for highlighting, search hit-marking, and reading-order
+reconstruction. It is <strong>not</strong> good enough to crop a glyph out of the source
+image, feed a downstream classifier, or drive layout analysis that assumes
+tight bounds. Widening each span to meet its neighbours would recover the
+extents, but picking that constant needs labelled data arboOCR does not
+have — so the raw alignment is reported honestly instead of being fudged.</p>
+</div>
+<h2 id="json-output">JSON output<a class="headerlink" href="#json-output" title="Permanent link">&para;</a></h2>
+<p><code>toJson()</code> never throws. The <code>backend</code> overload exists because
+<code>Engine::backend()</code> is not part of <code>PagePrediction</code>, and callers who want it in
+the payload (the CLI's <code>--json</code> does) should not have to splice it in
+themselves. Floats are written with 6 significant digits, so <code>0.9f</code> serializes
+as <code>0.9</code>.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;backend&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;receipt.jpg&quot;</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nt">&quot;elapsedMs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">184.2</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="nt">&quot;lines&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TOTAL 12.50&quot;</span><span class="p">,</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">      </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.982</span><span class="p">,</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="nt">&quot;detScore&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.914</span><span class="p">,</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="nt">&quot;polygon&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">118</span><span class="p">},</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">233</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">118</span><span class="p">},</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">233</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">146</span><span class="p">},</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">146</span><span class="p">}</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">      </span><span class="p">],</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">      </span><span class="nt">&quot;words&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TOTAL&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.991</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;polygon&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">118</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">130</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">118</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">130</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">146</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">146</span><span class="p">}]},</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;12.50&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.973</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;polygon&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">140</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">118</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">233</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">118</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">233</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">146</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">140</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">146</span><span class="p">}]}</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">      </span><span class="p">]</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend</code></td>
+<td><code>string</code></td>
+<td>Only in the <code>backend</code> overload. <code>"tensorrt"</code> | <code>"cuda"</code> | <code>"cpu"</code>.</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td><code>string</code></td>
+<td>The source path — <strong><code>""</code></strong> for <code>cv::Mat</code> and <code>recognizeEncoded()</code> input.</td>
+</tr>
+<tr>
+<td><code>elapsedMs</code></td>
+<td><code>number</code></td>
+<td>Wall-clock time for the pass. Set even on a failed/empty page.</td>
+</tr>
+<tr>
+<td><code>lines</code></td>
+<td><code>array</code></td>
+<td>Sorted top→bottom, left→right. Empty on any failure.</td>
+</tr>
+<tr>
+<td><code>lines[].text</code></td>
+<td><code>string</code></td>
+<td>Decoded text, JSON-escaped (control chars as <code>\uXXXX</code>).</td>
+</tr>
+<tr>
+<td><code>lines[].score</code></td>
+<td><code>number</code></td>
+<td>Mean CTC character confidence.</td>
+</tr>
+<tr>
+<td><code>lines[].detScore</code></td>
+<td><code>number</code></td>
+<td>Detector box score. Note the camelCase — the Python binding calls it <code>det_score</code>.</td>
+</tr>
+<tr>
+<td><code>lines[].polygon</code></td>
+<td><code>array</code></td>
+<td><code>[{"x": …, "y": …}, …]</code> in source-image coordinates.</td>
+</tr>
+<tr>
+<td><code>lines[].words</code></td>
+<td><code>array</code></td>
+<td><strong>Present only when non-empty.</strong> <code>[{"text": …, "score": …, "polygon": […]}, …]</code>.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title"><code>words</code> is emitted only when non-empty</p>
+<p>A line with no word boxes omits the key entirely rather than writing
+<code>"words": []</code>. The JSON shape is therefore byte-identical to the previous
+release for every caller who never sets <code>returnWordBoxes</code> — existing
+parsers and wrappers keep working untouched. If you consume <code>words</code>, treat
+a missing key and an empty array as the same thing.</p>
+<p>In <code>pretty</code> mode, line polygons are expanded one point per line but each
+<strong>word</strong> polygon stays on a single line. Word boxes are numerous and a
+fully expanded dump is unreadable; this keeps the pretty output skimmable.</p>
+</div>
 <h2 id="engineconfig-field-reference"><code>EngineConfig</code> field reference<a class="headerlink" href="#engineconfig-field-reference" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1818,7 +2136,13 @@ must use polygon geometry instead.</p>
 <td><code>minimumConfidence</code></td>
 <td><code>float</code></td>
 <td><code>0.5f</code></td>
-<td>Drops low-confidence lines; <code>0</code> keeps every box. See <a href="../models/accuracy-defaults/">Accuracy defaults</a>.</td>
+<td>Drops low-confidence lines; <code>0</code> keeps every box. Also the green/red threshold in <a href="visualize/"><code>drawResult</code></a>. See <a href="../models/accuracy-defaults/">Accuracy defaults</a>.</td>
+</tr>
+<tr>
+<td><code>returnWordBoxes</code></td>
+<td><code>bool</code></td>
+<td><code>false</code></td>
+<td>Populates <code>LinePrediction::words</code> with a polygon per word (per character for CJK). Off by default — the spans are cheap, carrying them for every line of every page is not. Read the <a href="#word-boxes">accuracy caveat</a> before you rely on the geometry.</td>
 </tr>
 <tr>
 <td><code>trtCacheDir</code></td>
@@ -1872,7 +2196,8 @@ arbitrary, the header explains why it is not.</p>
 <ul>
 <li><a href="logging/">Logging</a> — install a callback; the library is silent by default.</li>
 <li><a href="custom-pipeline/">Building a custom pipeline</a> — <code>Detector</code>, <code>Classifier</code>, <code>Recognizer</code> directly.</li>
-<li><a href="downloader/">Model downloader</a> — <code>downloadFile</code>, <code>downloadOcrModels</code>.</li>
+<li><a href="visualize/">Visualization</a> — <code>drawResult</code>, the box-overlay debug helper.</li>
+<li><a href="downloader/">Model downloader</a> — <code>downloadFile</code>, <code>downloadOcrModels</code>, <code>ocrModelFileNames</code>.</li>
 </ul>
 
 
@@ -1896,7 +2221,7 @@ arbitrary, the header explains why it is not.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
   </span>
 
     
@@ -1983,13 +2308,13 @@ arbitrary, the header explains why it is not.</p>
         
         
           
-          <a href="logging/" class="md-footer__link md-footer__link--next" aria-label="Next: Logging">
+          <a href="visualize/" class="md-footer__link md-footer__link--next" aria-label="Next: Visualization">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Logging
+                Visualization
               </div>
             </div>
             <div class="md-footer__button md-icon">

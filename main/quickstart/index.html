@@ -18,7 +18,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../faq/">
+        <link rel="next" href="../cli/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
@@ -494,6 +494,8 @@
       
         
       
+        
+      
     
     
     
@@ -614,6 +616,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="C++">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recognizing-bytes-you-already-hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recognizing bytes you already hold
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -638,6 +655,29 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Command line
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -947,6 +987,8 @@
       
         
       
+        
+      
     
     
     
@@ -990,6 +1032,29 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/visualize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Visualization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -1652,6 +1717,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="C++">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recognizing-bytes-you-already-hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recognizing bytes you already hold
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1719,6 +1799,9 @@ if you grab a <a href="https://github.com/wafik/ArboOCR/releases">release</a>:</
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  [1] &quot;PT. Angin Sepoi&quot; (score=0.862601)
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  ...
 </span></code></pre></div>
+<p>Add <code>--json</code> for machine-readable output — that is the same invocation every
+language wrapper makes. Every flag, default, and exit code is on
+<a href="../cli/">Command line</a>.</p>
 <h2 id="c">C++<a class="headerlink" href="#c" title="Permanent link">&para;</a></h2>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/engine.hpp&gt;</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
@@ -1755,30 +1838,60 @@ if you grab a <a href="https://github.com/wafik/ArboOCR/releases">release</a>:</
 the detector emitted them. If you're migrating code that matched boxes by
 index, see <a href="../models/accuracy-defaults/">Accuracy defaults</a>.</p>
 </div>
-<p>Next: <a href="../build/">build the library</a>, or read the
-<a href="../api/">API reference</a>.</p>
+<h3 id="recognizing-bytes-you-already-hold">Recognizing bytes you already hold<a class="headerlink" href="#recognizing-bytes-you-already-hold" title="Permanent link">&para;</a></h3>
+<p>A web handler receiving a multipart upload, or a worker pulling a JPEG off a
+message queue, already has the encoded image in memory. Spilling it to a temp
+file per request just to hand it to <code>recognize()</code> is a syscall round-trip for
+nothing. <code>recognizeEncoded</code> takes the bytes directly and decodes them in
+process:</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognizeEncoded</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeEncodedAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</span></code></pre></div>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// `body` is whatever your framework handed you — std::string, std::vector&lt;char&gt;,</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">// a std::span, or a raw FFI buffer. Pointer + size binds to all of them with</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">// no copy at the boundary.</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">auto</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine</span><span class="p">.</span><span class="n">recognizeEncoded</span><span class="p">(</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">body</span><span class="p">.</span><span class="n">data</span><span class="p">()),</span><span class="w"> </span><span class="n">body</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></code></pre></div>
+<p>Two things to know. It is <strong>never</strong> throwing, exactly like <code>recognize()</code>: null
+<code>data</code>, a zero <code>size</code>, and garbage bytes all degrade to a <code>PagePrediction</code> with
+empty <code>lines</code> and <code>elapsedMs</code> still set — so check <code>page.lines.empty()</code>, not a
+<code>try</code>/<code>catch</code>. And <code>page.image</code> comes back empty, because a byte buffer has no
+filename.</p>
+<div class="admonition tip">
+<p class="admonition-title">The async overload copies your buffer</p>
+<p><code>recognizeEncodedAsync</code> copies the bytes before returning the future, so you
+may free or reuse the caller's buffer immediately — no lifetime coupling to
+a background thread. As with every async overload, don't run two on the same
+<code>Engine</code>: ONNXRuntime sessions aren't concurrent. One outstanding call, or
+one <code>Engine</code> per worker.</p>
+</div>
+<p>Full reference for both overloads, and the <code>cv::Mat</code> one for already-decoded
+frames, is in the <a href="../api/">API reference</a>.</p>
+<p>Next: <a href="../build/">build the library</a>, or drive the
+<a href="../cli/">command line</a> if you'd rather spawn a binary than link one.</p>
 <h2 id="python-bindings-optional">Python bindings (optional)<a class="headerlink" href="#python-bindings-optional" title="Permanent link">&para;</a></h2>
 <p>Engine facade via pybind11 — same native backends as C++. Off by default
 (<code>ARBOOCR_BUILD_PYTHON=OFF</code>); enable when you have Python 3 development headers
 and want <code>import arboocr</code>.</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">cmake</span> <span class="p">-</span><span class="n">-preset</span> <span class="n">windows-x64</span> <span class="n">-DARBOOCR_BUILD_PYTHON</span><span class="p">=</span><span class="n">ON</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">cmake</span> <span class="p">-</span><span class="n">-build</span> <span class="n">build</span><span class="p">/</span><span class="n">windows-x64</span> <span class="p">-</span><span class="n">-config</span> <span class="n">Release</span> <span class="p">-</span><span class="n">-target</span> <span class="n">_arboocr</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">$env:PYTHONPATH</span> <span class="p">=</span> <span class="s2">&quot;python&quot;</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c"># Windows: DLL path is auto-probed for build/windows-x64/vcpkg_installed/.../bin;</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c"># override with $env:ARBOOCR_DLL_DIR = &quot;...\vcpkg_installed\x64-windows\bin&quot; if needed.</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from arboocr import Engine, EngineConfig; print(EngineConfig().model_type)&quot;</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">cmake</span> <span class="p">-</span><span class="n">-preset</span> <span class="n">windows-x64</span> <span class="n">-DARBOOCR_BUILD_PYTHON</span><span class="p">=</span><span class="n">ON</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">cmake</span> <span class="p">-</span><span class="n">-build</span> <span class="n">build</span><span class="p">/</span><span class="n">windows-x64</span> <span class="p">-</span><span class="n">-config</span> <span class="n">Release</span> <span class="p">-</span><span class="n">-target</span> <span class="n">_arboocr</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nv">$env:PYTHONPATH</span> <span class="p">=</span> <span class="s2">&quot;python&quot;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c"># Windows: DLL path is auto-probed for build/windows-x64/vcpkg_installed/.../bin;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c"># override with $env:ARBOOCR_DLL_DIR = &quot;...\vcpkg_installed\x64-windows\bin&quot; if needed.</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from arboocr import Engine, EngineConfig; print(EngineConfig().model_type)&quot;</span>
 </span></code></pre></div>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">arboocr</span><span class="w"> </span><span class="kn">import</span> <span class="n">Engine</span><span class="p">,</span> <span class="n">EngineConfig</span><span class="p">,</span> <span class="n">to_json</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">EngineConfig</span><span class="p">()</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">cfg</span><span class="o">.</span><span class="n">models_dir</span> <span class="o">=</span> <span class="s2">&quot;models&quot;</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">cfg</span><span class="o">.</span><span class="n">use_tensorrt</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">Engine</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">page</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="s2">&quot;page.jpg&quot;</span><span class="p">)</span>          <span class="c1"># path</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># page = engine.recognize(bgr_numpy_hxwx3)  # uint8 BGR only</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="p">[(</span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">polygon</span><span class="p">])</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">pretty</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">arboocr</span><span class="w"> </span><span class="kn">import</span> <span class="n">Engine</span><span class="p">,</span> <span class="n">EngineConfig</span><span class="p">,</span> <span class="n">to_json</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">EngineConfig</span><span class="p">()</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">cfg</span><span class="o">.</span><span class="n">models_dir</span> <span class="o">=</span> <span class="s2">&quot;models&quot;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">cfg</span><span class="o">.</span><span class="n">use_tensorrt</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">Engine</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">page</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="s2">&quot;page.jpg&quot;</span><span class="p">)</span>          <span class="c1"># path</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># page = engine.recognize(bgr_numpy_hxwx3)  # uint8 BGR only</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="p">[(</span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">polygon</span><span class="p">])</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">pretty</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </span></code></pre></div>
 <p>NumPy images must be <strong>HxWx3 uint8 BGR</strong> (OpenCV layout). No async, no low-level
 <code>Detector</code>/<code>Recognizer</code> bindings, and no published wheels in v1 — build the
@@ -1819,7 +1932,7 @@ buildable programs you can run immediately, not just read.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
   </span>
 
     
@@ -1906,13 +2019,13 @@ buildable programs you can run immediately, not just read.</p>
         
         
           
-          <a href="../faq/" class="md-footer__link md-footer__link--next" aria-label="Next: FAQ">
+          <a href="../cli/" class="md-footer__link md-footer__link--next" aria-label="Next: Command line">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                FAQ
+                Command line
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -492,6 +492,8 @@
       
         
       
+        
+      
     
     
     
@@ -550,6 +552,29 @@
   
   <span class="md-ellipsis">
     Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Command line
     
   </span>
   
@@ -904,6 +929,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#changes-since-the-accuracy-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes since the accuracy cycle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes since the accuracy cycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detlimitsidelen-is-now-a-ceiling-not-a-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      detLimitSideLen is now a ceiling, not a target
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-order-tolerance-is-now-adaptive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading-order tolerance is now adaptive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-footprint-the-onnxruntime-cpu-arena-is-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory footprint: the ONNXRuntime CPU arena is off
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#typical-production-cpu-defaults" class="md-nav__link">
     <span class="md-ellipsis">
       Typical production CPU defaults
@@ -939,6 +1006,8 @@
       
         
           
+        
+      
         
       
         
@@ -990,6 +1059,29 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/visualize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Visualization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -1664,6 +1756,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#changes-since-the-accuracy-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes since the accuracy cycle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes since the accuracy cycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detlimitsidelen-is-now-a-ceiling-not-a-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      detLimitSideLen is now a ceiling, not a target
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-order-tolerance-is-now-adaptive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading-order tolerance is now adaptive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-footprint-the-onnxruntime-cpu-arena-is-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory footprint: the ONNXRuntime CPU arena is off
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#typical-production-cpu-defaults" class="md-nav__link">
     <span class="md-ellipsis">
       Typical production CPU defaults
@@ -1712,6 +1846,9 @@ char similarity for cold arbo <code>small</code> — within ~0.2 pts of a TS Pad
 port on the same images.</p>
 <p>If you pin config or re-implement the pipeline yourself, note <strong>every</strong> item
 below. Three of them change behaviour your code may already depend on.</p>
+<p>Two further behaviour changes landed <em>after</em> that cycle — detector input
+scaling and reading-order tolerance. See
+<a href="#changes-since-the-accuracy-cycle">Changes since the accuracy cycle</a>.</p>
 </div>
 <h2 id="what-changed">What changed<a class="headerlink" href="#what-changed" title="Permanent link">&para;</a></h2>
 <table>
@@ -1847,6 +1984,77 @@ these can pass your build and fail your data.</p>
    unless the failure mode matches (faded scans / 180° / confirmed over-merge).
    See <a href="../clahe/">Low-contrast documents (CLAHE)</a>.</li>
 </ol>
+<h2 id="changes-since-the-accuracy-cycle">Changes since the accuracy cycle<a class="headerlink" href="#changes-since-the-accuracy-cycle" title="Permanent link">&para;</a></h2>
+<p>These landed after the cycle above, from a gap analysis against RapidOCR. No
+config default moved, but <strong>both change output</strong>, so they matter if you pin
+config or diff results against a stored baseline.</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Old behaviour</th>
+<th>New behaviour</th>
+<th>Affects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detector input scaling</td>
+<td><code>detLimitSideLen</code> scaled the long side <strong>both ways</strong></td>
+<td>Scale factor clamped to <code>&lt;= 1.0</code> — downscale only</td>
+<td>Small images: faster, detection may differ</td>
+</tr>
+<tr>
+<td>Reading-order tolerance</td>
+<td>Hard-coded <strong>12px</strong> y-tolerance</td>
+<td>Derived from the <strong>median polygon height</strong> of the lines being sorted</td>
+<td>High-DPI / unusually-scaled pages: line order may differ</td>
+</tr>
+</tbody>
+</table>
+<h3 id="detlimitsidelen-is-now-a-ceiling-not-a-target"><code>detLimitSideLen</code> is now a ceiling, not a target<a class="headerlink" href="#detlimitsidelen-is-now-a-ceiling-not-a-target" title="Permanent link">&para;</a></h3>
+<p><code>getScaleParam</code> used to compute <code>ratio = detLimitSideLen / longSide</code> with no
+upper guard, so an image <em>smaller</em> than the limit was <strong>upscaled</strong> to it. At the
+default <code>detLimitSideLen = 960</code>, a 200px thumbnail became a 960px detector input
+and paid full detection cost for invented pixels.</p>
+<p>The ratio is now clamped to <code>&lt;= 1.0</code>. <code>detLimitSideLen</code> is a maximum and nothing
+else — RapidOCR calls this <code>limit_type: max</code>, and this is now the same
+behaviour. The multiple-of-32 flooring of both dimensions still applies exactly
+as before.</p>
+<div class="admonition warning">
+<p class="admonition-title">Small images now run faster, and their detection results may differ</p>
+<p>This is not a pure speed win. The detector now sees the image at its
+original resolution instead of an upscaled one, so boxes on sub-<code>960px</code>
+inputs can come out differently — usually fewer spurious boxes, but if you
+have a stored baseline for small images, re-generate it. Images already at
+or above <code>detLimitSideLen</code> are unaffected: they were being downscaled
+before and are downscaled identically now.</p>
+</div>
+<h3 id="reading-order-tolerance-is-now-adaptive">Reading-order tolerance is now adaptive<a class="headerlink" href="#reading-order-tolerance-is-now-adaptive" title="Permanent link">&para;</a></h3>
+<p><code>sortLinesReadingOrder</code> groups lines into visual rows before sorting left to
+right within each row. That grouping used a fixed 12px y-tolerance, which is
+resolution-dependent: 12px is about half a line height at 100–150 DPI, but on a
+300 or 600 DPI scan it is a fraction of one — so rows fragment into single-cell
+rows and a two-column row could be emitted in the wrong order.</p>
+<p>The tolerance is now derived from the <strong>median polygon height</strong> across the lines
+being sorted (roughly half a line height), with a small floor so degenerate
+input — one line, or boxes too few to estimate from — still behaves.</p>
+<div class="admonition warning">
+<p class="admonition-title">Line order on high-DPI pages may differ, and is now scale-invariant</p>
+<p>Sorting is now independent of page scale: the same page rendered at 1x and
+at 4x produces the same line order. If you captured a <code>page.lines</code> ordering
+from a high-DPI or unusually-scaled document, re-check it — the old ordering
+on those pages was the buggy one.</p>
+</div>
+<h3 id="memory-footprint-the-onnxruntime-cpu-arena-is-off">Memory footprint: the ONNXRuntime CPU arena is off<a class="headerlink" href="#memory-footprint-the-onnxruntime-cpu-arena-is-off" title="Permanent link">&para;</a></h3>
+<p>Not an accuracy change, and it <strong>does not affect output</strong> — but anyone
+benchmarking will see it. All three sessions (det, cls, rec) now disable the
+ONNXRuntime CPU memory arena. The arena never returns memory to the OS;
+RapidOCR measured <strong>5695.5 MiB peak RSS with it on versus 82.1 MiB with it
+off</strong>, a 5618 MiB delta on a <em>single</em> inference, in exchange for roughly 13%
+inference latency. On a 4 GB Jetson that is the difference between running and
+being OOM-killed, so the memory is the better trade. Expect slightly higher
+per-inference latency and dramatically lower RSS than before.</p>
 <h2 id="typical-production-cpu-defaults">Typical production CPU defaults<a class="headerlink" href="#typical-production-cpu-defaults" title="Permanent link">&para;</a></h2>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// Typical production CPU defaults after the accuracy cycle (these are already</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">// the EngineConfig defaults — shown explicitly for upgrades):</span>
@@ -1889,7 +2097,7 @@ baseline line by line.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
   </span>
 
     
