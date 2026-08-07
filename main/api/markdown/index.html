@@ -12,13 +12,13 @@
         <meta name="author" content="ARBO-TEAM">
       
       
-        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/api/custom-pipeline/">
+        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/api/markdown/">
       
       
-        <link rel="prev" href="../logging/">
+        <link rel="prev" href="../visualize/">
       
       
-        <link rel="next" href="../downloader/">
+        <link rel="next" href="../logging/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
@@ -29,7 +29,7 @@
     
     
       
-        <title>Building a custom pipeline - arboOCR Docs</title>
+        <title>Markdown export - arboOCR Docs</title>
       
     
     
@@ -112,7 +112,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#building-a-custom-pipeline" class="md-skip">
+        <a href="#markdown-export" class="md-skip">
           Skip to content
         </a>
       
@@ -152,7 +152,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Building a custom pipeline
+              Markdown export
             
           </span>
         </div>
@@ -970,10 +970,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../markdown/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Markdown export
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -984,6 +1006,131 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#three-surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Three surfaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-it-infers" class="md-nav__link">
+    <span class="md-ellipsis">
+      What it infers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What it infers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-ways-a-keyvalue-row-is-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two ways a key/value row is found
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-lone-pair-is-not-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      A lone pair is not a table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-columns-out-always" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two columns out, always
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thresholds-are-fractions-of-the-median-line-height" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thresholds are fractions of the median line height
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-and-after" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before and after
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-it-escapes-and-what-it-deliberately-does-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      What it escapes, and what it deliberately does not
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-markdown-implies-word-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      --markdown implies word boxes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-it-does-not-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      What it does not do
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1016,32 +1163,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Building a custom pipeline
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../custom-pipeline/" class="md-nav__link">
         
   
   
@@ -1052,53 +1177,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#when-to-reach-for-this" class="md-nav__link">
-    <span class="md-ellipsis">
-      When to reach for this
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#read-the-headers-not-just-this-page" class="md-nav__link">
-    <span class="md-ellipsis">
-      Read the headers, not just this page
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      See also
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1703,18 +1781,96 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#when-to-reach-for-this" class="md-nav__link">
+  <a href="#three-surfaces" class="md-nav__link">
     <span class="md-ellipsis">
-      When to reach for this
+      Three surfaces
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#read-the-headers-not-just-this-page" class="md-nav__link">
+  <a href="#what-it-infers" class="md-nav__link">
     <span class="md-ellipsis">
-      Read the headers, not just this page
+      What it infers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What it infers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-ways-a-keyvalue-row-is-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two ways a key/value row is found
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-lone-pair-is-not-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      A lone pair is not a table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-columns-out-always" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two columns out, always
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thresholds-are-fractions-of-the-median-line-height" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thresholds are fractions of the median line height
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-and-after" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before and after
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-it-escapes-and-what-it-deliberately-does-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      What it escapes, and what it deliberately does not
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-markdown-implies-word-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      --markdown implies word boxes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-it-does-not-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      What it does not do
     </span>
   </a>
   
@@ -1745,7 +1901,7 @@
 
 
   
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/api/custom-pipeline.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/api/markdown.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
     </a>
@@ -1754,79 +1910,468 @@
     
       
     
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/api/custom-pipeline.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/api/markdown.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
     </a>
   
 
 
-<h1 id="building-a-custom-pipeline">Building a custom pipeline<a class="headerlink" href="#building-a-custom-pipeline" title="Permanent link">&para;</a></h1>
-<p>Need more control than <code>Engine</code> gives you? The three stages are public:</p>
-<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">Detector</span><span class="w"> </span><span class="n">detector</span><span class="p">;</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">detector</span><span class="p">.</span><span class="n">loadModel</span><span class="p">(</span><span class="s">&quot;models/PP-OCRv6_det.onnx&quot;</span><span class="p">,</span><span class="w"> </span><span class="cm">/*useCuda=*/</span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="cm">/*useTensorrt=*/</span><span class="nb">true</span><span class="p">);</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">auto</span><span class="w"> </span><span class="n">boxes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">detector</span><span class="p">.</span><span class="n">getTextBoxes</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="p">,</span><span class="w"> </span><span class="n">boxScoreThresh</span><span class="p">,</span><span class="w"> </span><span class="n">boxThresh</span><span class="p">,</span><span class="w"> </span><span class="n">unclipRatio</span><span class="p">);</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">Recognizer</span><span class="w"> </span><span class="n">recognizer</span><span class="p">;</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">recognizer</span><span class="p">.</span><span class="n">loadModel</span><span class="p">(</span><span class="s">&quot;models/PP-OCRv6_rec_medium.onnx&quot;</span><span class="p">);</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">recognizer</span><span class="p">.</span><span class="n">loadKeysFromModelMetadata</span><span class="p">();</span><span class="w"> </span><span class="c1">// or loadKeysFromFile(&quot;dict.txt&quot;)</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">auto</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">recognizer</span><span class="p">.</span><span class="n">getTextLines</span><span class="p">(</span><span class="n">croppedImages</span><span class="p">);</span><span class="w"> </span><span class="c1">// batched internally</span>
+<h1 id="markdown-export">Markdown export<a class="headerlink" href="#markdown-export" title="Permanent link">&para;</a></h1>
+<p>One function, for the moment when a flat list of lines is not what you wanted —
+you wanted the document.</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/markdown.hpp&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">toMarkdown</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PagePrediction</span><span class="o">&amp;</span><span class="w"> </span><span class="n">page</span><span class="p">);</span>
 </span></code></pre></div>
-<p><code>Classifier</code> (0°/180° orientation) is public too and slots between the two
-when you need it — the <code>Engine</code> only runs it when <code>useAngleCls</code> is true.</p>
-<h2 id="when-to-reach-for-this">When to reach for this<a class="headerlink" href="#when-to-reach-for-this" title="Permanent link">&para;</a></h2>
-<p>The <code>Engine</code> facade is the right default. It resolves model paths, runs
-detection → optional orientation → recognition, sorts lines into reading
-order, applies <code>minimumConfidence</code>, and never throws. Dropping to the stages
-means you own all of that.</p>
-<p>Do it when:</p>
-<ul>
-<li><strong>You need the intermediate artefacts.</strong> Boxes without text (layout
-  analysis, table structure, redaction), or crops you want to inspect, cache,
-  or feed somewhere else.</li>
-<li><strong>Detection and recognition run at different rates.</strong> Detect once on a
-  static form template, then recognize many filled copies against the same
-  box set.</li>
-<li><strong>You are injecting your own stage.</strong> Deskew, dewarp, per-region
-  binarization, or a custom crop policy between detection and recognition.</li>
-<li><strong>You need a different fan-out.</strong> One detector feeding a pool of
-  recognizers, or per-region models (a numeric-only recognizer on the amount
-  column, a general one elsewhere).</li>
-<li><strong>Recognition only.</strong> You already have boxes from another source and want
-  <code>getTextLines()</code> on your own crops.</li>
-</ul>
-<div class="admonition warning">
-<p class="admonition-title">You inherit the sharp edges</p>
-<p>Reading order, confidence filtering, and the empty-result-instead-of-throw
-behaviour all live in the <code>Engine</code>. At stage level, <code>page.lines</code>-style
-top→bottom / left→right sorting does not happen for free, and errors
-surface however the stage surfaces them. Re-read
-<a href="../../models/accuracy-defaults/">Accuracy defaults</a> before you
-re-implement the pipeline — those defaults are the difference between
-~84% and ~94% char similarity on the receipt smoke set.</p>
+<p>OCR gives you lines, not structure. Where <code>page.lines</code> breaks is an artifact of
+how wide the page was, not a fact about the text: one sentence wrapped over
+three lines arrives as three entries, a heading arrives as a line no different
+in shape from body text, and a receipt's <code>TOTAL</code> and <code>12.50</code> arrive either fused
+into one string with a gap in the middle or as two separate boxes sitting on the
+same row. <code>toMarkdown</code> reads the structure back out of the geometry that is
+already in the result — line heights, vertical gaps, left edges, vertical
+overlap, and the spacing between words — and emits markdown.</p>
+<p>It never throws, and an empty page yields an empty string. It expects
+<code>page.lines</code> in reading order, which
+<a href="../#arboocrengine"><code>Engine::recognize</code></a> already guarantees (centroid y,
+then x).</p>
+<h2 id="three-surfaces">Three surfaces<a class="headerlink" href="#three-surfaces" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">C++</label><label for="__tabbed_1_2">CLI</label><label for="__tabbed_1_3">Python</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/engine.hpp&gt;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;arboOCR/markdown.hpp&gt;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fstream&gt;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">EngineConfig</span><span class="w"> </span><span class="n">cfg</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">cfg</span><span class="p">.</span><span class="n">modelsDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">cfg</span><span class="p">.</span><span class="n">returnWordBoxes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w">   </span><span class="c1">// only needed for narrow-gutter `key | value` rows</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">Engine</span><span class="w"> </span><span class="nf">engine</span><span class="p">(</span><span class="n">cfg</span><span class="p">);</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">auto</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine</span><span class="p">.</span><span class="n">recognize</span><span class="p">(</span><span class="s">&quot;invoice.png&quot;</span><span class="p">);</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="w"> </span><span class="n">out</span><span class="p">(</span><span class="s">&quot;invoice.md&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">out</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">toMarkdown</span><span class="p">(</span><span class="n">page</span><span class="p">);</span>
+</span></code></pre></div>
 </div>
-<h2 id="read-the-headers-not-just-this-page">Read the headers, not just this page<a class="headerlink" href="#read-the-headers-not-just-this-page" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/wafik/ArboOCR/tree/main/include/arboOCR"><code>include/arboOCR/</code></a>
-carries full doc comments on each class. Three design decisions in particular
-are documented inline where the code lives, because they are the ones people
-otherwise "fix" and regress:</p>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>invoice.png<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--markdown<span class="w"> </span>invoice.md
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Backend: cpu
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Markdown: invoice.md
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Image: invoice.png
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Lines: 11 (339.338 ms)
+</span></code></pre></div>
+<p><code>--markdown &lt;path&gt;</code> composes with <code>--json</code> exactly the way <code>--draw</code> does —
+the file is written first, its confirmation and any failure go to stderr, so
+stdout stays a single parseable object:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>invoice.png<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--json<span class="w"> </span>--markdown<span class="w"> </span>invoice.md<span class="w"> </span>&gt;<span class="w"> </span>invoice.json
+</span></code></pre></div>
+<p>A write failure is a warning, not an error: recognition itself succeeded, so
+the exit code and the JSON on stdout are unaffected.</p>
+</div>
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">arboocr</span><span class="w"> </span><span class="kn">import</span> <span class="n">Engine</span><span class="p">,</span> <span class="n">EngineConfig</span><span class="p">,</span> <span class="n">to_markdown</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">EngineConfig</span><span class="p">()</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">cfg</span><span class="o">.</span><span class="n">models_dir</span> <span class="o">=</span> <span class="s2">&quot;models&quot;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">cfg</span><span class="o">.</span><span class="n">return_word_boxes</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">page</span> <span class="o">=</span> <span class="n">Engine</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="s2">&quot;invoice.png&quot;</span><span class="p">)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;invoice.md&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">page</span><span class="p">))</span>
+</span></code></pre></div>
+<p><code>to_markdown(page)</code> mirrors <code>to_json(page)</code>: one call, one string, no
+options.</p>
+</div>
+</div>
+</div>
+<h2 id="what-it-infers">What it infers<a class="headerlink" href="#what-it-infers" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>How it is detected</th>
+<th>What it emits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Paragraph</strong></td>
+<td>Consecutive text lines with a small vertical gap <em>and</em> a shared left edge belong to one block.</td>
+<td>The block's lines joined into a single paragraph with one space per seam — not a hard break — separated from the next block by a blank line.</td>
+</tr>
+<tr>
+<td><strong>Heading</strong></td>
+<td>A block of <strong>at most two</strong> text lines whose median height clears a multiple of the page's median line height. Two tiers.</td>
+<td><code># Heading</code> for the tallest tier, <code>## Heading</code> for the next. A block that is already a list or a key/value row is never promoted, however large its type.</td>
+</tr>
+<tr>
+<td><strong>List item</strong></td>
+<td>The text begins with <code>-</code>, <code>*</code>, <code>•</code> (U+2022) or <code>·</code> (U+00B7), or with a digit run or single letter followed by <code>.</code> or <code>)</code>. The marker must be followed by a space or end the line.</td>
+<td><code>- item</code> / <code>1. item</code>, one per line — list items are <strong>not</strong> merged into the surrounding paragraph. Every bullet glyph collapses to <code>-</code>, and <code>2)</code> is re-spelled <code>2.</code>, the form markdown counts from.</td>
+</tr>
+<tr>
+<td><strong>Key/value row</strong> <em>(word-level)</em></td>
+<td><strong>One</strong> detected line whose <code>words</code> show a single gap far wider than the line's own typical inter-word gap. Needs word boxes.</td>
+<td>A <code>\| key \| value \|</code> table row.</td>
+</tr>
+<tr>
+<td><strong>Key/value row</strong> <em>(line-level)</em></td>
+<td><strong>Two or more consecutive lines</strong> that overlap vertically by at least half a line height and are separated by a wide horizontal gutter. Needs no word boxes at all.</td>
+<td>The same <code>\| key \| value \|</code> row, from the same splitter and the same emitter.</td>
+</tr>
+<tr>
+<td><strong>Table</strong></td>
+<td>A run of two or more adjacent key/value rows, from either detector.</td>
+<td>One GFM table. A run of exactly one row does <strong>not</strong> become a table — see below.</td>
+</tr>
+<tr>
+<td><strong>Block break</strong></td>
+<td>A vertical gap above the paragraph threshold, or a change of left edge. Between two key/value rows the vertical bar is raised, because form rows are set with far more air than prose.</td>
+<td>A blank line, starting a new block.</td>
+</tr>
+</tbody>
+</table>
+<p>The marker rule is deliberately strict: <code>-5.00</code> on a receipt is a negative
+amount, not a bullet, and <code>1.5kg</code> is not item one.</p>
+<p>Lines whose <code>text</code> is empty are dropped before anything is measured, so a blank
+recognition cannot invent a vertical gap between the two real lines it sits
+between. A line with no usable polygon has no geometry to compare and stays with
+whatever it followed, rather than inventing a break by pretending it sits at the
+origin.</p>
+<h3 id="two-ways-a-keyvalue-row-is-found">Two ways a key/value row is found<a class="headerlink" href="#two-ways-a-keyvalue-row-is-found" title="Permanent link">&para;</a></h3>
+<p>The same visual row reaches <code>toMarkdown</code> in one of two shapes, depending on how
+wide the gutter was, and there is a detector for each. Both feed the same
+splitter, produce the same internal item, and flow through the same block
+grouping and the same emitter — so there is one set of thresholds, not two.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Word-level</th>
+<th>Line-level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Page shape</strong></td>
+<td>Narrow gutter</td>
+<td>Wide gutter</td>
+</tr>
+<tr>
+<td><strong>What the detector did</strong></td>
+<td>Emitted <strong>one</strong> box containing label and value</td>
+<td>Emitted <strong>two separate</strong> boxes on the same row</td>
+</tr>
+<tr>
+<td><strong>Where the gap shows up</strong></td>
+<td>Between that line's <code>words</code></td>
+<td>Between two consecutive <code>LinePrediction</code>s</td>
+</tr>
+<tr>
+<td><strong>Needs <code>returnWordBoxes</code></strong></td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">The line-level path is the common one</p>
+<p>A real column gutter is wide enough that DBNet splits the label and the
+value into separate boxes, which means the gap never appears between one
+line's words and the word-level pass cannot see it at all. Most invoices and
+forms are recovered by the line-level detector — including the one in
+<a href="#before-and-after">Before and after</a> below.</p>
+<p>This is also why the line-level pass has to run <em>before</em> block grouping: the
+left-edge rule would otherwise file a label at <code>x=40</code> and its value at
+<code>x=520</code> as two different blocks, which is exactly how a wide-gutter invoice
+used to come out as alternating one-line paragraphs.</p>
+</div>
+<h3 id="a-lone-pair-is-not-a-table">A lone pair is not a table<a class="headerlink" href="#a-lone-pair-is-not-a-table" title="Permanent link">&para;</a></h3>
+<p>A run of <strong>one</strong> key/value row is emitted as <code>**label** value</code>, not as a table.</p>
+<p>A one-row GFM table is a header plus a separator with no body, which renders as
+an empty table — strictly worse than the text it replaced. A single wide gap is
+also weak evidence on its own. Bolding the label keeps both halves and keeps the
+split visible without claiming a column structure exists.</p>
+<p>Two or more adjacent rows do become a table, and the <strong>first pair becomes the
+header row</strong>. GFM has no table without a header; synthesizing an empty one would
+render as a blank band above the data, while promoting the first row invents no
+text that was not on the page — and on invoices that row genuinely is the column
+caption more often than not.</p>
+<h3 id="two-columns-out-always">Two columns out, always<a class="headerlink" href="#two-columns-out-always" title="Permanent link">&para;</a></h3>
+<p>A row with three or more pieces is <strong>not</strong> expanded into three or more cells. It
+splits at its single widest gap: everything to the left of that gap is the
+label, everything to the right is the value.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>1  Cheeseburger      12.00
+</span></code></pre></div>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>| 1 Cheeseburger | 12.00 |
+</span></code></pre></div>
+<p>Nothing is dropped — the cap never strands a piece. Agreeing on a column count
+across the rows of a run is real cell-grid reconstruction, which is
+<a href="#what-it-does-not-do">out of scope</a>.</p>
+<p>The comparison that picks the split point is made against the median of the
+row's <em>other</em> gaps, not of all of them. This is what keeps fully justified prose
+out of the table path — every inter-word space there is stretched, so all the
+gaps grow together and none of them dwarfs the rest — and what makes the line
+item above split after the description rather than after the quantity.</p>
+<div class="admonition note">
+<p class="admonition-title">Joining pieces in CJK</p>
+<p>When the label or value is assembled from several pieces, a space is
+inserted only when both sides of the seam are ASCII. CJK recognition gives
+every character its own word box, and joining those with spaces would shred
+the text; this gets both scripts right without carrying a Unicode word-break
+table. Paragraph joining, by contrast, always uses a single space.</p>
+</div>
+<h2 id="thresholds-are-fractions-of-the-median-line-height">Thresholds are fractions of the median line height<a class="headerlink" href="#thresholds-are-fractions-of-the-median-line-height" title="Permanent link">&para;</a></h2>
+<p>Every geometric threshold in <code>markdown.cpp</code> is expressed as a multiple of the
+page's <strong>median line height</strong>. There is no pixel constant in the file.</p>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+<th>What it gates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kBlockGapFraction</code></td>
+<td><code>0.8</code></td>
+<td>Vertical gap that ends a paragraph block.</td>
+</tr>
+<tr>
+<td><code>kRowGapFraction</code></td>
+<td><code>2.0</code></td>
+<td>Vertical gap that ends a run of key/value rows.</td>
+</tr>
+<tr>
+<td><code>kIndentFraction</code></td>
+<td><code>1.5</code></td>
+<td>Left-edge shift that starts a new block.</td>
+</tr>
+<tr>
+<td><code>kRowOverlapFraction</code></td>
+<td><code>0.5</code></td>
+<td>Vertical overlap two boxes need to count as one visual row.</td>
+</tr>
+<tr>
+<td><code>kHeading1Ratio</code></td>
+<td><code>1.6</code></td>
+<td>Block height ÷ page median at or above which a block becomes <code>#</code>.</td>
+</tr>
+<tr>
+<td><code>kHeading2Ratio</code></td>
+<td><code>1.25</code></td>
+<td>The same, for <code>##</code>.</td>
+</tr>
+<tr>
+<td><code>kKeyValueGapFraction</code></td>
+<td><code>1.5</code></td>
+<td>Absolute bar a gap must clear to be a gutter rather than a space.</td>
+</tr>
+<tr>
+<td><code>kKeyValueGapRatio</code></td>
+<td><code>3.0</code></td>
+<td>How far the candidate gap must dwarf the row's other gaps.</td>
+</tr>
+</tbody>
+</table>
+<p>The one constant that is not a fraction is <code>kMaxHeadingLines = 2</code>, a line count:
+past two lines a tall block is a large-print paragraph, and promoting it would
+swallow the body text.</p>
+<div class="admonition tip">
+<p class="admonition-title">This is a resolution guarantee, not a coincidence</p>
+<p>Because the unit is the page's own median line height, the same page
+photographed at 96 DPI and scanned at 300 DPI produces <strong>byte-identical</strong>
+markdown, and no knob has to be re-tuned per source. The values above are
+chosen against the physical facts they measure — a space glyph is a quarter
+to a third of an em, so <code>1.5</code> line heights of blank is four to six spaces
+wide and cannot be word spacing; single-spaced prose leaves <code>0.2</code>–<code>0.5</code> line
+heights between glyph boxes while a real paragraph break starts at ~<code>1.2</code>,
+so <code>0.8</code> sits in the empty middle. This was learned the hard way:
+<code>sortLinesReadingOrder</code> once used a hard-coded 12 px row tolerance, which
+fragmented 300 DPI scans and merged thumbnails.</p>
+</div>
+<h2 id="before-and-after">Before and after<a class="headerlink" href="#before-and-after" title="Permanent link">&para;</a></h2>
+<p>A rendered invoice: a heading in large bold, two body lines set close together,
+three label/value rows with a wide gutter, and two bullets.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>invoice.png<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--markdown<span class="w"> </span>out.md
+</span></code></pre></div>
+<p>The engine hands back eleven lines. The columns that matter are each line's left
+edge and which lines share a visual row — the wide gutter made the detector emit
+the label and the value as two separate boxes:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>#   text                                                      x0    row
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>1   INVOICE                                                   40     a      (taller than the page median)
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>2   This document confirms the purchase of goods listed       40     b
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>3   below and is valid without signature.                     40     c
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>4   Invoice No                                                40     d
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>5   INV-2026-0042                                            520     d
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>6   Date                                                      40     e
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>7   07 August 2026                                           520     e
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>8   Total                                                     40     f
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>9   149000                                                   520     f
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>10  • Delivery within 3 days                                  40     g
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>11  • Payment on receipt                                      40     h
+</span></code></pre></div>
+<p><code>out.md</code>:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="gu">## INVOICE</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>This document confirms the purchase of goods listed below and is valid without signature.
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>| Invoice No | INV-2026-0042 |
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>| --- | --- |
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>| Date | 07 August 2026 |
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>| Total | 149000 |
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="k">-</span><span class="w"> </span>Delivery within 3 days
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="k">-</span><span class="w"> </span>Payment on receipt
+</span></code></pre></div>
+<p>Four things to read out of that:</p>
 <ul>
-<li><strong>Why batching trades off the way it does.</strong> <code>getTextLines()</code> batches
-  internally, and that is a win on GPU and a loss on CPU — padding every crop
-  to a shared width is wasted computation where there is no parallelism across
-  the batch dimension. The numbers are in
-  <a href="../../benchmarks/#batching-cpu-vs-tensorrt">Benchmarks</a>.</li>
-<li><strong>Why padding is normalized-then-padded, not padded-then-normalized.</strong>
-  Order matters here; getting it backwards changes what the network sees in
-  the padded region.</li>
-<li><strong>Why the detector has no size variants.</strong> <code>modelType</code> selects the
-  recognizer only — there is a single <code>PP-OCRv6_det.onnx</code>.</li>
+<li><strong>Lines 2 and 3 became one paragraph.</strong> They were one sentence in the source
+  document, arrived as two OCR lines, and left as one. That merge is the whole
+  point — a flat line list preserves the page's wrapping, which is exactly the
+  information you do not want when the text is headed for a diff, an embedding,
+  or a language model.</li>
+<li><strong>Line 1 became <code>##</code>, not <code>#</code>.</strong> Its height cleared the <code>1.25</code> tier but not
+  the <code>1.6</code> one. The tier is the type size on the page, not the line's position
+  in the document.</li>
+<li><strong>Rows <code>d</code>, <code>e</code> and <code>f</code> were paired by the line-level detector</strong>, and the
+  first pair — <code>Invoice No</code> / <code>INV-2026-0042</code> — became the table's header row.
+  There is no separate caption line on the page; GFM simply has no table without
+  a header, so the first row is promoted rather than a blank one being invented.</li>
+<li><strong>The bullet glyphs normalized to <code>-</code>.</strong> Whatever the recognizer read — <code>•</code>,
+  <code>·</code>, <code>*</code> or <code>-</code> — comes out as the one bullet markdown spells.</li>
 </ul>
+<h2 id="what-it-escapes-and-what-it-deliberately-does-not">What it escapes, and what it deliberately does not<a class="headerlink" href="#what-it-escapes-and-what-it-deliberately-does-not" title="Permanent link">&para;</a></h2>
+<p>The escaping policy is narrow on purpose: touch only what would silently change
+the document, and leave everything else as the recognizer read it.</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Escaped?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\|</code></td>
+<td><strong>Inside table cells only</strong></td>
+<td>There it ends the cell. Everywhere else it is an ordinary character and stays one.</td>
+</tr>
+<tr>
+<td><code>]</code></td>
+<td><strong>Only when <code>](</code> or <code>][</code> follows</strong></td>
+<td>That is the one shape that turns OCR text into a link and eats the target. A bare <code>[1]</code> is a shortcut reference with no definition, so it renders literally — citations and footnote markers stay readable instead of becoming <code>\[1\]</code>.</td>
+</tr>
+<tr>
+<td>CR, LF, TAB</td>
+<td><strong>Always</strong>, replaced with a space</td>
+<td>The only inline characters that can shatter block structure from inside a line.</td>
+</tr>
+<tr>
+<td>Leading <code>#</code> or <code>&gt;</code></td>
+<td><strong>Always</strong></td>
+<td>Would open a heading or a blockquote nobody asked for.</td>
+</tr>
+<tr>
+<td>Leading <code>-</code>, <code>*</code> or <code>+</code> followed by a space or end of line</td>
+<td><strong>Always</strong></td>
+<td>Would open a bullet list.</td>
+</tr>
+<tr>
+<td>A line consisting <strong>entirely</strong> of <code>-</code>, <code>=</code>, <code>_</code> or <code>*</code> (plus spaces)</td>
+<td><strong>Always</strong></td>
+<td>A receipt's <code>--------</code> separator is a setext heading underline. Left alone it silently retitles the paragraph printed above it — this is the case that actually bites.</td>
+</tr>
+<tr>
+<td><code>*</code>, <code>_</code>, <code>#</code> and backticks <strong>mid-line</strong></td>
+<td><strong>Never</strong></td>
+<td>Unpaired they are literal; paired they cost at worst italics or a code span, with the text still on the page. Escaping them would turn the masked card number <code>**** 1234</code> that is on half the receipts arboOCR targets into <code>\*\*\*\* 1234</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>The split is between <em>structure-forming positions</em> — the start of a line, and
+the inside of a table cell — and everything else. Only the former can change
+what the document <em>is</em>; the latter can at worst change how a few characters
+look, and unreadable escapes are a worse trade than a stray italic.</p>
+<h2 id="-markdown-implies-word-boxes"><code>--markdown</code> implies word boxes<a class="headerlink" href="#-markdown-implies-word-boxes" title="Permanent link">&para;</a></h2>
+<p>The word-level key/value detector measures the gap <em>between words</em>, so it needs
+<a href="../#word-boxes"><code>LinePrediction::words</code></a>. The CLI therefore turns
+<code>returnWordBoxes</code> on whenever <code>--markdown</code> is passed, whether or not you also
+passed <code>--word-boxes</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">This does not change your <code>--json</code> payload</p>
+<p><code>--json --markdown out.md</code> still emits the JSON shape you would get without
+<code>--markdown</code>. The CLI turns word boxes on internally for the markdown pass
+and then drops them again before serializing, because <code>"words"</code> appearing
+<em>iff</em> the caller asked for it is a published contract — <code>--markdown</code> must
+not silently reshape a wrapper's output. Pass <code>--word-boxes</code> explicitly if
+you want them in the JSON.</p>
+</div>
+<p>In C++ and Python nothing is implied for you — set <code>returnWordBoxes</code> /
+<code>return_word_boxes</code> yourself before constructing the <code>Engine</code>. Without it,
+<code>toMarkdown</code> still works, and it loses less than you might expect: headings,
+paragraphs and lists are all line-level, and so is the <strong>line-level</strong> key/value
+detector, which is the one that recovers wide-gutter invoices and forms. What
+you lose is only the narrow-gutter case — a label and value the detector fused
+into one box. Those lines stay plain paragraph lines, with the internal gap
+collapsed to a single space.</p>
+<div class="admonition warning">
+<p class="admonition-title">Word polygons are approximate</p>
+<p>Word boxes come from <strong>CTC timestep alignment</strong>, a by-product of
+recognition rather than a supervised output. They run roughly <strong>half a
+character wide of true glyph extents</strong>, consistently lagging right — which
+is why the gap measurement clamps negative gaps to zero, since neighbouring
+boxes can overlap by a hair. That is fine for the one thing <code>toMarkdown</code>
+asks of them — deciding <em>where</em> a gap is and whether it is unusually wide —
+but it is not pixel-exact, and the same caveat applies to anything else you
+build on <code>words</code>. See the <a href="../#word-boxes">full discussion</a>.</p>
+</div>
+<h2 id="what-it-does-not-do">What it does not do<a class="headerlink" href="#what-it-does-not-do" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Rough by design, and rough in specific known places</p>
+<ul>
+<li><strong>Multi-column page bodies come out mangled. This is a known, accepted
+  limitation, not an oversight.</strong> A two-column article is geometrically
+  <em>identical</em> to a page of key/value rows: a ragged-right left column leaves
+  gaps every bit as wide as an invoice gutter, so neither the absolute
+  gutter width nor its share of the row width discriminates between them.
+  No per-row test exists. A page-level "nearly every line pairs up" guard
+  would catch articles, but it would equally break a full-page form — which
+  <em>is</em> the shape arboOCR targets — so the miss is deliberately left on the
+  article side. The damage is also done upstream regardless: <code>page.lines</code> is
+  sorted by centroid y then x, so a two-column layout arrives already
+  interleaved across the columns before <code>toMarkdown</code> ever sees it.
+  Newspapers, two-column papers, and side-by-side forms come out wrong.</li>
+<li><strong>No table-grid reconstruction.</strong> Only the two-column <code>key | value</code> shape
+  is recovered, and rows with more pieces are capped at two columns rather
+  than expanded. Ruled tables, spanned cells, and genuine N-column grids are
+  not reconstructed.</li>
+<li><strong>No image, figure, or horizontal-rule detection.</strong> Non-text content
+  never produced a line in the first place, so it is simply absent from the
+  output. There is no placeholder and no warning.</li>
+<li><strong>Geometric heuristics degrade quietly.</strong> Skewed, curved, warped, or
+  rotated text does not fail loudly — it yields plausible-looking markdown
+  with the wrong structure, which is harder to notice than an error.</li>
+</ul>
+<p>This is the same envelope RapidOCR draws around its own <code>to_markdown</code>, whose
+documentation calls it 粗略 — crude. Treat the result as a better starting
+point than a flat list of lines, not as a faithful document conversion. If
+you need real layout analysis, you need a layout model, and arboOCR does not
+ship one.</p>
+</div>
 <h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../architecture/">Architecture</a> — how the stages fit together in the facade.</li>
-<li><a href="../../benchmarks/#batching-cpu-vs-tensorrt">Benchmarks</a> — batching, backends, latency.</li>
-<li><a href="../#arboocrengine">API Reference</a> — the <code>Engine</code> path you are stepping around.</li>
+<li><a href="../">API Reference</a> — <code>Engine</code>, <code>PagePrediction</code>, and the JSON output.</li>
+<li><a href="../#word-boxes">Word boxes</a> — what <code>words</code> is, and why its geometry is approximate.</li>
+<li><a href="../../cli/">CLI reference</a> — <code>--markdown</code>, <code>--json</code>, <code>--word-boxes</code>, and how they compose.</li>
+<li><a href="../visualize/">Visualization</a> — the other export, for when you need to see where the boxes landed rather than what the text says.</li>
 </ul>
 
 
@@ -1850,7 +2395,7 @@ otherwise "fix" and regress:</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 15:33:14 UTC">2026-08-07 15:33:14</span>
   </span>
 
     
@@ -1860,7 +2405,7 @@ otherwise "fix" and regress:</p>
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 15:33:14 UTC">2026-08-07 15:33:14</span>
   </span>
 
     
@@ -1920,7 +2465,7 @@ otherwise "fix" and regress:</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../logging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Logging">
+          <a href="../visualize/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Visualization">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
@@ -1930,20 +2475,20 @@ otherwise "fix" and regress:</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Logging
+                Visualization
               </div>
             </div>
           </a>
         
         
           
-          <a href="../downloader/" class="md-footer__link md-footer__link--next" aria-label="Next: Model downloader">
+          <a href="../logging/" class="md-footer__link md-footer__link--next" aria-label="Next: Logging">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Model downloader
+                Logging
               </div>
             </div>
             <div class="md-footer__button md-icon">
