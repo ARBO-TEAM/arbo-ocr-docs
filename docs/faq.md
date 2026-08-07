@@ -121,6 +121,57 @@ Short answers with a link to the page that has the full one.
 
     See [Benchmarks](benchmarks.md).
 
+??? question "How do I OCR a folder of images efficiently?"
+
+    Use **`--images-from`**, not a shell loop. Every language wrapper drives
+    `arboocr_demo` as a subprocess, so `for f in *.png; do arboocr_demo
+    --image "$f"; done` over 200 pages pays 200 process spawns *and 200 model
+    loads*. The spawn is milliseconds; the model load — three ONNX sessions,
+    the character dictionary, ORT's graph optimizations — is the dominant cost,
+    and that loop throws it away after every single page.
+
+    `--images-from <path>` reads one image path per line (`-` reads stdin,
+    blank and `#` lines are skipped), builds the `Engine` **once**, and reuses
+    it for the whole list:
+
+    ```bash
+    ls *.png | arboocr_demo --images-from - --models-dir models --json
+    ```
+
+    Two things to know before you wire it up: with `--json` a batch emits a
+    **JSON array** of page objects rather than the bare object single-image mode
+    emits, and exit code `1` means "the run finished, some images had no text" —
+    a partial result, not a failure.
+
+    See [Batch input](cli.md#batch-input).
+
+??? question "arboOCR uses all my CPU cores — can I limit that?"
+
+    Yes, with `EngineConfig::intraOpNumThreads` (`intra_op_num_threads` in
+    Python). It defaults to `0`, meaning ONNX Runtime sizes its thread pool for
+    **the whole machine** — correct for one OCR process on a dedicated box,
+    wrong the moment it is not. N workers on one host each spawn a
+    machine-sized pool and thrash each other; a container's CPU quota is
+    invisible to ORT, so it sizes against the host's core count and then gets
+    throttled. Both are fixed by *lowering* the value.
+
+    ```python
+    cfg.intra_op_num_threads = 1   # one worker per core beats N machine-sized pools
+    ```
+
+    Treat this as a deployment knob, not a speed knob — RapidOCR exposes the
+    same pair and says outright that bigger is not better, because the optimum
+    is workload-dependent. Measure before you change it; if one process owns the
+    machine, `0` is already right. There is a matching `interOpNumThreads`, but
+    it is largely inert: arboOCR runs sessions in ORT's default sequential
+    execution mode.
+
+    These are library-level fields with **no CLI flag**, so a subprocess-based
+    deployment should constrain from outside instead — `taskset`, `cpuset`
+    cgroups, or `--cpus` on the container.
+
+    See the [API reference](api/index.md#thread-pools-intraop-and-interop).
+
 ??? question "Can I get structured output instead of a flat list of lines?"
 
     Yes — `toMarkdown(page)` reconstructs a **rough** markdown document from

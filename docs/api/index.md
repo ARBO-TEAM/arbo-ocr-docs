@@ -40,6 +40,8 @@ struct EngineConfig {
     bool        useCuda      = false;
     bool        useTensorrt  = false;
     bool        useFp16      = true;      // TensorRT only — FP16 kernels (default on)
+    int         intraOpNumThreads = 0;    // ORT thread pools, all three sessions
+    int         interOpNumThreads = 0;    // 0 = ORT default (machine-sized)
     bool        useClahe     = false;     // CLAHE contrast boost before detection (faded/low-contrast docs)
     bool        splitOvermerged = false; // ink-gap split of wide fused det boxes (opt-in)
     float       minimumConfidence = 0.5f; // drop low-conf lines (0 = keep all)
@@ -72,6 +74,64 @@ cv::Mat decodeImageBytes(const uint8_t* data, size_t size);
 `"cpu"` — not what you asked for. Log it at startup; a config that requested
 TensorRT but silently fell back to CPU is the single most common cause of
 "why is this 10× slower than the benchmark".
+
+### Thread pools: intraOp and interOp
+
+Two `int` fields, both defaulting to `0`, applied to **all three ONNX Runtime
+sessions** (detector, classifier, recognizer) at `Engine` construction. In
+Python they are `intra_op_num_threads` and `inter_op_num_threads`. Negative
+values are clamped to `0` — ORT reads these as a literal thread count, so a
+stray `-1` is not the "auto" it looks like.
+
+!!! warning "This is a deployment knob, not a performance win"
+
+    Do not reach for these expecting speed. `0` means "let ORT decide", which
+    in practice sizes the pools for **the whole machine** — and that is the
+    right answer for a process that owns the box. It is the wrong answer when
+    the process does not own the box:
+
+    - **N workers on one host.** Each process independently spawns a
+      machine-sized pool. Eight workers on eight cores means eight pools of
+      eight threads competing for the same eight cores, and they thrash.
+    - **A container with a CPU quota.** A cgroup limit is invisible to ORT: it
+      sizes against the host's core count, not your `--cpus` budget, then gets
+      throttled.
+
+    Both cases are fixed by *lowering* the value, not raising it. One worker
+    per core with `intraOpNumThreads = 1` beats eight machine-sized pools.
+
+RapidOCR exposes the same two knobs and states outright that bigger is not
+better — the optimum is workload-dependent, which is precisely why this is
+tunable rather than tuned. There is no value arboOCR could ship that would be
+correct for a Jetson, a 64-core server and a 0.5-CPU container at once, so the
+default stays at ORT's own choice and the decision is handed to whoever knows
+the deployment. **Measure on your own hardware and your own images before you
+change either field**; if you are running a single OCR process on a dedicated
+machine, `0` is already right and you should leave it alone.
+
+!!! note "`intraOpNumThreads` is the one that does anything today"
+
+    Intra-op threads parallelize work *inside* a single operator and are what
+    actually determines how many cores one inference burns. Inter-op threads
+    parallelize *across* independent operators, which ONNX Runtime only does in
+    parallel execution mode — and arboOCR never calls `SetExecutionMode`, so
+    every session runs in ORT's default sequential mode. `interOpNumThreads` is
+    exposed for symmetry with RapidOCR and for provider configurations that
+    schedule differently; set `intraOpNumThreads` if you want to cap CPU usage.
+
+These fields are **library-level only** — there are no `arboocr_demo` flags for
+them, so they are reachable from C++ and Python but not from the CLI or the
+wrappers that spawn it. If you are constraining a subprocess-based deployment,
+constrain it from outside: `taskset`, `cpuset` cgroups, or `--cpus` on the
+container.
+
+!!! tip "Consistent with the arena decision"
+
+    arboOCR takes a deliberately conservative stance on ONNX Runtime resource
+    defaults. The CPU memory arena is disabled for a closely related reason —
+    ORT's default is tuned for a process that owns the machine, and it never
+    returns memory to the OS. See
+    [Memory footprint: the ONNXRuntime CPU arena is off](../models/accuracy-defaults.md#memory-footprint-the-onnxruntime-cpu-arena-is-off).
 
 ### Three ways in: path, `cv::Mat`, encoded bytes
 
@@ -308,6 +368,8 @@ as `0.9`.
 | `useCuda` | `bool` | `false` | Request the CUDA execution provider. Confirm with `backend()`. |
 | `useTensorrt` | `bool` | `false` | Request the TensorRT execution provider. Confirm with `backend()`. |
 | `useFp16` | `bool` | `true` | TensorRT only — FP16 kernels, on by default. See [Benchmarks](../benchmarks.md#tensorrt-precision-fp16). |
+| `intraOpNumThreads` | `int` | `0` | ORT intra-op pool size for all three sessions. `0` = ORT decides (sizes for the whole machine). Lower it when several workers or a CPU-quota'd container share a host. Negatives clamp to `0`. See [Thread pools](#thread-pools-intraop-and-interop). |
+| `interOpNumThreads` | `int` | `0` | ORT inter-op pool size. `0` = ORT decides. Largely inert today — arboOCR runs sessions in ORT's default sequential execution mode. Negatives clamp to `0`. |
 | `useClahe` | `bool` | `false` | CLAHE contrast boost applied to the full image before detection, for faded/low-contrast docs. See [CLAHE](../models/clahe.md). |
 | `splitOvermerged` | `bool` | `false` | Opt-in ink-gap split of wide fused detector boxes. See [Accuracy defaults](../models/accuracy-defaults.md). |
 | `minimumConfidence` | `float` | `0.5f` | Drops low-confidence lines; `0` keeps every box. Also the green/red threshold in [`drawResult`](visualize.md). See [Accuracy defaults](../models/accuracy-defaults.md). |

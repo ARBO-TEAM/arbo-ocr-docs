@@ -2,7 +2,8 @@
 title: Command line
 description: >-
   Full flag reference for arboocr_demo — the binary every arboOCR language
-  wrapper spawns. Defaults, exit codes, the --json contract, and tuning recipes.
+  wrapper spawns. Defaults, batch input, exit codes, the --json contract, and
+  tuning recipes.
 ---
 
 # Command line
@@ -23,10 +24,15 @@ have no way to act on it from Python. The flags below close that gap. A knob
 that exists here exists in all four languages.
 
 ```text
-arboocr_demo --image <path> [options]
+arboocr_demo --image <path>        [options]
+arboocr_demo --images-from <path>  [options]
 ```
 
-`--image` is required. Without it the binary prints usage and exits `1`.
+Exactly one input flag is required. Without either, the binary prints usage and
+exits `1`; passing **both** is an error. `--image` recognizes one file;
+[`--images-from`](#batch-input) reads a list of paths and recognizes all of them
+in a single process — see the next section for why that is not just a
+convenience.
 
 !!! note "Boolean flags"
 
@@ -38,15 +44,187 @@ arboocr_demo --image <path> [options]
 
 | Flag | Default | Meaning |
 |---|---|---|
-| `--image <path>` | *(required)* | Image to recognize. Any format OpenCV can decode. |
+| `--image <path>` | *(one required)* | Image to recognize. Any format OpenCV can decode. Mutually exclusive with `--images-from`. |
+| `--images-from <path>` | *(one required)* | Recognize every image listed in `<path>`, one path per line. `-` reads the list from stdin. See [Batch input](#batch-input). |
 | `--json` | off | Emit machine-readable JSON and nothing else on stdout. See [the contract](#the-json-contract). |
-| `--draw <path>` | *(unset)* | Write a copy of the image with every detected polygon outlined to `<path>`. |
+| `--draw <path>` | *(unset)* | Write a copy of the image with every detected polygon outlined to `<path>`. Single-image mode only. |
+| `--markdown <path>` | *(unset)* | Write the reconstructed markdown document to `<path>`. Implies `--word-boxes`. Single-image mode only. See [Markdown export](api/markdown.md). |
 | `--word-boxes` | off | Also emit a polygon per word (per character for CJK). Adds `"words"` to each line. |
 
 `--draw` colours boxes by recognition confidence: green at or above `0.5`, red
 below. `0.5` is not a new number — it is the `--min-confidence` default, so a
 red box is one the default config would have thrown away. You only ever see one
 after lowering that filter, which is exactly when you are debugging.
+
+## Batch input
+
+`--images-from <path>` reads a list of image paths — one per line — and
+recognizes every one of them in a single process. Pass `-` to read the list
+from stdin.
+
+```text
+# invoices, Q3
+scans/page-001.png
+scans/page-002.png
+
+# the rest of the batch
+scans/page-003.png
+```
+
+Blank lines and lines whose first character is `#` are skipped, so a list file
+can carry comments and survive being hand-edited. Everything else is taken
+verbatim as a path — no globbing, no shell expansion, no trimming of anything
+but the line ending. The list above therefore produces **three** results.
+
+### Why this exists: the model load, not the spawn
+
+Recall the framing at the top of this page: every wrapper drives this binary
+over a subprocess. That is fine for one image and quietly catastrophic for a
+document set. A 200-page job used to cost 200 process spawns **and 200 model
+loads** — and it is the second number that hurts. Spawning a process is
+milliseconds; opening three ONNX sessions, reading the recognizer's character
+dictionary, and letting ORT build its graph optimizations is the dominant cost,
+paid in full for every single page and thrown away immediately after.
+
+`--images-from` constructs the `Engine` **once** and reuses it for every path in
+the list. The per-image cost drops to what recognition actually costs. This is
+the same win a long-lived `Engine` gives a C++ or Python caller, made available
+to the subprocess-based wrappers that cannot hold one.
+
+!!! tip "This is the flag to reach for before you reach for a GPU"
+
+    If your throughput problem is "many pages", amortizing the model load is a
+    larger and cheaper win than changing execution provider or model size. Fix
+    the load pattern first, then benchmark.
+
+### Why a list file rather than a glob or a repeatable flag
+
+Three deliberate reasons, none of them about ergonomics:
+
+- **No glob library, and no recursion policy to invent.** A `--images-dir`
+  would immediately owe an answer to "does it recurse?", "which extensions?",
+  "does it follow symlinks?", "what order?" — four decisions arboOCR would be
+  making badly on your behalf. A list file has none: the caller already decided.
+- **It composes with the tools that already do this well.** `find`, `ls`,
+  `Get-ChildItem`, `git ls-files`, a database query, or a hand-written manifest
+  all produce lines of text. Piping one into `--images-from -` costs nothing to
+  learn.
+- **No command-line length ceiling.** A repeatable `--image` flag runs into the
+  operating system's argv limit — Windows caps a command line near 32k
+  characters, which a few hundred realistic paths will exhaust. A file has no
+  such bound, and the failure it avoids is the worst kind: it appears only once
+  the batch gets large, in production.
+
+### The JSON shape: an array, not an object
+
+!!! warning "The JSON shape changes between single and batch mode"
+
+    This is the one thing a wrapper author must not get wrong.
+
+    | Mode | stdout with `--json` |
+    |---|---|
+    | `--image` | A **bare object** — `{"backend":…,"image":…,"lines":[…]}` |
+    | `--images-from` | A **JSON array** of those same objects — `[{…},{…},{…}]` |
+
+    The page objects are identical in both cases: same keys, same types, same
+    [contract](#the-json-contract). Only the outer wrapping differs. Array order
+    matches list order, and there is exactly one element per non-skipped input
+    line, so you can zip the results back onto your inputs by index.
+
+    A parser that assumes an object will fail on the first batch run, and one
+    that assumes an array will fail on every single-image run. If your wrapper
+    accepts both, branch on the flag you passed rather than sniffing the first
+    byte.
+
+Everything else about the `--json` contract holds: stdout carries pure JSON and
+nothing else, diagnostics go to stderr, and the stream ends with one newline.
+
+### One bad image does not abort the run
+
+`recognize()` never throws. A path that does not exist, is not an image, or is
+corrupt yields a page with `"lines":[]` and `elapsedMs` set — exactly as it does
+in single-image mode — and the batch moves on to the next line. You get one
+result object per input either way, so a typo on line 47 of a 200-line list
+costs you line 47, not the other 199.
+
+That means **you cannot detect a bad input from the exit code alone**. If a
+missing file must be an error in your pipeline, check the paths before you write
+the list, or check for empty `lines` per element afterwards.
+
+### Exit codes in batch mode
+
+The batch run distinguishes three outcomes:
+
+| Code | Meaning |
+|---|---|
+| `0` | Every image produced at least one line. |
+| `1` | The run completed, but one or more images produced no text. |
+| `2` | Genuine failure — the engine could not be built, or the list could not be read. |
+
+`1` is the interesting one: it is a *partial* result, not a failed run. The
+output is complete and parseable; some pages were simply blank, unreadable, or
+below `--min-confidence`. Treat `1` as "look at the results" and `2` as "nothing
+usable came out". Only `2` means retrying with different inputs is pointless.
+
+### Overlay and markdown output are rejected in batch mode
+
+`--draw` and `--markdown` both take a single output path. Against a list of N images they would write the
+same file N times and leave you with the last one, which is worse than useless
+because it looks like it worked. Combining either with `--images-from` is
+therefore a usage error, not a silent overwrite.
+
+!!! note "The upgrade path is an output directory, not a mangled filename"
+
+    If per-image overlays or markdown for a batch turn out to be wanted, the fix
+    is an explicit output-directory flag (`--draw-dir`, `--markdown-dir`) that
+    derives one file per input — not a template string, and not
+    `overlay.png` silently becoming `overlay-001.png`. Nothing is stopping that
+    from being added; it just has not been needed yet. Until then, loop the
+    single-image form for the handful of pages you actually want to inspect —
+    debugging is not the throughput path.
+
+### Batch examples
+
+=== "A list file"
+
+    ```bash
+    arboocr_demo --images-from pages.txt --models-dir models --json > pages.json
+    ```
+
+    `pages.json` holds one array element per line of `pages.txt`, in order.
+
+=== "A pipeline"
+
+    ```bash
+    ls *.png | arboocr_demo --images-from - --models-dir models --json
+    ```
+
+    `-` reads the list from stdin, so anything that emits one path per line
+    feeds the batch directly. On Windows PowerShell:
+
+    ```powershell
+    Get-ChildItem *.png | Select-Object -ExpandProperty FullName |
+      arboocr_demo --images-from - --models-dir models --json
+    ```
+
+=== "A recursive scan"
+
+    ```bash
+    find scans/ -type f -name '*.jpg' | sort |
+      arboocr_demo --images-from - --models-dir models --json > out.json
+    ```
+
+    The recursion policy, the extension filter and the ordering are all yours —
+    which is the entire point of taking a list instead of a directory.
+
+=== "Human-readable batch"
+
+    ```bash
+    arboocr_demo --images-from pages.txt --models-dir models
+    ```
+
+    Without `--json` you get the same per-image block as single-image mode,
+    one after another. Useful for eyeballing a set; parse the JSON form instead.
 
 ## Model selection
 
@@ -190,9 +368,18 @@ input image or the flags can be fixed by retrying; on `2` the binary prints the
 four resolved model paths to stderr so you can see exactly which file it went
 looking for.
 
-`1` covers a wider range: an unrecognized flag, a missing `--image`, a bad
-`--log-level` value, and — in the default human-readable mode — a page that
-produced zero lines.
+`1` covers a wider range: an unrecognized flag, no input flag at all, `--image`
+and `--images-from` together, `--draw` or `--markdown` alongside
+`--images-from`, a bad `--log-level` value, and — in the default human-readable
+mode — a page that produced zero lines.
+
+!!! note "Batch mode reads `1` as partial, not failed"
+
+    With `--images-from`, `1` means the run finished and produced complete
+    output but at least one image yielded no text. Unlike the single-image
+    `--json` case below, that holds in both output modes: the batch exit code
+    reports the *set*, not the last page. See
+    [Exit codes in batch mode](#exit-codes-in-batch-mode).
 
 !!! warning "`--json` reports an empty page as success"
 
@@ -212,6 +399,10 @@ stream into a JSON parser without pre-filtering it, so a single stray
 `printf` would break all four languages at once. Everything that is not the
 result — engine logs, `--draw` confirmations, `--draw` failures — goes to
 stderr.
+
+The object below is the **single-image** shape. With
+[`--images-from`](#the-json-shape-an-array-not-an-object) the same object
+appears as one element of a JSON array; every key documented here is unchanged.
 
 ```json
 {"backend":"cpu","image":"page.jpg","elapsedMs":66.3257,"lines":[{"text":"INVOICE","score":0.999803,"detScore":0.857679,"polygon":[{"x":43,"y":27},{"x":285,"y":30},{"x":284,"y":91},{"x":43,"y":89}]}]}
@@ -284,6 +475,10 @@ arboocr_demo --image page.jpg --models-dir models --json --draw overlay.png > pa
 `page.json` is valid JSON; `overlay.png` is on disk. This is the shape you want
 in a debugging pipeline that also needs the structured result.
 
+This composition is single-image only — `--draw` with `--images-from` is
+[rejected](#overlay-and-markdown-output-are-rejected-in-batch-mode), because one
+output path cannot hold N overlays.
+
 ## Examples
 
 === "Simplest run"
@@ -309,6 +504,16 @@ in a debugging pipeline that also needs the structured result.
 
     One compact JSON object on stdout, exit `0`. This is the invocation every
     wrapper builds internally — see [Wrappers](wrappers/index.md).
+
+=== "A whole folder"
+
+    ```bash
+    ls *.png | arboocr_demo --images-from - --models-dir models --json
+    ```
+
+    One process, one model load, a JSON **array** on stdout. This is the
+    difference between a 200-page job that loads the models once and one that
+    loads them 200 times — see [Batch input](#batch-input).
 
 === "Faded receipts"
 
