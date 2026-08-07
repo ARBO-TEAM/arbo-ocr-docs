@@ -1,0 +1,82 @@
+/* arboOCR docs — minimal theme overrides.
+   All colors come from mkdocs-material custom properties so the light and
+   dark palettes both stay correct. No animations, no decoration. */
+
+/* The API reference is mostly wide tables (EngineConfig fields, benchmark
+   rows). Material's default 61rem wraps those columns too early on a laptop;
+   +6rem is enough to unwrap them without hurting prose line length. */
+.md-grid {
+  max-width: 67rem;
+}
+
+/* EngineConfig blocks are long lines of C++ with alignment that only reads
+   correctly when it isn't wrapped or over-sized. Slightly smaller type and a
+   tighter line height fit more of a declaration per line. */
+.md-typeset pre > code {
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+/* Inline identifiers (`minimumConfidence`, `detLimitSideLen`) sit inside
+   running prose. Default inline code is large enough to disturb the baseline
+   rhythm of a paragraph that has several of them. */
+.md-typeset code {
+  font-size: 0.78em;
+}
+
+/* Dense tables: the docs lean on them heavily (settings, model sizes,
+   benchmarks). Smaller type fits more columns; the extra cell padding keeps
+   rows from reading as a solid block. */
+.md-typeset table:not([class]) {
+  font-size: 0.72rem;
+}
+
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  padding: 0.6em 0.9em;
+}
+
+/* Header row needs to stay distinguishable once the type is smaller. */
+.md-typeset table:not([class]) th {
+  background-color: var(--md-default-fg-color--lightest);
+}
+
+/* Numeric columns (latency, similarity) are right-aligned via Markdown's
+   `---:` syntax — tabular figures stop the digits from jittering column width. */
+.md-typeset table:not([class]) td[align="right"] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Grid cards on the homepage. Material renders them as plain bordered boxes;
+   these rules only equalize height and soften the border so cards of
+   different text length still line up. */
+.md-typeset .grid.cards > ul > li {
+  border-color: var(--md-default-fg-color--lightest);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Push the last element (usually the "read more" link) to the card bottom so
+   a row of uneven cards still has aligned links. */
+.md-typeset .grid.cards > ul > li > :last-child {
+  margin-top: auto;
+}
+
+/* Card hover: border only. Enough to signal the whole card is a target
+   without introducing a shadow or transform. */
+.md-typeset .grid.cards > ul > li:focus-within,
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: var(--md-primary-fg-color);
+  box-shadow: none;
+}
+
+/* Card headings are the card's label, not document structure — drop the
+   inherited top margin and lean on the accent color for hierarchy. */
+.md-typeset .grid.cards > ul > li > hr + p,
+.md-typeset .grid.cards > ul > li > p:first-child {
+  margin-top: 0;
+}
+
+.md-typeset .grid.cards > ul > li .twemoji {
+  color: var(--md-primary-fg-color);
+}

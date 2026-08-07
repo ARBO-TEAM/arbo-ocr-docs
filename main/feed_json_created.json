@@ -1,0 +1,31 @@
+{
+    "version": "https://jsonfeed.org/version/1.1",
+    "title": "arboOCR Docs",
+    "home_page_url": "https://arbo-team.github.io/arbo-ocr-docs/main/",
+    "feed_url": "https://arbo-team.github.io/arbo-ocr-docs/main/feed_json_created.json",
+    "description": "arboOCR is a standalone C++ OCR library \u2014 text detection, orientation classification, and recognition over PP-OCRv6 ONNX models via ONNXRuntime, running on CPU, CUDA, or TensorRT. Wrappers for Python, Go, Rust, and PHP.",
+    "icon": null,
+    "authors": [
+        {
+            "name": "ARBO-TEAM"
+        }
+    ],
+    "language": "en",
+    "items": [
+        {
+            "id": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/",
+            "url": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/",
+            "title": "The accuracy cycle: the recognizer was never the problem",
+            "content_html": "Cold arbo small went from ~84% to ~94% char similarity on the SROIE receipt smoke set \u2014 and none of it came from a bigger recognizer.",
+            "image": null,
+            "date_modified": "2026-08-07T12:05:42+00:00",
+            "date_published": "2026-08-07T00:00:00+00:00",
+            "authors": [
+                {
+                    "name": "ARBO-TEAM"
+                }
+            ],
+            "tags": null
+        }
+    ]
+}

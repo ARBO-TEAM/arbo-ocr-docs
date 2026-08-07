@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    
+    <title>arboOCR Docs</title>
+    <description>arboOCR is a standalone C++ OCR library — text detection, orientation classification, and recognition over PP-OCRv6 ONNX models via ONNXRuntime, running on CPU, CUDA, or TensorRT. Wrappers for Python, Go, Rust, and PHP.</description>
+    <link>https://arbo-team.github.io/arbo-ocr-docs/main/</link>
+    <atom:link href="https://arbo-team.github.io/arbo-ocr-docs/main/feed_rss_created.xml" rel="self" type="application/rss+xml" />
+
+    
+    <managingEditor>ARBO-TEAM</managingEditor>
+    <docs>https://github.com/wafik/ArboOCR</docs>
+    <language>en</language>
+
+    
+    <pubDate>Fri, 07 Aug 2026 12:06:59 -0000</pubDate>
+    <lastBuildDate>Fri, 07 Aug 2026 12:06:59 -0000</lastBuildDate>
+    <ttl>1440</ttl>
+
+    
+    <generator>MkDocs RSS plugin - v1.17.9</generator>
+
+    
+    
+    <image>
+      <url>None</url>
+      <title>arboOCR Docs</title>
+      <link>https://arbo-team.github.io/arbo-ocr-docs/main/</link>
+    </image>
+    
+
+    
+    
+    <item>
+      <title>The accuracy cycle: the recognizer was never the problem</title>
+      
+      
+        
+      <author>ARBO-TEAM</author>
+        
+      
+      
+      
+      <description>Cold arbo small went from ~84% to ~94% char similarity on the SROIE receipt smoke set — and none of it came from a bigger recognizer.</description>
+      <link>https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/</link>
+      <pubDate>Fri, 07 Aug 2026 00:00:00 +0000</pubDate>
+      <source url="https://arbo-team.github.io/arbo-ocr-docs/main/feed_rss_created.xml">arboOCR Docs</source>
+      
+      <guid isPermaLink="true">https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/</guid>
+      
+    </item>
+    
+  </channel>
+</rss>
