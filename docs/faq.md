@@ -121,6 +121,22 @@ Short answers with a link to the page that has the full one.
 
     See [Benchmarks](benchmarks.md).
 
+??? question "Can I get structured output instead of a flat list of lines?"
+
+    Yes — `toMarkdown(page)` reconstructs a **rough** markdown document from
+    line geometry: lines that are close together and left-aligned merge into
+    one paragraph, taller-than-median lines become `#`/`##` headings, bullet
+    and numbered lines stay list items, and a line split by one wide internal
+    word gap becomes a `key | value` table row. The CLI writes it with
+    `--markdown <path>` (which implies `--word-boxes`); Python has
+    `to_markdown(page)`.
+
+    It is a heuristic, not layout analysis: **no multi-column splitting, no
+    table-grid reconstruction, no image or rule detection**, and it degrades
+    quietly on skewed text rather than failing loudly.
+
+    See [Markdown export](api/markdown.md).
+
 ??? question "How do I use arboOCR from Python?"
 
     Via the pybind11 `Engine` facade, which runs on the same native backends
