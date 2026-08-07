@@ -1,0 +1,13 @@
+# Placeholder hosts used in code samples — intentionally not resolvable.
+https://your-host.example/.*
+.*example\.com.*
+.*localhost.*
+.*127\.0\.0\.1.*
+
+# Rate-limited or bot-hostile hosts.
+https://pypi.org/.*
+https://packagist\.org/.*
+https://www\.angusj\.com/.*
+
+# Anchors into the source repo's README — lychee can't resolve GitHub anchors.
+https://github\.com/wafik/ArboOCR#.*

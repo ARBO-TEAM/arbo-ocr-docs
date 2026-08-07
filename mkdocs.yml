@@ -1,0 +1,200 @@
+site_name: arboOCR Docs
+site_url: https://arbo-team.github.io/arbo-ocr-docs/
+site_author: ARBO-TEAM
+site_description: >-
+  arboOCR is a standalone C++ OCR library — text detection, orientation
+  classification, and recognition over PP-OCRv6 ONNX models via ONNXRuntime,
+  running on CPU, CUDA, or TensorRT. Wrappers for Python, Go, Rust, and PHP.
+
+repo_name: wafik/ArboOCR
+repo_url: https://github.com/wafik/ArboOCR
+
+copyright: Copyright &copy; 2026 ARBO-TEAM — Apache License 2.0
+
+edit_uri: https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  features:
+    - announce.dismiss
+    - content.tooltips
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.action.edit
+    - content.action.view
+    - content.footnote.tooltips
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - navigation.footer
+    - navigation.indexes
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/theme-light-dark
+        name: Follow system theme
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: lime
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+  icon:
+    logo: material/text-recognition
+    previous: fontawesome/solid/angle-left
+    next: fontawesome/solid/angle-right
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+    tag:
+      default-tag: fontawesome/solid/tag
+      hardware-tag: fontawesome/solid/microchip
+      software-tag: fontawesome/solid/laptop-code
+
+plugins:
+  - meta
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - tags
+  - rss:
+      match_path: "blog/posts/.*"
+      date_from_meta:
+        as_creation: date.created
+        as_update: "git"
+      length: 20
+      pretty_print: true
+  - blog:
+      blog_dir: blog
+      archive: true
+      archive_name: Archive
+      archive_date_format: yyyy/MM
+      archive_url_format: "archive/{date}"
+      post_date_format: short
+      blog_toc: true
+      pagination: false
+      categories_toc: true
+      categories_name: Categories
+  # Committer avatars hit the GitHub API for every page — CI only, so that
+  # `mkdocs serve` stays fast and doesn't burn an unauthenticated rate limit.
+  - git-committers:
+      enabled: !ENV [CI, false]
+      repository: ARBO-TEAM/arbo-ocr-docs
+      branch: main
+      token: !!python/object/apply:os.getenv ["MKDOCS_GIT_COMMITTERS_APIKEY"]
+  - git-revision-date-localized:
+      enabled: !ENV [CI, false]
+      enable_creation_date: true
+      type: iso_datetime
+      fallback_to_build_date: true
+      exclude:
+        - "index.md"
+        - "license.md"
+        - "wrappers/**"
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ARBO-TEAM
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/arbo-ocr-python/
+    - icon: fontawesome/brands/php
+      link: https://packagist.org/packages/arbo/ocr-php
+    - icon: fontawesome/solid/rss
+      link: https://arbo-team.github.io/arbo-ocr-docs/latest/feed_rss_created.xml
+  version:
+    provider: mike
+    default: latest
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - toc:
+      permalink: true
+
+not_in_nav: |
+  tags.md
+
+nav:
+  - Home:
+    - index.md
+    - quickstart.md
+    - faq.md
+  - Build:
+    - build/index.md
+    - build/jetson.md
+  - Models:
+    - models/index.md
+    - models/sizes.md
+    - models/languages.md
+    - models/clahe.md
+    - models/accuracy-defaults.md
+  - API:
+    - api/index.md
+    - api/logging.md
+    - api/custom-pipeline.md
+    - api/downloader.md
+  - Wrappers:
+    - wrappers/index.md
+    - wrappers/python.md
+    - wrappers/go.md
+    - wrappers/rust.md
+    - wrappers/php.md
+  - Reference:
+    - benchmarks.md
+    - architecture.md
+    - contributing.md
+    - license.md
+  - Blog:
+    - blog/index.md
