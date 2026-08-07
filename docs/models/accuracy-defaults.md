@@ -13,6 +13,10 @@ title: Accuracy defaults
     If you pin config or re-implement the pipeline yourself, note **every** item
     below. Three of them change behaviour your code may already depend on.
 
+    Two further behaviour changes landed *after* that cycle — detector input
+    scaling and reading-order tolerance. See
+    [Changes since the accuracy cycle](#changes-since-the-accuracy-cycle).
+
 ## What changed
 
 | Setting | Old | New default | Why it matters |
@@ -72,6 +76,68 @@ The reference row is the point of the table: at `small`, arbo lands within
 7. **Opt-in only:** `useClahe`, `useAngleCls`, `splitOvermerged` — leave off
    unless the failure mode matches (faded scans / 180° / confirmed over-merge).
    See [Low-contrast documents (CLAHE)](clahe.md).
+
+## Changes since the accuracy cycle
+
+These landed after the cycle above, from a gap analysis against RapidOCR. No
+config default moved, but **both change output**, so they matter if you pin
+config or diff results against a stored baseline.
+
+| Change | Old behaviour | New behaviour | Affects |
+|---|---|---|---|
+| Detector input scaling | `detLimitSideLen` scaled the long side **both ways** | Scale factor clamped to `<= 1.0` — downscale only | Small images: faster, detection may differ |
+| Reading-order tolerance | Hard-coded **12px** y-tolerance | Derived from the **median polygon height** of the lines being sorted | High-DPI / unusually-scaled pages: line order may differ |
+
+### `detLimitSideLen` is now a ceiling, not a target
+
+`getScaleParam` used to compute `ratio = detLimitSideLen / longSide` with no
+upper guard, so an image *smaller* than the limit was **upscaled** to it. At the
+default `detLimitSideLen = 960`, a 200px thumbnail became a 960px detector input
+and paid full detection cost for invented pixels.
+
+The ratio is now clamped to `<= 1.0`. `detLimitSideLen` is a maximum and nothing
+else — RapidOCR calls this `limit_type: max`, and this is now the same
+behaviour. The multiple-of-32 flooring of both dimensions still applies exactly
+as before.
+
+!!! warning "Small images now run faster, and their detection results may differ"
+
+    This is not a pure speed win. The detector now sees the image at its
+    original resolution instead of an upscaled one, so boxes on sub-`960px`
+    inputs can come out differently — usually fewer spurious boxes, but if you
+    have a stored baseline for small images, re-generate it. Images already at
+    or above `detLimitSideLen` are unaffected: they were being downscaled
+    before and are downscaled identically now.
+
+### Reading-order tolerance is now adaptive
+
+`sortLinesReadingOrder` groups lines into visual rows before sorting left to
+right within each row. That grouping used a fixed 12px y-tolerance, which is
+resolution-dependent: 12px is about half a line height at 100–150 DPI, but on a
+300 or 600 DPI scan it is a fraction of one — so rows fragment into single-cell
+rows and a two-column row could be emitted in the wrong order.
+
+The tolerance is now derived from the **median polygon height** across the lines
+being sorted (roughly half a line height), with a small floor so degenerate
+input — one line, or boxes too few to estimate from — still behaves.
+
+!!! warning "Line order on high-DPI pages may differ, and is now scale-invariant"
+
+    Sorting is now independent of page scale: the same page rendered at 1x and
+    at 4x produces the same line order. If you captured a `page.lines` ordering
+    from a high-DPI or unusually-scaled document, re-check it — the old ordering
+    on those pages was the buggy one.
+
+### Memory footprint: the ONNXRuntime CPU arena is off
+
+Not an accuracy change, and it **does not affect output** — but anyone
+benchmarking will see it. All three sessions (det, cls, rec) now disable the
+ONNXRuntime CPU memory arena. The arena never returns memory to the OS;
+RapidOCR measured **5695.5 MiB peak RSS with it on versus 82.1 MiB with it
+off**, a 5618 MiB delta on a *single* inference, in exchange for roughly 13%
+inference latency. On a 4 GB Jetson that is the difference between running and
+being OOM-killed, so the memory is the better trade. Expect slightly higher
+per-inference latency and dramatically lower RSS than before.
 
 ## Typical production CPU defaults
 

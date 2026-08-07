@@ -170,6 +170,7 @@ nav:
   - Home:
     - index.md
     - quickstart.md
+    - cli.md
     - faq.md
   - Build:
     - build/index.md
@@ -182,6 +183,7 @@ nav:
     - models/accuracy-defaults.md
   - API:
     - api/index.md
+    - api/visualize.md
     - api/logging.md
     - api/custom-pipeline.md
     - api/downloader.md

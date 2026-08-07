@@ -25,6 +25,10 @@ Lines: 31 (402.053 ms)
   ...
 ```
 
+Add `--json` for machine-readable output — that is the same invocation every
+language wrapper makes. Every flag, default, and exit code is on
+[Command line](cli.md).
+
 ## C++
 
 ```cpp
@@ -64,8 +68,46 @@ int main() {
     the detector emitted them. If you're migrating code that matched boxes by
     index, see [Accuracy defaults](models/accuracy-defaults.md).
 
-Next: [build the library](build/index.md), or read the
-[API reference](api/index.md).
+### Recognizing bytes you already hold
+
+A web handler receiving a multipart upload, or a worker pulling a JPEG off a
+message queue, already has the encoded image in memory. Spilling it to a temp
+file per request just to hand it to `recognize()` is a syscall round-trip for
+nothing. `recognizeEncoded` takes the bytes directly and decodes them in
+process:
+
+```cpp
+arbo::ocr::PagePrediction recognizeEncoded(const uint8_t* data, size_t size);
+std::future<arbo::ocr::PagePrediction> recognizeEncodedAsync(const uint8_t* data, size_t size);
+```
+
+```cpp
+// `body` is whatever your framework handed you — std::string, std::vector<char>,
+// a std::span, or a raw FFI buffer. Pointer + size binds to all of them with
+// no copy at the boundary.
+auto page = engine.recognizeEncoded(
+    reinterpret_cast<const uint8_t*>(body.data()), body.size());
+```
+
+Two things to know. It is **never** throwing, exactly like `recognize()`: null
+`data`, a zero `size`, and garbage bytes all degrade to a `PagePrediction` with
+empty `lines` and `elapsedMs` still set — so check `page.lines.empty()`, not a
+`try`/`catch`. And `page.image` comes back empty, because a byte buffer has no
+filename.
+
+!!! tip "The async overload copies your buffer"
+
+    `recognizeEncodedAsync` copies the bytes before returning the future, so you
+    may free or reuse the caller's buffer immediately — no lifetime coupling to
+    a background thread. As with every async overload, don't run two on the same
+    `Engine`: ONNXRuntime sessions aren't concurrent. One outstanding call, or
+    one `Engine` per worker.
+
+Full reference for both overloads, and the `cv::Mat` one for already-decoded
+frames, is in the [API reference](api/index.md).
+
+Next: [build the library](build/index.md), or drive the
+[command line](cli.md) if you'd rather spawn a binary than link one.
 
 ## Python bindings (optional)
 

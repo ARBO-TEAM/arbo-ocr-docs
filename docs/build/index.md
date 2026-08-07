@@ -75,6 +75,125 @@ ctest                 # or: ./arboocr_tests
 `ctest` is the wrapper; `./arboocr_tests` is the doctest binary underneath if
 you want to pass doctest filters directly.
 
+## Install
+
+The build tree is not the delivery format. `cmake --install` copies the public
+half of it — headers, static libs, the CLI, and a CMake package — to a prefix
+you choose:
+
+```bash
+cmake --install build/<preset> --prefix /opt/arboocr
+```
+
+On Windows, a multi-config generator needs the config named explicitly:
+
+```powershell
+cmake --install build/windows-x64 --config Release --prefix C:\arboocr
+```
+
+What lands where, relative to the prefix (via `GNUInstallDirs`, so `lib` may be
+`lib64` on some distros):
+
+| Path | Contents |
+|---|---|
+| `include/arboOCR/` | Every public header — `engine.hpp`, `types.hpp`, `detector.hpp`, and the rest |
+| `lib/` | `arboOCR` and `arboocr_clipper` static libraries |
+| `bin/` | `arboocr_demo` |
+| `lib/cmake/arboOCR/` | `arboOCRConfig.cmake`, `arboOCRConfigVersion.cmake`, `arboOCRTargets.cmake` |
+
+Two things are deliberately *not* installed. `arboocr_tests` and the
+`examples/` programs stay build-tree only — they are for developing arboOCR,
+not for consuming it. `arboocr_demo` is installed, because the Python, Go, Rust
+and PHP wrappers all spawn it as a subprocess; for those languages it is the
+delivered artifact rather than a demo. See [Command line](../cli.md).
+
+`arboocr_clipper` is installed alongside the main library for a linker reason,
+not a usability one: a static library that links another static library leaves
+those symbols unresolved for the consumer, so the vendored Clipper archive has
+to travel with it. Its header stays private — no public arboOCR header includes
+it, and you never name the target yourself.
+
+### The `ARBOOCR_INSTALL` option
+
+Install rules are generated only when arboOCR is the top-level project. Pull it
+in with `add_subdirectory()` and they switch off, so vendoring arboOCR into your
+build does not silently splice its headers and CLI into *your* `cmake --install`
+output.
+
+```bash
+cmake -S . -B build -DARBOOCR_INSTALL=ON    # force on inside add_subdirectory
+cmake -S . -B build -DARBOOCR_INSTALL=OFF   # force off for a standalone build
+```
+
+## Consuming arboOCR from another project
+
+Point `CMAKE_PREFIX_PATH` at the prefix you installed to, and the package
+behaves like any other CMake dependency:
+
+```cmake
+find_package(arboOCR CONFIG REQUIRED)
+
+add_executable(myapp main.cpp)
+target_link_libraries(myapp PRIVATE arboOCR::arboOCR)
+```
+
+```bash
+cmake -S . -B build -DCMAKE_PREFIX_PATH=/opt/arboocr
+```
+
+The namespaced target carries the include directories and the whole transitive
+link line, so there is no `arboOCR_INCLUDE_DIRS` variable to plumb by hand.
+
+Version matching is `SameMinorVersion`, which is stricter than CMake's default
+on purpose: pre-1.0, `0.1` and `0.2` are not interchangeable, so
+`find_package(arboOCR 0.1 CONFIG REQUIRED)` will refuse a `0.2` install rather
+than link you against a changed API.
+
+!!! tip "`arboOCR::arboOCR` works either way"
+
+    The same namespaced name is defined as an `ALIAS` in the build tree, so a
+    project that vendors arboOCR via `add_subdirectory()` writes exactly the
+    same `target_link_libraries` line as one that installs it. Switching
+    between the two is a one-line change to how you acquire the sources, not a
+    rewrite of your link rules.
+
+!!! note "The consumer must be able to find OpenCV, onnxruntime and cURL"
+
+    arboOCR is a **static** library and its dependencies leak through its public
+    headers — `types.hpp` includes `<opencv2/core.hpp>`, and
+    `detector.hpp`/`classifier.hpp`/`recognizer.hpp` include
+    `<onnxruntime_cxx_api.h>`. So `arboOCRConfig.cmake` re-resolves them with
+    `find_dependency(onnxruntime CONFIG)`, `find_dependency(OpenCV CONFIG)` and
+    `find_dependency(CURL CONFIG)` before it loads the targets file. cURL is not
+    in any public header but is linked `PUBLIC`, so the imported target still
+    names `CURL::libcurl` and it must resolve too.
+
+    All three therefore have to be discoverable on the **consumer's**
+    `CMAKE_PREFIX_PATH`, not just on the machine that built arboOCR. A prefix
+    path missing onnxruntime fails at configure time with a message that names
+    the dependency and not arboOCR:
+
+    ```text
+    Could not find a package configuration file provided by "onnxruntime"
+    ```
+
+    With a vcpkg-built arboOCR, the fix is to give the consumer the same
+    toolchain file (`-DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake`)
+    rather than adding prefixes one at a time.
+
+    `doctest` and `cxxopts` are *not* re-found. They are test- and CLI-only, so
+    consumers of the library never need them.
+
+!!! note "Jetson / `ARBOOCR_USE_SYSTEM_DEPS` installs differ"
+
+    In that mode onnxruntime is a vendored `.so`, not a CMake package, so the
+    config file uses the plain-module `find_dependency(OpenCV)` and
+    `find_dependency(CURL)` and re-applies the recorded
+    `ARBOOCR_ORT_INCLUDE_DIR` / `ARBOOCR_ORT_LIB_DIR` to the imported target
+    itself. Those paths are baked in at build time — moving the vendored
+    onnxruntime after installing breaks consumers. See
+    [Jetson / aarch64](jetson.md).
+
 ## Backend selection at runtime
 
 You do not pick the execution provider at build time. `Engine` auto-detects

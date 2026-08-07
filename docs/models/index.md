@@ -29,8 +29,12 @@ models/
         "PP-OCRv6", "medium", "models");
     ```
 
-    See [Model downloader](../api/downloader.md) for the full signature and
-    return type.
+    This fetches **all four** files above — detector, classifier, recognizer,
+    and the `_dict.txt`. The dict is best-effort: a 404 on it is not fatal,
+    because some ONNX genuinely carry their charset in `character` metadata and
+    have no dict file to fetch. See
+    [Model downloader](../api/downloader.md) for the full signature, the return
+    type, and how to tell a best-effort miss from a real failure.
 
 !!! warning "arboOCR ships **no default download URL**"
 
