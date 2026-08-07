@@ -1643,6 +1643,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#thread-pools-intraop-and-interop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thread pools: intraOp and interOp
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#three-ways-in-path-cvmat-encoded-bytes" class="md-nav__link">
     <span class="md-ellipsis">
       Three ways in: path, cv::Mat, encoded bytes
@@ -1773,37 +1782,93 @@ image.</p>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">useCuda</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">useTensorrt</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">useFp16</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w">      </span><span class="c1">// TensorRT only — FP16 kernels (default on)</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">useClahe</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">     </span><span class="c1">// CLAHE contrast boost before detection (faded/low-contrast docs)</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">splitOvermerged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// ink-gap split of wide fused det boxes (opt-in)</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="kt">float</span><span class="w">       </span><span class="n">minimumConfidence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">;</span><span class="w"> </span><span class="c1">// drop low-conf lines (0 = keep all)</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">returnWordBoxes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">  </span><span class="c1">// per-word polygons in LinePrediction::words</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">trtCacheDir</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models/trt_engines&quot;</span><span class="p">;</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">modelsDir</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">;</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">detModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_det.onnx</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">clsModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_cls.onnx</span>
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">recModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_rec_modelType.onnx</span>
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">dictPath</span><span class="p">;</span><span class="w">       </span><span class="c1">// empty = modelsDir/ocrVersion_rec_modelType_dict.txt</span>
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="p">};</span>
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="k">class</span><span class="w"> </span><span class="nc">Engine</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="k">public</span><span class="o">:</span>
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Engine</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EngineConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">config</span><span class="p">);</span>
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">backend</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">                       </span><span class="c1">// &quot;tensorrt&quot; | &quot;cuda&quot; | &quot;cpu&quot;</span>
-</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognize</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imagePath</span><span class="p">);</span>
-</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognize</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="w"> </span><span class="n">image</span><span class="p">);</span><span class="w">    </span><span class="c1">// in-memory (no disk I/O)</span>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognizeEncoded</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">  </span><span class="c1">// PNG/JPEG bytes</span>
-</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imagePath</span><span class="p">);</span>
-</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="w"> </span><span class="n">image</span><span class="p">);</span>
-</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeEncodedAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
-</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="p">};</span>
-</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
-</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="n">ModelPaths</span><span class="w"> </span><span class="nf">resolveModelPaths</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EngineConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cfg</span><span class="p">);</span>
-</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="w"> </span><span class="nf">decodeImageBytes</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="n">intraOpNumThreads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">    </span><span class="c1">// ORT thread pools, all three sessions</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="kt">int</span><span class="w">         </span><span class="n">interOpNumThreads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">    </span><span class="c1">// 0 = ORT default (machine-sized)</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">useClahe</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">     </span><span class="c1">// CLAHE contrast boost before detection (faded/low-contrast docs)</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">splitOvermerged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// ink-gap split of wide fused det boxes (opt-in)</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="kt">float</span><span class="w">       </span><span class="n">minimumConfidence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">;</span><span class="w"> </span><span class="c1">// drop low-conf lines (0 = keep all)</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="kt">bool</span><span class="w">        </span><span class="n">returnWordBoxes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">  </span><span class="c1">// per-word polygons in LinePrediction::words</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">trtCacheDir</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models/trt_engines&quot;</span><span class="p">;</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">modelsDir</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">;</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">detModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_det.onnx</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">clsModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_cls.onnx</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">recModelPath</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty = modelsDir/ocrVersion_rec_modelType.onnx</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">dictPath</span><span class="p">;</span><span class="w">       </span><span class="c1">// empty = modelsDir/ocrVersion_rec_modelType_dict.txt</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="p">};</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="k">class</span><span class="w"> </span><span class="nc">Engine</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="k">public</span><span class="o">:</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Engine</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EngineConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">config</span><span class="p">);</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">backend</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">                       </span><span class="c1">// &quot;tensorrt&quot; | &quot;cuda&quot; | &quot;cpu&quot;</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognize</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imagePath</span><span class="p">);</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognize</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="w"> </span><span class="n">image</span><span class="p">);</span><span class="w">    </span><span class="c1">// in-memory (no disk I/O)</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">    </span><span class="n">PagePrediction</span><span class="w"> </span><span class="nf">recognizeEncoded</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">  </span><span class="c1">// PNG/JPEG bytes</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imagePath</span><span class="p">);</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span><span class="w"> </span><span class="n">image</span><span class="p">);</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">PagePrediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">recognizeEncodedAsync</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="p">};</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="n">ModelPaths</span><span class="w"> </span><span class="nf">resolveModelPaths</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EngineConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cfg</span><span class="p">);</span>
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="w"> </span><span class="nf">decodeImageBytes</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
 </span></code></pre></div>
 <p><code>backend()</code> reports what actually got selected — <code>"tensorrt"</code>, <code>"cuda"</code> or
 <code>"cpu"</code> — not what you asked for. Log it at startup; a config that requested
 TensorRT but silently fell back to CPU is the single most common cause of
 "why is this 10× slower than the benchmark".</p>
+<h3 id="thread-pools-intraop-and-interop">Thread pools: intraOp and interOp<a class="headerlink" href="#thread-pools-intraop-and-interop" title="Permanent link">&para;</a></h3>
+<p>Two <code>int</code> fields, both defaulting to <code>0</code>, applied to <strong>all three ONNX Runtime
+sessions</strong> (detector, classifier, recognizer) at <code>Engine</code> construction. In
+Python they are <code>intra_op_num_threads</code> and <code>inter_op_num_threads</code>. Negative
+values are clamped to <code>0</code> — ORT reads these as a literal thread count, so a
+stray <code>-1</code> is not the "auto" it looks like.</p>
+<div class="admonition warning">
+<p class="admonition-title">This is a deployment knob, not a performance win</p>
+<p>Do not reach for these expecting speed. <code>0</code> means "let ORT decide", which
+in practice sizes the pools for <strong>the whole machine</strong> — and that is the
+right answer for a process that owns the box. It is the wrong answer when
+the process does not own the box:</p>
+<ul>
+<li><strong>N workers on one host.</strong> Each process independently spawns a
+  machine-sized pool. Eight workers on eight cores means eight pools of
+  eight threads competing for the same eight cores, and they thrash.</li>
+<li><strong>A container with a CPU quota.</strong> A cgroup limit is invisible to ORT: it
+  sizes against the host's core count, not your <code>--cpus</code> budget, then gets
+  throttled.</li>
+</ul>
+<p>Both cases are fixed by <em>lowering</em> the value, not raising it. One worker
+per core with <code>intraOpNumThreads = 1</code> beats eight machine-sized pools.</p>
+</div>
+<p>RapidOCR exposes the same two knobs and states outright that bigger is not
+better — the optimum is workload-dependent, which is precisely why this is
+tunable rather than tuned. There is no value arboOCR could ship that would be
+correct for a Jetson, a 64-core server and a 0.5-CPU container at once, so the
+default stays at ORT's own choice and the decision is handed to whoever knows
+the deployment. <strong>Measure on your own hardware and your own images before you
+change either field</strong>; if you are running a single OCR process on a dedicated
+machine, <code>0</code> is already right and you should leave it alone.</p>
+<div class="admonition note">
+<p class="admonition-title"><code>intraOpNumThreads</code> is the one that does anything today</p>
+<p>Intra-op threads parallelize work <em>inside</em> a single operator and are what
+actually determines how many cores one inference burns. Inter-op threads
+parallelize <em>across</em> independent operators, which ONNX Runtime only does in
+parallel execution mode — and arboOCR never calls <code>SetExecutionMode</code>, so
+every session runs in ORT's default sequential mode. <code>interOpNumThreads</code> is
+exposed for symmetry with RapidOCR and for provider configurations that
+schedule differently; set <code>intraOpNumThreads</code> if you want to cap CPU usage.</p>
+</div>
+<p>These fields are <strong>library-level only</strong> — there are no <code>arboocr_demo</code> flags for
+them, so they are reachable from C++ and Python but not from the CLI or the
+wrappers that spawn it. If you are constraining a subprocess-based deployment,
+constrain it from outside: <code>taskset</code>, <code>cpuset</code> cgroups, or <code>--cpus</code> on the
+container.</p>
+<div class="admonition tip">
+<p class="admonition-title">Consistent with the arena decision</p>
+<p>arboOCR takes a deliberately conservative stance on ONNX Runtime resource
+defaults. The CPU memory arena is disabled for a closely related reason —
+ORT's default is tuned for a process that owns the machine, and it never
+returns memory to the OS. See
+<a href="../models/accuracy-defaults/#memory-footprint-the-onnxruntime-cpu-arena-is-off">Memory footprint: the ONNXRuntime CPU arena is off</a>.</p>
+</div>
 <h3 id="three-ways-in-path-cvmat-encoded-bytes">Three ways in: path, <code>cv::Mat</code>, encoded bytes<a class="headerlink" href="#three-ways-in-path-cvmat-encoded-bytes" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -2146,6 +2211,18 @@ fully expanded dump is unreadable; this keeps the pretty output skimmable.</p>
 <td>TensorRT only — FP16 kernels, on by default. See <a href="../benchmarks/#tensorrt-precision-fp16">Benchmarks</a>.</td>
 </tr>
 <tr>
+<td><code>intraOpNumThreads</code></td>
+<td><code>int</code></td>
+<td><code>0</code></td>
+<td>ORT intra-op pool size for all three sessions. <code>0</code> = ORT decides (sizes for the whole machine). Lower it when several workers or a CPU-quota'd container share a host. Negatives clamp to <code>0</code>. See <a href="#thread-pools-intraop-and-interop">Thread pools</a>.</td>
+</tr>
+<tr>
+<td><code>interOpNumThreads</code></td>
+<td><code>int</code></td>
+<td><code>0</code></td>
+<td>ORT inter-op pool size. <code>0</code> = ORT decides. Largely inert today — arboOCR runs sessions in ORT's default sequential execution mode. Negatives clamp to <code>0</code>.</td>
+</tr>
+<tr>
 <td><code>useClahe</code></td>
 <td><code>bool</code></td>
 <td><code>false</code></td>
@@ -2246,7 +2323,7 @@ arbitrary, the header explains why it is not.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 16:04:14 UTC">2026-08-07 16:04:14</span>
   </span>
 
     
