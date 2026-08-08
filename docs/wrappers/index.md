@@ -156,7 +156,8 @@ cache is frequently read-only, so it cannot be written into the way Composer's
 All four wrappers are pinned to release
 [`v0.1.0-php1`](https://github.com/wafik/ArboOCR/releases/tag/v0.1.0-php1), and
 the auto-download is verified working end to end on both Windows and Linux
-against that tag.
+against that tag. The model weights are pinned and cached the same way, one
+layer down — see [Models](#models).
 
 !!! tip "Offline installs and unsupported platforms"
     If auto-download fails — air-gapped CI, a corporate proxy, an OS with no
@@ -170,10 +171,14 @@ against that tag.
 
 ## Models
 
-**No wrapper bundles OCR models, and none of them auto-download models.** You
-point a models directory at a folder of PP-OCRv6 ONNX files yourself. Only the
-recognizer has size variants; the detector is always one file, and the angle
-classifier is only needed if you turn angle classification on.
+**No wrapper bundles OCR models — and all four auto-download them anyway.** Not
+one line of wrapper code makes that happen: every wrapper spawns the same
+`arboocr_demo` binary, and that binary fetches the stock weights it is missing,
+so the wrappers inherit the behaviour for free. Point a models directory at
+files you already have and nothing touches the network; leave them missing and
+they arrive on first use. Only the recognizer has size variants; the detector is
+always one file, and the angle classifier is only needed if you turn angle
+classification on.
 
 | File | Needed for | Varies by model type? |
 |---|---|---|
@@ -189,18 +194,59 @@ You only need the recognizer size(s) you will actually use. For the default
 later is a one-word config change; the directory can hold all three sizes side
 by side so you can switch freely at runtime.
 
-### Three ways to get the files
+### Four ways to get the files
 
-1. **Copy from a `rapidocr` install.** If you already have the Python
+1. **Do nothing.** This is the default now, which is what turns the other three
+   into deliberate choices rather than prerequisites. The first time a wrapper
+   spawns `arboocr_demo` with stock weights missing, the engine downloads them,
+   checks each file against a SHA-256 baked into the binary, and writes it
+   atomically. A mirror serving different bytes
+   is rejected rather than loaded, and a half-finished download never becomes a
+   file the next run mistakes for complete.
+2. **Copy from a `rapidocr` install.** If you already have the Python
    `rapidocr` package, copy its `models/` directory over and rename the files
    to match the layout above.
-2. **Use your own PP-OCRv6 ONNX export.** Place and rename the files as above.
-3. **Use a local arboOCR checkout.** Its `models/` directory already contains
+3. **Use your own PP-OCRv6 ONNX export.** Place and rename the files as above.
+4. **Use a local arboOCR checkout.** Its `models/` directory already contains
    the detector, the classifier, and all three recognizer sizes — the fastest
    path for local development.
 
-arboOCR does not host default download URLs. See [Models](../models/index.md)
-for the full treatment, including [size trade-offs](../models/sizes.md) and
+Options 2–4 all reduce to the same rule: **a populated models directory wins.**
+If the files the engine wants are already sitting in `models_dir` / `ModelsDir`
+/ `modelsDir`, there is no network access at all.
+
+Where the downloaded files land — tag-scoped, so a future `models-v2` can never
+reuse a `models-v1` file:
+
+| Platform | Model cache directory |
+|---|---|
+| Windows | `%LOCALAPPDATA%\arboOCR\models\models-v1` |
+| macOS | `~/Library/Caches/arboOCR/models/models-v1` |
+| Linux | `$XDG_CACHE_HOME/arboOCR/models/models-v1`, falling back to `~/.cache/arboOCR/models/models-v1` |
+
+That is the same shape as [Getting the binary](#getting-the-binary) above: a
+pinned tag, a platform cache directory, a lazy fetch on first use. Same pattern,
+second artifact — the wrappers cache the CLI under their own name, and the CLI
+caches the weights under arboOCR's.
+
+!!! tip "Turning the download off from any of the four languages"
+    The wrappers do not expose `arboocr_demo`'s `--no-download` and
+    `--models-url` flags, but a spawned process inherits your environment, so
+    the env vars reach it from every language. `ARBOOCR_OFFLINE=1` makes a
+    missing model an immediate error instead of a network call — the setting you
+    want in an air-gapped runtime, where a stalled socket is indistinguishable
+    from a hang. `ARBOOCR_MODELS_URL` points at an internal mirror, and
+    `ARBOOCR_CACHE_DIR` moves the cache somewhere writable, which matters when
+    your service runs as a user with no home directory. To prefetch during a
+    Docker build instead of at first request, run the binary once with
+    `--download-models`; it downloads and exits.
+
+arboOCR does host a default download URL now:
+[`models-v1`](https://github.com/ARBO-TEAM/arbo-ocr-models/releases/tag/models-v1)
+in [ARBO-TEAM/arbo-ocr-models](https://github.com/ARBO-TEAM/arbo-ocr-models), an
+immutable release tag rather than a branch, with every stock file checksummed.
+See [Models](../models/index.md) for the full treatment, including
+[size trade-offs](../models/sizes.md) and
 [language coverage](../models/languages.md).
 
 ## Overhead

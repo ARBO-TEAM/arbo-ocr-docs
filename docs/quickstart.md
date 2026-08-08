@@ -4,8 +4,21 @@ title: Quickstart
 
 # Quickstart
 
-Three ways in, shortest first. All of them need [model files](models/index.md) —
-arboOCR does not bundle them.
+Three ways in, shortest first. All of them need [model files](models/index.md),
+and all of them will fetch those files for you: arboOCR does not bundle the
+weights, but on a first run with none present it downloads them, verifies each
+against a SHA-256 baked into the binary, and caches them per platform. Bring
+your own by pointing `modelsDir` at a directory that already holds them — a
+populated directory always wins and never triggers a download.
+
+!!! tip "When you would rather it did not reach for the network"
+
+    Set `ARBOOCR_OFFLINE=1`, or pass `--no-download` to the CLI, and a missing
+    model becomes an immediate error instead of a network call — the behaviour
+    you want in an air-gapped sandbox, where a stalled socket is
+    indistinguishable from a hang. `arboocr_demo --download-models` prefetches
+    everything and exits, which is the natural line to put in a Dockerfile so
+    the runtime image never downloads anything at all.
 
 ## The CLI
 

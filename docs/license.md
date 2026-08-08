@@ -30,7 +30,28 @@ for full attribution.
     with your binaries; it is the authoritative list, kept current with what
     the repository actually vendors.
 
-The table above covers the library source. arboOCR does not bundle the PP-OCRv6
-model files — they are fetched separately and are not part of this repository,
-so their terms are whatever their own distributor sets. See
-[Models](models/index.md).
+## The model weights
+
+The Components table covers the library source. arboOCR still does not bundle
+the PP-OCRv6 model files — they are fetched separately and are not part of this
+repository — but it now ships a **default download URL** pointing at weights the
+project hosts itself, at
+[ARBO-TEAM/arbo-ocr-models](https://github.com/ARBO-TEAM/arbo-ocr-models). Since
+those are the bytes you get if you do nothing, arboOCR is the distributor of
+them, and owes you the provenance rather than deferring to someone else's terms.
+
+The weights derive from
+[PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)'s PP-OCR models, and
+upstream PaddleOCR is Apache-2.0. The models repository carries a `NOTICE`
+recording that provenance and licence; treat it as authoritative for the
+weights, the same way `THIRD_PARTY_NOTICES.md` is authoritative for the code.
+
+!!! info "Two licences, two scopes"
+
+    arboOCR's Apache-2.0 covers arboOCR's own code. It makes no claim about the
+    weights, and the weights' terms make no claim about the code — so if you
+    redistribute a product containing both, carry both notices. If you point
+    `modelsDir` at ONNX files you obtained yourself, arboOCR downloads nothing
+    and the models repository's `NOTICE` never enters the picture.
+
+See [Models](models/index.md).
