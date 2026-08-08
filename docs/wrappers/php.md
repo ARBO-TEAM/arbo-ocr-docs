@@ -39,9 +39,12 @@ needed.
 
 ## Models
 
-`arbo/ocr-php` does not bundle or download OCR models. Point `modelsDir` at a
-folder of PP-OCRv6 ONNX files. For the default `modelType: 'small'` that means
-three files:
+`arbo/ocr-php` does not bundle OCR models — it does not have to. The
+`arboocr_demo` binary it spawns downloads the stock weights it is missing on
+first use, checks each file against a SHA-256 baked into the binary, and caches
+it per platform. Point `modelsDir` at a folder that already holds the PP-OCRv6
+ONNX files and nothing touches the network. For the default
+`modelType: 'small'` that means three files:
 
 ```text
 models/
@@ -54,8 +57,9 @@ models/
 files for `_tiny` or `_medium` to change size — or keep all three in the same
 directory and switch with `modelType`.
 
-Full file matrix and where to get the files: [Models](index.md#models) on the
-wrappers overview, or [Models](../models/index.md) for the complete treatment.
+Full file matrix, the cache locations, and how to turn the download off:
+[Models](index.md#models) on the wrappers overview, or
+[Models](../models/index.md) for the complete treatment.
 
 ## Usage
 

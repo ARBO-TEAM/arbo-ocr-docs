@@ -22,18 +22,50 @@ Short answers with a link to the page that has the full one.
     - `PP-OCRv6_cls.onnx` — angle classification, **only** needed if
       `useAngleCls` is on.
 
-    See [Models](models/index.md) for the directory layout and the two ways
+    See [Models](models/index.md) for the directory layout and the three ways
     to obtain the files.
 
-??? question "Why is there no default model download URL?"
+??? question "Is there a default model download URL?"
 
-    Because PP-OCR model hosting locations are not stable across mirrors, so
-    arboOCR makes the caller pick the source rather than baking in a URL that
-    rots. `downloadOcrModels()` takes a `baseUrl` you supply; there is no
-    built-in default.
+    **Yes, as of `models-v1`** — and this entry used to say there was not, and
+    never would be, so here is what changed rather than a quiet edit. The old
+    answer rested on three things: a hardcoded URL **rots**, you do not control
+    **integrity**, and you do not control the **licence question** of where the
+    weights came from. A default is only defensible once all three are
+    answered, and now they are. The default resolves to an immutable release
+    tag, so it is a version rather than a moving target. Every stock file is
+    checked against a SHA-256 compiled into the binary, so a host serving
+    different bytes is rejected instead of loaded. And the weights live in
+    [arbo-ocr-models](https://github.com/ARBO-TEAM/arbo-ocr-models) with a
+    NOTICE recording their PP-OCR provenance — upstream PaddleOCR is
+    Apache-2.0.
+
+    In practice: construct an `Engine` and anything missing is fetched and
+    verified. What you supply still comes first — an explicit `recModelPath` is
+    never swapped for a stock download, a populated `modelsDir` is used without
+    touching the network, and `autoDownload = false` (or `ARBOOCR_OFFLINE=1`,
+    or `--no-download`) turns fetching off entirely. `downloadOcrModels()`
+    still takes a `baseUrl`; it is now optional rather than mandatory.
 
     See [Models](models/index.md) and the
     [model downloader](api/downloader.md).
+
+??? question "Where do downloaded models actually go?"
+
+    Into a per-platform cache directory, scoped by release tag — not into your
+    build tree, so several projects on one machine share one copy:
+
+    | Platform | Path |
+    |---|---|
+    | Windows | `%LOCALAPPDATA%\arboOCR\models\models-v1` |
+    | macOS | `~/Library/Caches/arboOCR/models/models-v1` |
+    | Linux | `$XDG_CACHE_HOME/arboOCR/models/models-v1`, else `~/.cache/arboOCR/models/models-v1` |
+
+    Override the root with `ARBOOCR_CACHE_DIR`. For a container image, prefer
+    `arboocr_demo --download-models` in a build step so the weights bake into a
+    layer instead of being fetched on every start.
+
+    See the [model downloader](api/downloader.md#the-cache-directory).
 
 ??? question "Should I use tiny, small or medium?"
 

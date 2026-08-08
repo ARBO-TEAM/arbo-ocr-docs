@@ -47,6 +47,8 @@ struct EngineConfig {
     float       minimumConfidence = 0.5f; // drop low-conf lines (0 = keep all)
     bool        returnWordBoxes = false;  // per-word polygons in LinePrediction::words
     std::string trtCacheDir  = "models/trt_engines";
+    bool        autoDownload = true;      // fetch missing stock weights instead of throwing
+    std::string modelsBaseUrl;            // empty = defaultModelsBaseUrl()
     std::string modelsDir    = "models";
     std::string detModelPath;   // empty = modelsDir/ocrVersion_det.onnx
     std::string clsModelPath;   // empty = modelsDir/ocrVersion_cls.onnx
@@ -66,7 +68,8 @@ public:
     std::future<PagePrediction> recognizeEncodedAsync(const uint8_t* data, size_t size);
 };
 
-ModelPaths resolveModelPaths(const EngineConfig& cfg);
+ModelPaths resolveModelPaths(const EngineConfig& cfg);  // pure — derives paths, touches nothing
+ModelPaths ensureOcrModels(const EngineConfig& cfg);    // derives, then fetches what is missing
 cv::Mat decodeImageBytes(const uint8_t* data, size_t size);
 ```
 
@@ -74,6 +77,44 @@ cv::Mat decodeImageBytes(const uint8_t* data, size_t size);
 `"cpu"` — not what you asked for. Log it at startup; a config that requested
 TensorRT but silently fell back to CPU is the single most common cause of
 "why is this 10× slower than the benchmark".
+
+### `ensureOcrModels`: the constructor's first step, exposed
+
+`Engine`'s constructor now calls `ensureOcrModels(cfg)` where it used to call
+`resolveModelPaths(cfg)`. It resolves the same four paths and then fills in
+whatever is missing, one file at a time, stopping at the first hit:
+
+1. An explicitly set `detModelPath` / `clsModelPath` / `recModelPath` /
+   `dictPath` is returned exactly as given and is **never** replaced by a
+   download.
+2. Otherwise, an existing non-empty file under `modelsDir` wins — a populated
+   models directory means zero network access.
+3. Otherwise the stock file is downloaded into the per-user cache, checked
+   against a SHA-256 compiled into the binary, and that cache path is returned.
+
+`clsModelPath` is only fetched when `useAngleCls` is set, and a dictionary that
+cannot be fetched is not fatal — most recognizers carry their charset in their
+own ONNX metadata. Set `autoDownload = false` (or export `ARBOOCR_OFFLINE=1`)
+to keep step 3 from ever running.
+
+!!! danger "An explicit path is never substituted by a download"
+    Rule 1 exists to protect fine-tuned weights. If `recModelPath` names your
+    own recognizer and that file is missing, arboOCR does not quietly fetch the
+    stock model and hand you plausible output from a network you did not
+    choose. The path comes back exactly as you set it and construction fails on
+    it — the same failure you would have got before any of this existed.
+    Substitution would be invisible from the results, which is what makes it
+    the wrong default.
+
+!!! note "`ensureOcrModels` never throws"
+    Anything it cannot fetch keeps its resolved-but-missing path, so a failed
+    download surfaces as the ordinary model-load error at construction rather
+    than as a second, separate failure mode you would have to catch
+    differently. `resolveModelPaths` is unchanged and still pure: no
+    filesystem check, no network, same answer every time. Call that one when
+    you want to know *which* paths a config names; call `ensureOcrModels` when
+    you want the download to happen at a moment you picked rather than inside
+    the constructor.
 
 ### Thread pools: intraOp and interOp
 
@@ -375,6 +416,8 @@ as `0.9`.
 | `minimumConfidence` | `float` | `0.5f` | Drops low-confidence lines; `0` keeps every box. Also the green/red threshold in [`drawResult`](visualize.md). See [Accuracy defaults](../models/accuracy-defaults.md). |
 | `returnWordBoxes` | `bool` | `false` | Populates `LinePrediction::words` with a polygon per word (per character for CJK). Off by default — the spans are cheap, carrying them for every line of every page is not. Read the [accuracy caveat](#word-boxes) before you rely on the geometry. |
 | `trtCacheDir` | `std::string` | `"models/trt_engines"` | Where TensorRT caches built engines. Changing `useFp16` or `recBatchNum` can invalidate this cache — see [Benchmarks](../benchmarks.md#tensorrt-precision-fp16). |
+| `autoDownload` | `bool` | `true` | Fetch missing **stock** weights into the per-user cache instead of failing to construct. An explicitly set `*ModelPath` is never downloaded over. Set `false` — or export `ARBOOCR_OFFLINE=1` — for a build agent or container that must not reach the network. See [Environment](../cli.md#environment). |
+| `modelsBaseUrl` | `std::string` | *(empty)* | Directory URL the stock files are fetched from. Empty means `defaultModelsBaseUrl()`: the pinned release, or `ARBOOCR_MODELS_URL` when that is set. Point it at an internal mirror. |
 | `modelsDir` | `std::string` | `"models"` | Base directory used to derive every path left empty below. |
 | `detModelPath` | `std::string` | *(empty)* | Empty = `modelsDir/ocrVersion_det.onnx`. |
 | `clsModelPath` | `std::string` | *(empty)* | Empty = `modelsDir/ocrVersion_cls.onnx`. |
@@ -383,8 +426,12 @@ as `0.9`.
 
 !!! tip "Check resolution before you construct"
     `resolveModelPaths(cfg)` applies exactly the derivation rules in the last
-    five rows. Call it first and assert the files exist — you get a clear
-    error at your own call site instead of a silent empty-lines page later.
+    five rows and nothing else. Call it first and assert the files exist — you
+    get a clear error at your own call site instead of a silent empty-lines
+    page later. With `autoDownload = true` that assertion is the wrong check on
+    its own, because a missing file is not yet a problem: call
+    [`ensureOcrModels(cfg)`](#ensureocrmodels-the-constructors-first-step-exposed)
+    instead and assert on what it returns.
 
 ## Where the real documentation lives
 
@@ -396,4 +443,4 @@ arbitrary, the header explains why it is not.
 - [Logging](logging.md) — install a callback; the library is silent by default.
 - [Building a custom pipeline](custom-pipeline.md) — `Detector`, `Classifier`, `Recognizer` directly.
 - [Visualization](visualize.md) — `drawResult`, the box-overlay debug helper.
-- [Model downloader](downloader.md) — `downloadFile`, `downloadOcrModels`, `ocrModelFileNames`.
+- [Model downloader](downloader.md) — `downloadFile` (now with an optional `expectedSha256`), `downloadOcrModels`, `ocrModelFileNames`, plus the defaults behind auto-download: `defaultModelsTag`, `defaultModelsBaseUrl`, `defaultModelsCacheDir`, `sha256File`, `knownSha256`.

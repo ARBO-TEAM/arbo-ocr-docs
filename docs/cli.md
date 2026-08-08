@@ -26,13 +26,16 @@ that exists here exists in all four languages.
 ```text
 arboocr_demo --image <path>        [options]
 arboocr_demo --images-from <path>  [options]
+arboocr_demo --download-models     [options]
 ```
 
 Exactly one input flag is required. Without either, the binary prints usage and
 exits `1`; passing **both** is an error. `--image` recognizes one file;
 [`--images-from`](#batch-input) reads a list of paths and recognizes all of them
 in a single process — see the next section for why that is not just a
-convenience.
+convenience. The third form recognizes nothing at all: it
+[prewarms the model cache](#prewarming-the-cache-download-models) and exits, so
+it needs no input.
 
 !!! note "Boolean flags"
 
@@ -237,6 +240,12 @@ therefore a usage error, not a silent overwrite.
 | `--cls-model <path>` | *(none)* | Override the resolved classifier path. |
 | `--rec-model <path>` | *(none)* | Override the resolved recognizer path. |
 | `--dict <path>` | *(none)* | Override the character dictionary path. |
+| `--no-download` | off | Never fetch missing models — fail instead. Same effect as `ARBOOCR_OFFLINE=1`. |
+| `--models-url <url>` | *(none)* | Directory URL to fetch missing models from. Empty uses the pinned default release. |
+| `--download-models` | off | Fetch the models for `--ocr-version`/`--model-type` into the cache and exit without recognizing anything. See [Prewarming the cache](#prewarming-the-cache-download-models). |
+
+`--no-download` and `--download-models` are presence switches like every other
+boolean flag on this page — write `--no-download`, not `--no-download=true`.
 
 Unless overridden, paths are assembled from the three values above:
 
@@ -260,6 +269,153 @@ harmless otherwise. And `--dict` is a **fallback**: the recognizer first tries
 to read its character set from the ONNX file's own metadata and only touches
 the `.txt` when that is absent. Run with `--log-level debug` to see which of
 the two paths was taken.
+
+### Missing models fetch themselves
+
+A model file that is not on disk is no longer an immediate failure. Before the
+first session opens, the binary resolves all four paths, downloads whatever is
+missing from a pinned release, verifies each file against a SHA-256 compiled
+into the binary, and writes it atomically into a per-user
+[cache directory](#where-the-cache-lives). The atomic write earns its keep the
+first time a download is killed halfway: without it you are left with a file
+that *exists* and does not load, which every later run treats as a cache hit
+and fails on.
+
+Resolution is per file, not per run, and it stops at the first hit:
+
+| Precedence | Source | When |
+|---|---|---|
+| 1 | `--det-model`, `--cls-model`, `--rec-model`, `--dict` | An explicitly given path is used as-is and is **never** substituted by a download. |
+| 2 | `--models-dir` | An existing, non-empty file there wins — a populated models directory means zero network access. |
+| 3 | The cache | Fetched from `--models-url` (or the default release), SHA-256 verified, and reused by every later run. |
+
+!!! danger "A fine-tuned model is never silently swapped for a stock one"
+
+    Rule 1 is the load-bearing one. Point `--rec-model` at your own weights and
+    misspell the path, and arboOCR does **not** quietly download the stock
+    recognizer and carry on emitting plausible-looking text from a model you
+    did not choose. You get the model-load failure, naming the file you
+    actually asked for. Silent substitution would be undetectable from the
+    output — the results would just be quietly wrong.
+
+Both resolution details above carry over to fetching. The classifier is only
+downloaded when `--angle` is set, and the dictionary is best-effort for the
+same reason it is a fallback on disk — the recognizer usually carries its own
+charset, and repos hosting such models often publish no `.txt` at all. Neither
+absence is a failure.
+
+### Prewarming the cache: `--download-models`
+
+`--download-models` fetches the models for the current `--ocr-version` and
+`--model-type`, then exits without recognizing anything. It exists so the
+network access happens where you can see it — a Docker build stage, a CI setup
+step, a provisioning script — instead of inside the first request that a real
+user is waiting on.
+
+It prints one line per file, in det, cls, rec, dict order:
+
+```text
+$ arboocr_demo --download-models --ocr-version PP-OCRv6 --model-type small
+ok      C:\Users\you\AppData\Local\arboOCR\models\models-v1\PP-OCRv6_det.onnx
+missing C:\Users\you\AppData\Local\arboOCR\models\models-v1\PP-OCRv6_cls.onnx
+ok      C:\Users\you\AppData\Local\arboOCR\models\models-v1\PP-OCRv6_rec_small.onnx
+missing C:\Users\you\AppData\Local\arboOCR\models\models-v1\PP-OCRv6_rec_small_dict.txt
+```
+
+Exit `0` when the detector and the recognizer are both present, `2` otherwise.
+Both `missing` lines above are expected and neither affects the exit code: no
+`--angle`, so no classifier was wanted, and this recognizer embeds its own
+charset. Keying the result on det and rec rather than on four clean `ok`s is
+what keeps a CI gate from failing over a dictionary nobody needs.
+
+!!! warning "`--download-models` with `--no-download` is a usage error"
+
+    Asking for a download and forbidding downloads in the same command line has
+    no sensible interpretation, so it is rejected with exit `1` rather than
+    resolved in favour of one of them. If you want a prewarm step that is a
+    no-op offline, branch on the environment yourself — do not pass both and
+    hope.
+
+=== ":material-docker: A Docker build stage"
+
+    ```dockerfile
+    ENV ARBOOCR_CACHE_DIR=/opt/arboocr/models
+    RUN arboocr_demo --download-models --model-type medium
+    ENV ARBOOCR_OFFLINE=1
+    ```
+
+    The fetch happens once, in a cached layer. Set `ARBOOCR_CACHE_DIR`
+    explicitly here: the default cache lives under the *user's* home, so a
+    build stage running as `root` and a service running as anyone else fill and
+    read two different directories — and the symptom is a container that
+    downloads models on every cold start. `ARBOOCR_OFFLINE=1` at runtime turns
+    a cache miss into a loud failure instead of a surprise egress from
+    production.
+
+=== ":material-github: A CI setup step"
+
+    ```bash
+    arboocr_demo --download-models --model-type small || exit 1
+    arboocr_demo --images-from pages.txt --no-download --json > out.json
+    ```
+
+    The first line is the only one allowed to touch the network, and it fails
+    the job loudly if the release is unreachable. The second runs against the
+    cache with fetching switched off, so a run that would silently re-download
+    on a cache miss fails instead — which is how you find out your cache key is
+    wrong.
+
+## Environment
+
+Three variables cover what a flag cannot: a build agent that must never reach
+the network, an image with a baked-in cache, and a site that mirrors the
+release internally.
+
+| Variable | Effect |
+|---|---|
+| `ARBOOCR_OFFLINE=1` | Forbid all model fetching, process-wide. Equivalent to `--no-download`. |
+| `ARBOOCR_CACHE_DIR` | Override the cache root. The `models-v1` tag segment is still appended. |
+| `ARBOOCR_MODELS_URL` | Override the default base URL — point a fleet at an internal mirror. |
+
+`ARBOOCR_OFFLINE` and `--no-download` are the same switch reached two ways, and
+either alone is enough: the flag is for one command, the variable for every
+process in an environment you do not want editing every call site of.
+`ARBOOCR_MODELS_URL` changes what an empty `--models-url` resolves to, so a
+mirror can be configured once for a machine rather than threaded through every
+invocation.
+
+!!! info "What the default URL points at"
+
+    `https://github.com/ARBO-TEAM/arbo-ocr-models/releases/download/models-v1/`
+    — release assets under an immutable tag, so the bytes behind a given
+    filename cannot change under a deployment that already pinned this version.
+    Every stock file is checked against a SHA-256 baked into the binary, so a
+    truncated transfer, a captive-portal login page served with a `200`, or a
+    tampered mirror all fail the download rather than landing on disk and
+    failing later as a confusing model-load error.
+
+### Where the cache lives
+
+| Platform | Path |
+|---|---|
+| Windows | `%LOCALAPPDATA%\arboOCR\models\models-v1` |
+| macOS | `~/Library/Caches/arboOCR/models/models-v1` |
+| Linux | `$XDG_CACHE_HOME/arboOCR/models/models-v1`, else `~/.cache/arboOCR/models/models-v1` |
+
+The trailing `models-v1` is the release tag, and it is not decoration. Scoping
+the directory by tag is what makes a future `models-v2` structurally incapable
+of reading a `models-v1` file: a re-trained weight shipped under the same
+filename lands in a different directory instead of registering as a cache hit
+and being loaded for the rest of that machine's life. `ARBOOCR_CACHE_DIR` moves
+the root only — the tag segment is still appended underneath whatever you set.
+
+!!! tip "The cache is disposable"
+
+    Nothing in it is authoritative; every file can be re-fetched and is
+    verified on arrival. Deleting the directory is a valid first step when a
+    model behaves oddly, and costs one download. That is also why downloads
+    land in the cache rather than in `--models-dir`: the directory you curated
+    is not somewhere an automatic fetch gets to add files.
 
 ## Detection tuning
 
@@ -359,19 +515,41 @@ $ arboocr_demo --image page.jpg --models-dir models --log-level debug
 |---|---|
 | `0` | Success. |
 | `1` | Usage or parse error, or (default output mode) no text found. |
-| `2` | Model load failure, or an unexpected recognition error. |
+| `2` | Model load failure — including a fetch that was attempted and failed — or an unexpected recognition error. |
 
 Wrappers should treat any non-zero code as failure. `2` is the one worth
 special-casing: it means the engine could not be *built* — a missing, corrupt,
-or unreadable ONNX file — or that inference itself threw. Nothing about the
-input image or the flags can be fixed by retrying; on `2` the binary prints the
-four resolved model paths to stderr so you can see exactly which file it went
-looking for.
+or unreadable ONNX file, or a missing one that could not be downloaded — or
+that inference itself threw. On `2` the binary prints the four resolved model
+paths to stderr, plus whether auto-download was on or off and the cache
+directory it resolved to, so you can see both which file it went looking for
+and where it was entitled to look.
 
 `1` covers a wider range: an unrecognized flag, no input flag at all, `--image`
 and `--images-from` together, `--draw` or `--markdown` alongside
-`--images-from`, a bad `--log-level` value, and — in the default human-readable
-mode — a page that produced zero lines.
+`--images-from`, `--download-models` alongside `--no-download`, a bad
+`--log-level` value, and — in the default human-readable mode — a page that
+produced zero lines.
+
+!!! warning "`2` is no longer always permanent"
+
+    The old rule was that retrying a `2` is pointless, because a missing file
+    stays missing. With auto-download on, `2` also covers "the fetch failed",
+    and a fetch fails for reasons that go away by themselves: a proxy, a rate
+    limit, a runner with no egress that hour. The stderr block tells you which
+    case you are in — if auto-download was `off`, the old rule still holds and
+    a retry is wasted; if it was `on`, read the download error before you
+    decide. The way to not have this failure mode at request time at all is to
+    move the fetch into your build with
+    [`--download-models`](#prewarming-the-cache-download-models).
+
+!!! note "`--download-models` has only two outcomes"
+
+    That mode recognizes nothing, so the codes mean something narrower: `0`
+    when the detector and recognizer are both on disk when it finishes, `2`
+    when either is not. A `missing` line for the classifier or the dictionary
+    does not change the result. See
+    [Prewarming the cache](#prewarming-the-cache-download-models).
 
 !!! note "Batch mode reads `1` as partial, not failed"
 

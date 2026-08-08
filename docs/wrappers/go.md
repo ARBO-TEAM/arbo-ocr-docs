@@ -32,9 +32,12 @@ step needed.
 
 ## Models
 
-`arbo-ocr-go` does not bundle or download OCR models. Point `Config.ModelsDir`
-at a folder of PP-OCRv6 ONNX files. For the default `ModelType: "small"` that
-means three files:
+`arbo-ocr-go` does not bundle OCR models — it does not have to. The
+`arboocr_demo` binary it spawns downloads the stock weights it is missing on
+first use, checks each file against a SHA-256 baked into the binary, and caches
+it per platform. Point `Config.ModelsDir` at a folder that already holds the
+PP-OCRv6 ONNX files and nothing touches the network. For the default
+`ModelType: "small"` that means three files:
 
 ```text
 models/
@@ -47,8 +50,9 @@ models/
 files for `_tiny` or `_medium` to change size — or keep all three in the same
 directory and switch with `ModelType`.
 
-Full file matrix and where to get the files: [Models](index.md#models) on the
-wrappers overview, or [Models](../models/index.md) for the complete treatment.
+Full file matrix, the cache locations, and how to turn the download off:
+[Models](index.md#models) on the wrappers overview, or
+[Models](../models/index.md) for the complete treatment.
 
 ## Usage
 
@@ -201,9 +205,15 @@ binPath, err := installer.EnsureInstalled(binDir)
 OS/arch. Call `installer.EnsureInstalled(binDir)` yourself to control exactly
 when the download happens, then pass the returned path as `Config.BinPath`.
 
-!!! warning "Models are never auto-downloaded"
-    Like the PHP package, `arbo-ocr-go` never bundles or downloads OCR models.
-    See [Models](../models/index.md) for exactly which files you need.
+!!! note "The models download is the binary's job, not this package's"
+    `arbo-ocr-go` downloads exactly one thing: the `arboocr_demo` binary. The
+    weights are fetched separately, by that binary, into arboOCR's own platform
+    cache — so `installer.EnsureInstalled` in a Docker build step gets you the
+    binary and *not* the models, and the first request would still reach for the
+    network. Prefetch both in the same step by running the returned binary once
+    with `--download-models`, or set `ARBOOCR_OFFLINE=1` at runtime so a missing
+    model fails fast instead of opening a socket. See
+    [Models](../models/index.md).
 
 ### Deadlock avoidance
 

@@ -24,9 +24,16 @@ you need a vcpkg checkout and `VCPKG_ROOT` pointing at it before you configure.
 Everything else — OpenCV, ONNXRuntime, cURL, doctest, cxxopts — comes from
 there.
 
-Model files are a **separate step**. arboOCR does not bundle them, and a build
-with no ONNX files in `modelsDir` will configure and compile cleanly while
-recognizing nothing at runtime. Fetch them before your first run — see
+Model files are **not part of the build**, and no longer a step you have to
+remember. arboOCR does not bundle them, but it does fetch them: a freshly built
+`arboocr_demo` pointed at an empty `modelsDir` downloads the stock weights it
+needs on first run, checks each against a SHA-256 baked into the binary, and
+caches them per platform.
+
+Make it explicit on a machine that must not reach for the network mid-run — an
+air-gapped runner, a hermetic image layer. `arboocr_demo --download-models`
+prefetches and exits, and `ARBOOCR_OFFLINE=1` (or `--no-download`) turns a
+missing model into an immediate error rather than a socket that hangs. See
 [Models](../models/index.md).
 
 ## Desktop presets
