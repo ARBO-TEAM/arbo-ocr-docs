@@ -1417,6 +1417,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-model-weights" class="md-nav__link">
+    <span class="md-ellipsis">
+      The model weights
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1693,6 +1702,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-model-weights" class="md-nav__link">
+    <span class="md-ellipsis">
+      The model weights
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1769,10 +1787,28 @@ forward. Redistribute
 with your binaries; it is the authoritative list, kept current with what
 the repository actually vendors.</p>
 </div>
-<p>The table above covers the library source. arboOCR does not bundle the PP-OCRv6
-model files — they are fetched separately and are not part of this repository,
-so their terms are whatever their own distributor sets. See
-<a href="../models/">Models</a>.</p>
+<h2 id="the-model-weights">The model weights<a class="headerlink" href="#the-model-weights" title="Permanent link">&para;</a></h2>
+<p>The Components table covers the library source. arboOCR still does not bundle
+the PP-OCRv6 model files — they are fetched separately and are not part of this
+repository — but it now ships a <strong>default download URL</strong> pointing at weights the
+project hosts itself, at
+<a href="https://github.com/ARBO-TEAM/arbo-ocr-models">ARBO-TEAM/arbo-ocr-models</a>. Since
+those are the bytes you get if you do nothing, arboOCR is the distributor of
+them, and owes you the provenance rather than deferring to someone else's terms.</p>
+<p>The weights derive from
+<a href="https://github.com/PaddlePaddle/PaddleOCR">PaddleOCR</a>'s PP-OCR models, and
+upstream PaddleOCR is Apache-2.0. The models repository carries a <code>NOTICE</code>
+recording that provenance and licence; treat it as authoritative for the
+weights, the same way <code>THIRD_PARTY_NOTICES.md</code> is authoritative for the code.</p>
+<div class="admonition info">
+<p class="admonition-title">Two licences, two scopes</p>
+<p>arboOCR's Apache-2.0 covers arboOCR's own code. It makes no claim about the
+weights, and the weights' terms make no claim about the code — so if you
+redistribute a product containing both, carry both notices. If you point
+<code>modelsDir</code> at ONNX files you obtained yourself, arboOCR downloads nothing
+and the models repository's <code>NOTICE</code> never enters the picture.</p>
+</div>
+<p>See <a href="../models/">Models</a>.</p>
 
 
 

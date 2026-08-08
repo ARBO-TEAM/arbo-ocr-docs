@@ -1634,9 +1634,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#two-ways-to-get-them" class="md-nav__link">
+  <a href="#three-ways-to-get-them" class="md-nav__link">
     <span class="md-ellipsis">
-      Two ways to get them
+      Three ways to get them
     </span>
   </a>
   
@@ -1693,39 +1693,114 @@
 
 
 <h1 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h1>
-<p>arboOCR ships no weights. It needs PP-OCRv6 ONNX files in <code>modelsDir</code>:</p>
+<p>arboOCR ships no weights — the library binary contains no model data. It needs
+PP-OCRv6 ONNX files, and as of <code>models-v1</code> it will fetch the stock ones for you
+if it cannot find them:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>models/
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── PP-OCRv6_det.onnx                text detection (single file — no size variants)
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── PP-OCRv6_cls.onnx                angle classification (only needed if useAngleCls)
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── PP-OCRv6_rec_medium.onnx         text recognition — tiny | small | medium
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>└── PP-OCRv6_rec_medium_dict.txt     character dict (only if not embedded in ONNX metadata)
 </span></code></pre></div>
-<h2 id="two-ways-to-get-them">Two ways to get them<a class="headerlink" href="#two-ways-to-get-them" title="Permanent link">&para;</a></h2>
+<h2 id="three-ways-to-get-them">Three ways to get them<a class="headerlink" href="#three-ways-to-get-them" title="Permanent link">&para;</a></h2>
 <details class="note">
-<summary>Option A — copy from an existing install</summary>
-<p>If you already have a Python <code>rapidocr</code> install, copy its <code>models/</code>
-directory into <code>modelsDir</code>, renaming files to match the layout above.</p>
+<summary>Option A — nothing (the default)</summary>
+<p>Construct an <code>Engine</code> with an empty or incomplete <code>modelsDir</code> and arboOCR
+downloads what is missing, verifies it against a SHA-256 compiled into the
+binary, and loads it. There is no flag to set and no first-run step to
+document for your users.</p>
+<p>Files land in a per-platform cache, not in your build tree, so several
+projects on one machine share a single copy:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>%LOCALAPPDATA%\arboOCR\models\models-v1</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>~/Library/Caches/arboOCR/models/models-v1</code></td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><code>$XDG_CACHE_HOME/arboOCR/models/models-v1</code>, else <code>~/.cache/arboOCR/models/models-v1</code></td>
+</tr>
+</tbody>
+</table>
+<p>The trailing <code>models-v1</code> is the release tag the weights are pinned to. It
+is part of the path on purpose: a future <code>models-v2</code> gets its own
+directory rather than reusing a same-named file from this one.</p>
+<p>Set <code>autoDownload = false</code>, or <code>ARBOOCR_OFFLINE=1</code>, if you would rather it
+never reached the network. See
+<a href="../api/downloader/#turning-it-off">Model downloader</a>.</p>
 </details>
 <details class="note">
-<summary>Option B — download programmatically</summary>
+<summary>Option B — copy from an existing install</summary>
+<p>If you already have a Python <code>rapidocr</code> install, copy its <code>models/</code>
+directory into <code>modelsDir</code>, renaming files to match the layout above.</p>
+<p>A populated <code>modelsDir</code> wins over any download — resolution checks it
+first, per file, so this costs zero network access even with
+<code>autoDownload</code> left on.</p>
+</details>
+<details class="note">
+<summary>Option C — download programmatically</summary>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">downloadOcrModels</span><span class="p">(</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="s">&quot;https://your-host.example/models/PP-OCRv6/&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// baseUrl — you supply this</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// empty baseUrl — the default, pinned source</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="s">&quot;PP-OCRv6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">);</span>
 </span></code></pre></div>
-<p>This fetches <strong>all four</strong> files above — detector, classifier, recognizer,
-and the <code>_dict.txt</code>. The dict is best-effort: a 404 on it is not fatal,
-because some ONNX genuinely carry their charset in <code>character</code> metadata and
-have no dict file to fetch. See
+<p>Pass your own <code>baseUrl</code> — an internal mirror, an artifact store, a CDN
+bucket you control — to fetch from somewhere else instead. Stock filenames
+are still hash-checked when they come from your host, so a mirror that has
+drifted is caught rather than loaded.</p>
+<p>Either way this fetches <strong>all four</strong> files above — detector, classifier,
+recognizer, and the <code>_dict.txt</code>. The dict is best-effort: a 404 on it is
+not fatal, because some ONNX genuinely carry their charset in <code>character</code>
+metadata and have no dict file to fetch. See
 <a href="../api/downloader/">Model downloader</a> for the full signature, the return
 type, and how to tell a best-effort miss from a real failure.</p>
 </details>
-<div class="admonition warning">
-<p class="admonition-title">arboOCR ships <strong>no default download URL</strong></p>
-<p>This is deliberate, not an omission. PP-OCR model hosting locations aren't
-stable across mirrors, so the caller picks the source — you pass <code>baseUrl</code>
-and you own the decision about where your weights come from. There is no
-silent fallback host that can rot, move, or serve you a different model
-than the one you tested against.</p>
+<div class="admonition info">
+<p class="admonition-title">There is a default download URL now — this page used to say there never would be</p>
+<p>That earlier position was not arbitrary, and it is worth saying why it
+changed rather than quietly editing it out. The objection was three
+specific things: a hardcoded URL <strong>rots</strong>, you do not control <strong>integrity</strong>,
+and you do not control the <strong>licence question</strong> of where the weights came
+from. A default is only safe once all three have answers — and now they do.</p>
+<table>
+<thead>
+<tr>
+<th>Then</th>
+<th>Now</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The URL would rot</td>
+<td>It points at an immutable release tag, <code>models-v1</code>. That is a version, not a moving target, and the tag is baked into the cache path so versions cannot collide.</td>
+</tr>
+<tr>
+<td>Integrity was yours to guarantee</td>
+<td>Every stock file is checked against a SHA-256 compiled into the binary. A host serving different bytes is rejected, not loaded.</td>
+</tr>
+<tr>
+<td>Provenance was unstated</td>
+<td>The weights live in <a href="https://github.com/ARBO-TEAM/arbo-ocr-models">arbo-ocr-models</a> with a NOTICE recording their PP-OCR provenance; upstream PaddleOCR is Apache-2.0.</td>
+</tr>
+</tbody>
+</table>
+<p>What has <strong>not</strong> changed is who decides, and the precedence still puts you
+first. An explicit <code>recModelPath</code> / <code>detModelPath</code> / <code>clsModelPath</code> /
+<code>dictPath</code> is used exactly as given and is never quietly replaced by a
+stock download. A file already sitting in <code>modelsDir</code> is used without
+touching the network. Your own <code>baseUrl</code> still overrides the source. The
+default is what happens when you express no preference — it does not
+overrule one.</p>
 </div>
 <h2 id="which-files-do-i-actually-need">Which files do I actually need?<a class="headerlink" href="#which-files-do-i-actually-need" title="Permanent link">&para;</a></h2>
 <p>Not all four files are mandatory, and the ones that vary by size only vary for
@@ -1771,6 +1846,11 @@ no file shuffling.</p>
 <p>The flat <code>&lt;ocrVersion&gt;_*</code> names above are just defaults. Point
 <code>recModelPath</code> / <code>dictPath</code> / <code>detModelPath</code> / <code>clsModelPath</code> at arbitrary
 files to override any of them — see <a href="languages/">Languages</a>.</p>
+<p>An explicit path is used exactly as written. If the file is missing you get
+a load failure, <strong>not</strong> a stock model downloaded in its place — a
+fine-tuned recognizer swapped for the stock one would still produce
+plausible-looking text, which is the kind of bug that survives a code
+review and a month of production.</p>
 </div>
 <h2 id="in-this-section">In this section<a class="headerlink" href="#in-this-section" title="Permanent link">&para;</a></h2>
 <table>
@@ -1823,7 +1903,7 @@ files, but it will tell you the minimum to get one image through.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 8, 2026 07:36:16 UTC">2026-08-08 07:36:16</span>
   </span>
 
     

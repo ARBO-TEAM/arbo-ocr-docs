@@ -717,6 +717,54 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Model selection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#missing-models-fetch-themselves" class="md-nav__link">
+    <span class="md-ellipsis">
+      Missing models fetch themselves
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prewarming-the-cache-download-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prewarming the cache: --download-models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-the-cache-lives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where the cache lives
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1943,6 +1991,54 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Model selection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#missing-models-fetch-themselves" class="md-nav__link">
+    <span class="md-ellipsis">
+      Missing models fetch themselves
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prewarming-the-cache-download-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prewarming the cache: --download-models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-the-cache-lives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where the cache lives
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2071,12 +2167,15 @@ have no way to act on it from Python. The flags below close that gap. A knob
 that exists here exists in all four languages.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>arboocr_demo --image &lt;path&gt;        [options]
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>arboocr_demo --images-from &lt;path&gt;  [options]
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>arboocr_demo --download-models     [options]
 </span></code></pre></div>
 <p>Exactly one input flag is required. Without either, the binary prints usage and
 exits <code>1</code>; passing <strong>both</strong> is an error. <code>--image</code> recognizes one file;
 <a href="#batch-input"><code>--images-from</code></a> reads a list of paths and recognizes all of them
 in a single process — see the next section for why that is not just a
-convenience.</p>
+convenience. The third form recognizes nothing at all: it
+<a href="#prewarming-the-cache-download-models">prewarms the model cache</a> and exits, so
+it needs no input.</p>
 <div class="admonition note">
 <p class="admonition-title">Boolean flags</p>
 <p>Every <code>bool</code> option is a presence switch: writing <code>--clahe</code> sets it true.
@@ -2341,8 +2440,25 @@ one after another. Useful for eyeballing a set; parse the JSON form instead.</p>
 <td><em>(none)</em></td>
 <td>Override the character dictionary path.</td>
 </tr>
+<tr>
+<td><code>--no-download</code></td>
+<td>off</td>
+<td>Never fetch missing models — fail instead. Same effect as <code>ARBOOCR_OFFLINE=1</code>.</td>
+</tr>
+<tr>
+<td><code>--models-url &lt;url&gt;</code></td>
+<td><em>(none)</em></td>
+<td>Directory URL to fetch missing models from. Empty uses the pinned default release.</td>
+</tr>
+<tr>
+<td><code>--download-models</code></td>
+<td>off</td>
+<td>Fetch the models for <code>--ocr-version</code>/<code>--model-type</code> into the cache and exit without recognizing anything. See <a href="#prewarming-the-cache-download-models">Prewarming the cache</a>.</td>
+</tr>
 </tbody>
 </table>
+<p><code>--no-download</code> and <code>--download-models</code> are presence switches like every other
+boolean flag on this page — write <code>--no-download</code>, not <code>--no-download=true</code>.</p>
 <p>Unless overridden, paths are assembled from the three values above:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&lt;models-dir&gt;/&lt;ocr-version&gt;_det.onnx
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>&lt;models-dir&gt;/&lt;ocr-version&gt;_cls.onnx
@@ -2362,6 +2478,188 @@ harmless otherwise. And <code>--dict</code> is a <strong>fallback</strong>: the 
 to read its character set from the ONNX file's own metadata and only touches
 the <code>.txt</code> when that is absent. Run with <code>--log-level debug</code> to see which of
 the two paths was taken.</p>
+<h3 id="missing-models-fetch-themselves">Missing models fetch themselves<a class="headerlink" href="#missing-models-fetch-themselves" title="Permanent link">&para;</a></h3>
+<p>A model file that is not on disk is no longer an immediate failure. Before the
+first session opens, the binary resolves all four paths, downloads whatever is
+missing from a pinned release, verifies each file against a SHA-256 compiled
+into the binary, and writes it atomically into a per-user
+<a href="#where-the-cache-lives">cache directory</a>. The atomic write earns its keep the
+first time a download is killed halfway: without it you are left with a file
+that <em>exists</em> and does not load, which every later run treats as a cache hit
+and fails on.</p>
+<p>Resolution is per file, not per run, and it stops at the first hit:</p>
+<table>
+<thead>
+<tr>
+<th>Precedence</th>
+<th>Source</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>--det-model</code>, <code>--cls-model</code>, <code>--rec-model</code>, <code>--dict</code></td>
+<td>An explicitly given path is used as-is and is <strong>never</strong> substituted by a download.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>--models-dir</code></td>
+<td>An existing, non-empty file there wins — a populated models directory means zero network access.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>The cache</td>
+<td>Fetched from <code>--models-url</code> (or the default release), SHA-256 verified, and reused by every later run.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition danger">
+<p class="admonition-title">A fine-tuned model is never silently swapped for a stock one</p>
+<p>Rule 1 is the load-bearing one. Point <code>--rec-model</code> at your own weights and
+misspell the path, and arboOCR does <strong>not</strong> quietly download the stock
+recognizer and carry on emitting plausible-looking text from a model you
+did not choose. You get the model-load failure, naming the file you
+actually asked for. Silent substitution would be undetectable from the
+output — the results would just be quietly wrong.</p>
+</div>
+<p>Both resolution details above carry over to fetching. The classifier is only
+downloaded when <code>--angle</code> is set, and the dictionary is best-effort for the
+same reason it is a fallback on disk — the recognizer usually carries its own
+charset, and repos hosting such models often publish no <code>.txt</code> at all. Neither
+absence is a failure.</p>
+<h3 id="prewarming-the-cache-download-models">Prewarming the cache: <code>--download-models</code><a class="headerlink" href="#prewarming-the-cache-download-models" title="Permanent link">&para;</a></h3>
+<p><code>--download-models</code> fetches the models for the current <code>--ocr-version</code> and
+<code>--model-type</code>, then exits without recognizing anything. It exists so the
+network access happens where you can see it — a Docker build stage, a CI setup
+step, a provisioning script — instead of inside the first request that a real
+user is waiting on.</p>
+<p>It prints one line per file, in det, cls, rec, dict order:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$ arboocr_demo --download-models --ocr-version PP-OCRv6 --model-type small
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ok      C:\Users\you\AppData\Local\arboOCR\models\models-v1\PP-OCRv6_det.onnx
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>missing C:\Users\you\AppData\Local\arboOCR\models\models-v1\PP-OCRv6_cls.onnx
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>ok      C:\Users\you\AppData\Local\arboOCR\models\models-v1\PP-OCRv6_rec_small.onnx
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>missing C:\Users\you\AppData\Local\arboOCR\models\models-v1\PP-OCRv6_rec_small_dict.txt
+</span></code></pre></div>
+<p>Exit <code>0</code> when the detector and the recognizer are both present, <code>2</code> otherwise.
+Both <code>missing</code> lines above are expected and neither affects the exit code: no
+<code>--angle</code>, so no classifier was wanted, and this recognizer embeds its own
+charset. Keying the result on det and rec rather than on four clean <code>ok</code>s is
+what keeps a CI gate from failing over a dictionary nobody needs.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>--download-models</code> with <code>--no-download</code> is a usage error</p>
+<p>Asking for a download and forbidding downloads in the same command line has
+no sensible interpretation, so it is rejected with exit <code>1</code> rather than
+resolved in favour of one of them. If you want a prewarm step that is a
+no-op offline, branch on the environment yourself — do not pass both and
+hope.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.81 10.25c-.06-.04-.56-.43-1.64-.43-.28 0-.56.03-.84.08-.21-1.4-1.38-2.11-1.43-2.14l-.29-.17-.18.27c-.24.36-.43.77-.51 1.19-.2.8-.08 1.56.33 2.21-.49.28-1.29.35-1.46.35H2.62c-.34 0-.62.28-.62.63 0 1.15.18 2.3.58 3.38.45 1.19 1.13 2.07 2 2.61.98.6 2.59.94 4.42.94.79 0 1.61-.07 2.42-.22 1.12-.2 2.2-.59 3.19-1.16A8.3 8.3 0 0 0 16.78 16c1.05-1.17 1.67-2.5 2.12-3.65h.19c1.14 0 1.85-.46 2.24-.85.26-.24.45-.53.59-.87l.08-.24zm-17.96.99h1.76c.08 0 .16-.07.16-.16V9.5c0-.08-.07-.16-.16-.16H3.85c-.09 0-.16.07-.16.16v1.58c.01.09.07.16.16.16m2.43 0h1.76c.08 0 .16-.07.16-.16V9.5c0-.08-.07-.16-.16-.16H6.28c-.09 0-.16.07-.16.16v1.58c.01.09.07.16.16.16m2.47 0h1.75c.1 0 .17-.07.17-.16V9.5c0-.08-.06-.16-.17-.16H8.75c-.08 0-.15.07-.15.16v1.58c0 .09.06.16.15.16m2.44 0h1.77c.08 0 .15-.07.15-.16V9.5c0-.08-.06-.16-.15-.16h-1.77c-.08 0-.15.07-.15.16v1.58c0 .09.07.16.15.16M6.28 9h1.76c.08 0 .16-.09.16-.18V7.25c0-.09-.07-.16-.16-.16H6.28c-.09 0-.16.06-.16.16v1.57c.01.09.07.18.16.18m2.47 0h1.75c.1 0 .17-.09.17-.18V7.25c0-.09-.06-.16-.17-.16H8.75c-.08 0-.15.06-.15.16v1.57c0 .09.06.18.15.18m2.44 0h1.77c.08 0 .15-.09.15-.18V7.25c0-.09-.07-.16-.15-.16h-1.77c-.08 0-.15.06-.15.16v1.57c0 .09.07.18.15.18m0-2.28h1.77c.08 0 .15-.07.15-.16V5c0-.1-.07-.17-.15-.17h-1.77c-.08 0-.15.06-.15.17v1.56c0 .08.07.16.15.16m2.46 4.52h1.76c.09 0 .16-.07.16-.16V9.5c0-.08-.07-.16-.16-.16h-1.76c-.08 0-.15.07-.15.16v1.58c0 .09.07.16.15.16"/></svg></span> A Docker build stage</label><label for="__tabbed_2_2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg></span> A CI setup step</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">ENV</span><span class="w"> </span><span class="nv">ARBOOCR_CACHE_DIR</span><span class="o">=</span>/opt/arboocr/models
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">RUN</span><span class="w"> </span>arboocr_demo<span class="w"> </span>--download-models<span class="w"> </span>--model-type<span class="w"> </span>medium
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">ENV</span><span class="w"> </span><span class="nv">ARBOOCR_OFFLINE</span><span class="o">=</span><span class="m">1</span>
+</span></code></pre></div>
+<p>The fetch happens once, in a cached layer. Set <code>ARBOOCR_CACHE_DIR</code>
+explicitly here: the default cache lives under the <em>user's</em> home, so a
+build stage running as <code>root</code> and a service running as anyone else fill and
+read two different directories — and the symptom is a container that
+downloads models on every cold start. <code>ARBOOCR_OFFLINE=1</code> at runtime turns
+a cache miss into a loud failure instead of a surprise egress from
+production.</p>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>arboocr_demo<span class="w"> </span>--download-models<span class="w"> </span>--model-type<span class="w"> </span>small<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>arboocr_demo<span class="w"> </span>--images-from<span class="w"> </span>pages.txt<span class="w"> </span>--no-download<span class="w"> </span>--json<span class="w"> </span>&gt;<span class="w"> </span>out.json
+</span></code></pre></div>
+<p>The first line is the only one allowed to touch the network, and it fails
+the job loudly if the release is unreachable. The second runs against the
+cache with fetching switched off, so a run that would silently re-download
+on a cache miss fails instead — which is how you find out your cache key is
+wrong.</p>
+</div>
+</div>
+</div>
+<h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
+<p>Three variables cover what a flag cannot: a build agent that must never reach
+the network, an image with a baked-in cache, and a site that mirrors the
+release internally.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ARBOOCR_OFFLINE=1</code></td>
+<td>Forbid all model fetching, process-wide. Equivalent to <code>--no-download</code>.</td>
+</tr>
+<tr>
+<td><code>ARBOOCR_CACHE_DIR</code></td>
+<td>Override the cache root. The <code>models-v1</code> tag segment is still appended.</td>
+</tr>
+<tr>
+<td><code>ARBOOCR_MODELS_URL</code></td>
+<td>Override the default base URL — point a fleet at an internal mirror.</td>
+</tr>
+</tbody>
+</table>
+<p><code>ARBOOCR_OFFLINE</code> and <code>--no-download</code> are the same switch reached two ways, and
+either alone is enough: the flag is for one command, the variable for every
+process in an environment you do not want editing every call site of.
+<code>ARBOOCR_MODELS_URL</code> changes what an empty <code>--models-url</code> resolves to, so a
+mirror can be configured once for a machine rather than threaded through every
+invocation.</p>
+<div class="admonition info">
+<p class="admonition-title">What the default URL points at</p>
+<p><code>https://github.com/ARBO-TEAM/arbo-ocr-models/releases/download/models-v1/</code>
+— release assets under an immutable tag, so the bytes behind a given
+filename cannot change under a deployment that already pinned this version.
+Every stock file is checked against a SHA-256 baked into the binary, so a
+truncated transfer, a captive-portal login page served with a <code>200</code>, or a
+tampered mirror all fail the download rather than landing on disk and
+failing later as a confusing model-load error.</p>
+</div>
+<h3 id="where-the-cache-lives">Where the cache lives<a class="headerlink" href="#where-the-cache-lives" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>%LOCALAPPDATA%\arboOCR\models\models-v1</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>~/Library/Caches/arboOCR/models/models-v1</code></td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><code>$XDG_CACHE_HOME/arboOCR/models/models-v1</code>, else <code>~/.cache/arboOCR/models/models-v1</code></td>
+</tr>
+</tbody>
+</table>
+<p>The trailing <code>models-v1</code> is the release tag, and it is not decoration. Scoping
+the directory by tag is what makes a future <code>models-v2</code> structurally incapable
+of reading a <code>models-v1</code> file: a re-trained weight shipped under the same
+filename lands in a different directory instead of registering as a cache hit
+and being loaded for the rest of that machine's life. <code>ARBOOCR_CACHE_DIR</code> moves
+the root only — the tag segment is still appended underneath whatever you set.</p>
+<div class="admonition tip">
+<p class="admonition-title">The cache is disposable</p>
+<p>Nothing in it is authoritative; every file can be re-fetched and is
+verified on arrival. Deleting the directory is a valid first step when a
+model behaves oddly, and costs one download. That is also why downloads
+land in the cache rather than in <code>--models-dir</code>: the directory you curated
+is not somewhere an automatic fetch gets to add files.</p>
+</div>
 <h2 id="detection-tuning">Detection tuning<a class="headerlink" href="#detection-tuning" title="Permanent link">&para;</a></h2>
 <p>These map one-to-one onto <code>EngineConfig</code>; the reasoning behind each default
 lives in <a href="../models/accuracy-defaults/">Accuracy defaults</a>.</p>
@@ -2522,11 +2820,11 @@ nothing until you pass the flag. An unrecognized level (<code>--log-level
 verbose</code>) is a usage error, not a silent fallback: it prints the accepted
 set and exits <code>1</code>.</p>
 </div>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$ arboocr_demo --image page.jpg --models-dir models --log-level debug
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>[arboOCR][INFO] Engine backend: cpu
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>[arboOCR][DEBUG] Model paths det=models\PP-OCRv6_det.onnx cls=models\PP-OCRv6_cls.onnx rec=models\PP-OCRv6_rec_small.onnx dict=models\PP-OCRv6_rec_small_dict.txt
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>[arboOCR][DEBUG] Recognizer keys: loaded from model metadata
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>[arboOCR][DEBUG] recognize: 3 lines
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>$ arboocr_demo --image page.jpg --models-dir models --log-level debug
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>[arboOCR][INFO] Engine backend: cpu
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>[arboOCR][DEBUG] Model paths det=models\PP-OCRv6_det.onnx cls=models\PP-OCRv6_cls.onnx rec=models\PP-OCRv6_rec_small.onnx dict=models\PP-OCRv6_rec_small_dict.txt
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>[arboOCR][DEBUG] Recognizer keys: loaded from model metadata
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>[arboOCR][DEBUG] recognize: 3 lines
 </span></code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">arboOCR is silent; ONNX Runtime is not always</p>
@@ -2556,20 +2854,42 @@ misfire on those. Key on the <strong>exit code</strong> instead.</p>
 </tr>
 <tr>
 <td><code>2</code></td>
-<td>Model load failure, or an unexpected recognition error.</td>
+<td>Model load failure — including a fetch that was attempted and failed — or an unexpected recognition error.</td>
 </tr>
 </tbody>
 </table>
 <p>Wrappers should treat any non-zero code as failure. <code>2</code> is the one worth
 special-casing: it means the engine could not be <em>built</em> — a missing, corrupt,
-or unreadable ONNX file — or that inference itself threw. Nothing about the
-input image or the flags can be fixed by retrying; on <code>2</code> the binary prints the
-four resolved model paths to stderr so you can see exactly which file it went
-looking for.</p>
+or unreadable ONNX file, or a missing one that could not be downloaded — or
+that inference itself threw. On <code>2</code> the binary prints the four resolved model
+paths to stderr, plus whether auto-download was on or off and the cache
+directory it resolved to, so you can see both which file it went looking for
+and where it was entitled to look.</p>
 <p><code>1</code> covers a wider range: an unrecognized flag, no input flag at all, <code>--image</code>
 and <code>--images-from</code> together, <code>--draw</code> or <code>--markdown</code> alongside
-<code>--images-from</code>, a bad <code>--log-level</code> value, and — in the default human-readable
-mode — a page that produced zero lines.</p>
+<code>--images-from</code>, <code>--download-models</code> alongside <code>--no-download</code>, a bad
+<code>--log-level</code> value, and — in the default human-readable mode — a page that
+produced zero lines.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>2</code> is no longer always permanent</p>
+<p>The old rule was that retrying a <code>2</code> is pointless, because a missing file
+stays missing. With auto-download on, <code>2</code> also covers "the fetch failed",
+and a fetch fails for reasons that go away by themselves: a proxy, a rate
+limit, a runner with no egress that hour. The stderr block tells you which
+case you are in — if auto-download was <code>off</code>, the old rule still holds and
+a retry is wasted; if it was <code>on</code>, read the download error before you
+decide. The way to not have this failure mode at request time at all is to
+move the fetch into your build with
+<a href="#prewarming-the-cache-download-models"><code>--download-models</code></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><code>--download-models</code> has only two outcomes</p>
+<p>That mode recognizes nothing, so the codes mean something narrower: <code>0</code>
+when the detector and recognizer are both on disk when it finishes, <code>2</code>
+when either is not. A <code>missing</code> line for the classifier or the dictionary
+does not change the result. See
+<a href="#prewarming-the-cache-download-models">Prewarming the cache</a>.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Batch mode reads <code>1</code> as partial, not failed</p>
 <p>With <code>--images-from</code>, <code>1</code> means the run finished and produced complete
@@ -2598,26 +2918,26 @@ stderr.</p>
 <p>The object below is the <strong>single-image</strong> shape. With
 <a href="#the-json-shape-an-array-not-an-object"><code>--images-from</code></a> the same object
 appears as one element of a JSON array; every key documented here is unchanged.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span><span class="nt">&quot;backend&quot;</span><span class="p">:</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="s2">&quot;page.jpg&quot;</span><span class="p">,</span><span class="nt">&quot;elapsedMs&quot;</span><span class="p">:</span><span class="mf">66.3257</span><span class="p">,</span><span class="nt">&quot;lines&quot;</span><span class="p">:[{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="s2">&quot;INVOICE&quot;</span><span class="p">,</span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="mf">0.999803</span><span class="p">,</span><span class="nt">&quot;detScore&quot;</span><span class="p">:</span><span class="mf">0.857679</span><span class="p">,</span><span class="nt">&quot;polygon&quot;</span><span class="p">:[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">43</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">27</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">285</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">284</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">91</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">43</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">89</span><span class="p">}]}]}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span><span class="nt">&quot;backend&quot;</span><span class="p">:</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="s2">&quot;page.jpg&quot;</span><span class="p">,</span><span class="nt">&quot;elapsedMs&quot;</span><span class="p">:</span><span class="mf">66.3257</span><span class="p">,</span><span class="nt">&quot;lines&quot;</span><span class="p">:[{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="s2">&quot;INVOICE&quot;</span><span class="p">,</span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="mf">0.999803</span><span class="p">,</span><span class="nt">&quot;detScore&quot;</span><span class="p">:</span><span class="mf">0.857679</span><span class="p">,</span><span class="nt">&quot;polygon&quot;</span><span class="p">:[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">43</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">27</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">285</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">284</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">91</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mi">43</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mi">89</span><span class="p">}]}]}</span>
 </span></code></pre></div>
 <p>The same payload, re-indented for reading (the wire format is always the single
 line above):</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;backend&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;page.jpg&quot;</span><span class="p">,</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;elapsedMs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">66.3257</span><span class="p">,</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">&quot;lines&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INVOICE&quot;</span><span class="p">,</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">      </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.999803</span><span class="p">,</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">      </span><span class="nt">&quot;detScore&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.857679</span><span class="p">,</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">      </span><span class="nt">&quot;polygon&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">285</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">},</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">284</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">91</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">89</span><span class="p">}</span>
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">      </span><span class="p">]</span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nt">&quot;backend&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;page.jpg&quot;</span><span class="p">,</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="nt">&quot;elapsedMs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">66.3257</span><span class="p">,</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="nt">&quot;lines&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INVOICE&quot;</span><span class="p">,</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">      </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.999803</span><span class="p">,</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">      </span><span class="nt">&quot;detScore&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.857679</span><span class="p">,</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">      </span><span class="nt">&quot;polygon&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">285</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">},</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">        </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">284</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">91</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">89</span><span class="p">}</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">      </span><span class="p">]</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="p">}</span>
 </span></code></pre></div>
 <table>
 <thead>
@@ -2677,7 +2997,7 @@ than binary noise.</p>
 out entirely when empty means the JSON shape is byte-for-byte unchanged for
 every caller that never asks for word boxes, so adding the feature broke no
 existing wrapper. Treat <code>words</code> as optional in your parser.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">&quot;words&quot;</span><span class="p">:[{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="s2">&quot;PT.&quot;</span><span class="p">,</span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="mf">0.999931</span><span class="p">,</span><span class="nt">&quot;polygon&quot;</span><span class="p">:[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">58.2754</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">105.116</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">110.101</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">105.464</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">110.101</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">157.464</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">58.2754</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">157.116</span><span class="p">}]},{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="s2">&quot;Angin&quot;</span><span class="p">,</span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="mf">0.99997</span><span class="p">,</span><span class="nt">&quot;polygon&quot;</span><span class="p">:[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">127.377</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">105.58</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">222.391</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">106.217</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">222.391</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">158.217</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">127.377</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">157.58</span><span class="p">}]}]</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">&quot;words&quot;</span><span class="p">:[{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="s2">&quot;PT.&quot;</span><span class="p">,</span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="mf">0.999931</span><span class="p">,</span><span class="nt">&quot;polygon&quot;</span><span class="p">:[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">58.2754</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">105.116</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">110.101</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">105.464</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">110.101</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">157.464</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">58.2754</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">157.116</span><span class="p">}]},{</span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="s2">&quot;Angin&quot;</span><span class="p">,</span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="mf">0.99997</span><span class="p">,</span><span class="nt">&quot;polygon&quot;</span><span class="p">:[{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">127.377</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">105.58</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">222.391</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">106.217</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">222.391</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">158.217</span><span class="p">},{</span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="mf">127.377</span><span class="p">,</span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="mf">157.58</span><span class="p">}]}]</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Word polygons are alignment-derived, not supervised</p>
@@ -2691,7 +3011,7 @@ a glyph from.</p>
 <p>They are not exclusive. The overlay is written <em>before</em> the JSON is emitted, and
 its confirmation and error messages go to stderr, so stdout stays a single
 parseable object:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--json<span class="w"> </span>--draw<span class="w"> </span>overlay.png<span class="w"> </span>&gt;<span class="w"> </span>page.json
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--json<span class="w"> </span>--draw<span class="w"> </span>overlay.png<span class="w"> </span>&gt;<span class="w"> </span>page.json
 </span></code></pre></div>
 <p><code>page.json</code> is valid JSON; <code>overlay.png</code> is on disk. This is the shape you want
 in a debugging pipeline that also needs the structured result.</p>
@@ -2699,35 +3019,35 @@ in a debugging pipeline that also needs the structured result.</p>
 <a href="#overlay-and-markdown-output-are-rejected-in-batch-mode">rejected</a>, because one
 output path cannot hold N overlays.</p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:6"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><input id="__tabbed_2_5" name="__tabbed_2" type="radio" /><input id="__tabbed_2_6" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Simplest run</label><label for="__tabbed_2_2">Driving it from a wrapper</label><label for="__tabbed_2_3">A whole folder</label><label for="__tabbed_2_4">Faded receipts</label><label for="__tabbed_2_5">Debugging</label><label for="__tabbed_2_6">GPU</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:6"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><input id="__tabbed_3_4" name="__tabbed_3" type="radio" /><input id="__tabbed_3_5" name="__tabbed_3" type="radio" /><input id="__tabbed_3_6" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Simplest run</label><label for="__tabbed_3_2">Driving it from a wrapper</label><label for="__tabbed_3_3">A whole folder</label><label for="__tabbed_3_4">Faded receipts</label><label for="__tabbed_3_5">Debugging</label><label for="__tabbed_3_6">GPU</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models
 </span></code></pre></div>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Backend: cpu
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Image: page.jpg
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Lines: 3 (63.9146 ms)
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>  [0] &quot;INVOICE&quot; (score=0.999803 detScore=0.857679) poly=[(43,27), (285,30), (284,91), (43,89)]
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>  [1] &quot;PT. Angin Sepoi&quot; (score=0.997808 detScore=0.846785) poly=[(41,105), (339,107), (339,159), (41,157)]
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>  [2] &quot;Total 1250000&quot; (score=0.999852 detScore=0.854063) poly=[(44,177), (303,174), (303,223), (44,226)]
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Backend: cpu
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>Image: page.jpg
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>Lines: 3 (63.9146 ms)
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>  [0] &quot;INVOICE&quot; (score=0.999803 detScore=0.857679) poly=[(43,27), (285,30), (284,91), (43,89)]
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>  [1] &quot;PT. Angin Sepoi&quot; (score=0.997808 detScore=0.846785) poly=[(41,105), (339,107), (339,159), (41,157)]
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>  [2] &quot;Total 1250000&quot; (score=0.999852 detScore=0.854063) poly=[(44,177), (303,174), (303,223), (44,226)]
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--json<span class="w"> </span>--word-boxes
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--json<span class="w"> </span>--word-boxes
 </span></code></pre></div>
 <p>One compact JSON object on stdout, exit <code>0</code>. This is the invocation every
 wrapper builds internally — see <a href="../wrappers/">Wrappers</a>.</p>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ls<span class="w"> </span>*.png<span class="w"> </span><span class="p">|</span><span class="w"> </span>arboocr_demo<span class="w"> </span>--images-from<span class="w"> </span>-<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--json
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ls<span class="w"> </span>*.png<span class="w"> </span><span class="p">|</span><span class="w"> </span>arboocr_demo<span class="w"> </span>--images-from<span class="w"> </span>-<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span>--json
 </span></code></pre></div>
 <p>One process, one model load, a JSON <strong>array</strong> on stdout. This is the
 difference between a 200-page job that loads the models once and one that
 loads them 200 times — see <a href="#batch-input">Batch input</a>.</p>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>receipt.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span>--clahe<span class="w"> </span>--min-confidence<span class="w"> </span><span class="m">0</span><span class="w"> </span>--split-overmerged
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>receipt.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span>--clahe<span class="w"> </span>--min-confidence<span class="w"> </span><span class="m">0</span><span class="w"> </span>--split-overmerged
 </span></code></pre></div>
 <p><code>--clahe</code> rescues boxes the detector would otherwise miss on thermal-printer
 output; <code>--min-confidence 0</code> keeps every line so you can judge for yourself
@@ -2736,16 +3056,16 @@ item-name and price columns that a receipt's tight layout fuses into one
 box.</p>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span>--log-level<span class="w"> </span>debug<span class="w"> </span>--min-confidence<span class="w"> </span><span class="m">0</span><span class="w"> </span>--draw<span class="w"> </span>boxes.png
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span>--log-level<span class="w"> </span>debug<span class="w"> </span>--min-confidence<span class="w"> </span><span class="m">0</span><span class="w"> </span>--draw<span class="w"> </span>boxes.png
 </span></code></pre></div>
 <p>stderr tells you which model files were opened and which backend loaded;
 <code>boxes.png</code> tells you what the detector actually saw. Red boxes are the
 lines the default <code>0.5</code> filter would have dropped.</p>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span>--tensorrt<span class="w"> </span>--trt-cache-dir<span class="w"> </span>cache/trt-fp16-b6<span class="w"> </span>--rec-batch-num<span class="w"> </span><span class="m">6</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span>--tensorrt<span class="w"> </span>--trt-cache-dir<span class="w"> </span>cache/trt-fp16-b6<span class="w"> </span>--rec-batch-num<span class="w"> </span><span class="m">6</span>
 </span></code></pre></div>
 <p>First run pays the engine build; later runs load from the cache. Note the
 cache path encodes the precision and batch size — see the
@@ -2780,7 +3100,7 @@ library than spawn it.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 16:04:14 UTC">2026-08-07 16:04:14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 8, 2026 07:36:16 UTC">2026-08-08 07:36:16</span>
   </span>
 
     

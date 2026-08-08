@@ -2046,8 +2046,11 @@ pass <code>Config.bin_path</code> explicitly — see
 <a href="#manual-binary-path">Manual binary path</a>.</p>
 </div>
 <h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
-<p><code>arbo-ocr</code> does not bundle or download OCR models. Point <code>Config.models_dir</code> at
-a folder of PP-OCRv6 ONNX files. For the default <code>model_type: "small"</code> that
+<p><code>arbo-ocr</code> does not bundle OCR models — it does not have to. The <code>arboocr_demo</code>
+binary it spawns downloads the stock weights it is missing on first use, checks
+each file against a SHA-256 baked into the binary, and caches it per platform.
+Point <code>Config.models_dir</code> at a folder that already holds the PP-OCRv6 ONNX files
+and nothing touches the network. For the default <code>model_type: "small"</code> that
 means three files:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>models/
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── PP-OCRv6_det.onnx
@@ -2057,8 +2060,9 @@ means three files:</p>
 <p><code>PP-OCRv6_cls.onnx</code> is only needed when <code>use_angle_cls</code> is on. Swap the <code>_small</code>
 files for <code>_tiny</code> or <code>_medium</code> to change size — or keep all three in the same
 directory and switch with <code>model_type</code>.</p>
-<p>Full file matrix and where to get the files: <a href="../#models">Models</a> on the
-wrappers overview, or <a href="../../models/">Models</a> for the complete treatment.</p>
+<p>Full file matrix, the cache locations, and how to turn the download off:
+<a href="../#models">Models</a> on the wrappers overview, or
+<a href="../../models/">Models</a> for the complete treatment.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <div class="language-rust highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">use</span><span class="w"> </span><span class="n">arbo_ocr</span><span class="p">::{</span><span class="n">Config</span><span class="p">,</span><span class="w"> </span><span class="n">Engine</span><span class="p">};</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
@@ -2263,10 +2267,16 @@ directory:</p>
 </span></code></pre></div>
 <p>Call <code>installer::ensure_installed(Some(dir))</code> yourself to control exactly when
 the download happens, then pass the returned path as <code>Config.bin_path</code>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Models are never auto-downloaded</p>
-<p>Like the PHP and Go packages, <code>arbo-ocr</code> never bundles or downloads OCR
-models. See <a href="../../models/">Models</a> for exactly which files you need.</p>
+<div class="admonition note">
+<p class="admonition-title">The models download is the binary's job, not this crate's</p>
+<p><code>arbo-ocr</code> downloads exactly one thing: the <code>arboocr_demo</code> binary. The
+weights are fetched separately, by that binary, into arboOCR's own platform
+cache — so <code>installer::ensure_installed</code> in a container build step gets you
+the binary and <em>not</em> the models, and the first request would still reach for
+the network. Prefetch both in the same step by running the returned binary
+once with <code>--download-models</code>, or set <code>ARBOOCR_OFFLINE=1</code> at runtime so a
+missing model fails fast instead of opening a socket. See
+<a href="../../models/">Models</a>.</p>
 </div>
 <h3 id="deadlock-avoidance">Deadlock avoidance<a class="headerlink" href="#deadlock-avoidance" title="Permanent link">&para;</a></h3>
 <p><code>recognize</code> captures the subprocess's output with <code>Command::output()</code>, which

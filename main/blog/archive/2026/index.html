@@ -1551,6 +1551,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#we-said-there-would-never-be-a-default-model-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      We said there would never be a default model URL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-accuracy-cycle-the-recognizer-was-never-the-problem" class="md-nav__link">
     <span class="md-ellipsis">
       The accuracy cycle: the recognizer was never the problem
@@ -1700,6 +1709,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#we-said-there-would-never-be-a-default-model-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      We said there would never be a default model URL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-accuracy-cycle-the-recognizer-was-never-the-problem" class="md-nav__link">
     <span class="md-ellipsis">
       The accuracy cycle: the recognizer was never the problem
@@ -1731,6 +1749,63 @@
       <header class="md-typeset">
         <h1 id="202608">2026/08<a class="headerlink" href="#202608" title="Permanent link">&para;</a></h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://github.com/ARBO-TEAM.png" alt="ARBO-TEAM">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2026-08-08 00:00:00+00:00">8/8/26</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/release-notes/" class="md-meta__link">Release notes</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              9 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="we-said-there-would-never-be-a-default-model-url"><a class="toclink" href="../../2026/08/08/we-said-there-would-never-be-a-default-model-url/">We said there would never be a default model URL</a></h2>
+<p>Yesterday's post has a section titled
+<a href="../../2026/08/07/what-rapidocr-measured-and-what-we-changed-because-of-it/">The documented download path produced a broken models directory</a>.
+It fixed the downloader's missing dictionary file, and on the way through it
+restated the standing position: <strong>arboOCR ships no default URL; the caller
+supplies <code>baseUrl</code>.</strong> That sentence is now false.</p>
+<p><code>ensureOcrModels(cfg)</code> fetches missing weights from a default location,
+verifies them against a checksum compiled into the binary, and caches them in a
+platform-correct directory. First run downloads. Every run after that is
+offline.</p>
+<p>This is a reversal, one day old. It is worth being precise about which part of
+the old position gave way, because it was not the reasoning.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2026/08/08/we-said-there-would-never-be-a-default-model-url/">
+          Continue reading
+        </a>
+      </nav>
+    
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">

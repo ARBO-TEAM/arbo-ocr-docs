@@ -1701,9 +1701,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#three-ways-to-get-the-files" class="md-nav__link">
+  <a href="#four-ways-to-get-the-files" class="md-nav__link">
     <span class="md-ellipsis">
-      Three ways to get the files
+      Four ways to get the files
     </span>
   </a>
   
@@ -1952,7 +1952,8 @@ cache is frequently read-only, so it cannot be written into the way Composer's
 <p>All four wrappers are pinned to release
 <a href="https://github.com/wafik/ArboOCR/releases/tag/v0.1.0-php1"><code>v0.1.0-php1</code></a>, and
 the auto-download is verified working end to end on both Windows and Linux
-against that tag.</p>
+against that tag. The model weights are pinned and cached the same way, one
+layer down — see <a href="#models">Models</a>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Offline installs and unsupported platforms</p>
 <p>If auto-download fails — air-gapped CI, a corporate proxy, an OS with no
@@ -1965,10 +1966,14 @@ their installers directly (<code>installer.EnsureInstalled</code>,
 or container build step and pass the returned path at runtime.</p>
 </div>
 <h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
-<p><strong>No wrapper bundles OCR models, and none of them auto-download models.</strong> You
-point a models directory at a folder of PP-OCRv6 ONNX files yourself. Only the
-recognizer has size variants; the detector is always one file, and the angle
-classifier is only needed if you turn angle classification on.</p>
+<p><strong>No wrapper bundles OCR models — and all four auto-download them anyway.</strong> Not
+one line of wrapper code makes that happen: every wrapper spawns the same
+<code>arboocr_demo</code> binary, and that binary fetches the stock weights it is missing,
+so the wrappers inherit the behaviour for free. Point a models directory at
+files you already have and nothing touches the network; leave them missing and
+they arrive on first use. Only the recognizer has size variants; the detector is
+always one file, and the angle classifier is only needed if you turn angle
+classification on.</p>
 <table>
 <thead>
 <tr>
@@ -2010,8 +2015,15 @@ classifier is only needed if you turn angle classification on.</p>
 <code>PP-OCRv6_rec_small.onnx</code>, and <code>PP-OCRv6_rec_small_dict.txt</code>. Switching sizes
 later is a one-word config change; the directory can hold all three sizes side
 by side so you can switch freely at runtime.</p>
-<h3 id="three-ways-to-get-the-files">Three ways to get the files<a class="headerlink" href="#three-ways-to-get-the-files" title="Permanent link">&para;</a></h3>
+<h3 id="four-ways-to-get-the-files">Four ways to get the files<a class="headerlink" href="#four-ways-to-get-the-files" title="Permanent link">&para;</a></h3>
 <ol>
+<li><strong>Do nothing.</strong> This is the default now, which is what turns the other three
+   into deliberate choices rather than prerequisites. The first time a wrapper
+   spawns <code>arboocr_demo</code> with stock weights missing, the engine downloads them,
+   checks each file against a SHA-256 baked into the binary, and writes it
+   atomically. A mirror serving different bytes
+   is rejected rather than loaded, and a half-finished download never becomes a
+   file the next run mistakes for complete.</li>
 <li><strong>Copy from a <code>rapidocr</code> install.</strong> If you already have the Python
    <code>rapidocr</code> package, copy its <code>models/</code> directory over and rename the files
    to match the layout above.</li>
@@ -2020,8 +2032,56 @@ by side so you can switch freely at runtime.</p>
    the detector, the classifier, and all three recognizer sizes — the fastest
    path for local development.</li>
 </ol>
-<p>arboOCR does not host default download URLs. See <a href="../models/">Models</a>
-for the full treatment, including <a href="../models/sizes/">size trade-offs</a> and
+<p>Options 2–4 all reduce to the same rule: <strong>a populated models directory wins.</strong>
+If the files the engine wants are already sitting in <code>models_dir</code> / <code>ModelsDir</code>
+/ <code>modelsDir</code>, there is no network access at all.</p>
+<p>Where the downloaded files land — tag-scoped, so a future <code>models-v2</code> can never
+reuse a <code>models-v1</code> file:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Model cache directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>%LOCALAPPDATA%\arboOCR\models\models-v1</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>~/Library/Caches/arboOCR/models/models-v1</code></td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><code>$XDG_CACHE_HOME/arboOCR/models/models-v1</code>, falling back to <code>~/.cache/arboOCR/models/models-v1</code></td>
+</tr>
+</tbody>
+</table>
+<p>That is the same shape as <a href="#getting-the-binary">Getting the binary</a> above: a
+pinned tag, a platform cache directory, a lazy fetch on first use. Same pattern,
+second artifact — the wrappers cache the CLI under their own name, and the CLI
+caches the weights under arboOCR's.</p>
+<div class="admonition tip">
+<p class="admonition-title">Turning the download off from any of the four languages</p>
+<p>The wrappers do not expose <code>arboocr_demo</code>'s <code>--no-download</code> and
+<code>--models-url</code> flags, but a spawned process inherits your environment, so
+the env vars reach it from every language. <code>ARBOOCR_OFFLINE=1</code> makes a
+missing model an immediate error instead of a network call — the setting you
+want in an air-gapped runtime, where a stalled socket is indistinguishable
+from a hang. <code>ARBOOCR_MODELS_URL</code> points at an internal mirror, and
+<code>ARBOOCR_CACHE_DIR</code> moves the cache somewhere writable, which matters when
+your service runs as a user with no home directory. To prefetch during a
+Docker build instead of at first request, run the binary once with
+<code>--download-models</code>; it downloads and exits.</p>
+</div>
+<p>arboOCR does host a default download URL now:
+<a href="https://github.com/ARBO-TEAM/arbo-ocr-models/releases/tag/models-v1"><code>models-v1</code></a>
+in <a href="https://github.com/ARBO-TEAM/arbo-ocr-models">ARBO-TEAM/arbo-ocr-models</a>, an
+immutable release tag rather than a branch, with every stock file checksummed.
+See <a href="../models/">Models</a> for the full treatment, including
+<a href="../models/sizes/">size trade-offs</a> and
 <a href="../models/languages/">language coverage</a>.</p>
 <h2 id="overhead">Overhead<a class="headerlink" href="#overhead" title="Permanent link">&para;</a></h2>
 <p>All wrappers call the identical <code>arboocr_demo</code> binary, so <strong>recognition

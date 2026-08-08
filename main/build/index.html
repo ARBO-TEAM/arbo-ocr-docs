@@ -1780,9 +1780,15 @@ that trade goes the other way — see <a href="jetson/">Jetson / aarch64</a>.</p
 you need a vcpkg checkout and <code>VCPKG_ROOT</code> pointing at it before you configure.
 Everything else — OpenCV, ONNXRuntime, cURL, doctest, cxxopts — comes from
 there.</p>
-<p>Model files are a <strong>separate step</strong>. arboOCR does not bundle them, and a build
-with no ONNX files in <code>modelsDir</code> will configure and compile cleanly while
-recognizing nothing at runtime. Fetch them before your first run — see
+<p>Model files are <strong>not part of the build</strong>, and no longer a step you have to
+remember. arboOCR does not bundle them, but it does fetch them: a freshly built
+<code>arboocr_demo</code> pointed at an empty <code>modelsDir</code> downloads the stock weights it
+needs on first run, checks each against a SHA-256 baked into the binary, and
+caches them per platform.</p>
+<p>Make it explicit on a machine that must not reach for the network mid-run — an
+air-gapped runner, a hermetic image layer. <code>arboocr_demo --download-models</code>
+prefetches and exits, and <code>ARBOOCR_OFFLINE=1</code> (or <code>--no-download</code>) turns a
+missing model into an immediate error rather than a socket that hangs. See
 <a href="../models/">Models</a>.</p>
 <h2 id="desktop-presets">Desktop presets<a class="headerlink" href="#desktop-presets" title="Permanent link">&para;</a></h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 12V6.75l6-1.32v6.48zm17-9v8.75l-10 .15V5.21zM3 13l6 .09v6.81l-6-1.15zm17 .25V22l-10-1.91V13.1z"/></svg></span> Windows (vcpkg)</label><label for="__tabbed_1_2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.62 8.35c-.42.28-1.75 1.04-1.95 1.19-.39.31-.75.29-1.14-.01-.2-.16-1.53-.92-1.95-1.19-.48-.31-.45-.7.08-.92 1.64-.69 3.28-.64 4.91.03.49.21.51.6.05.9m7.22 7.28c-.93-2.09-2.2-3.99-3.84-5.66a4.3 4.3 0 0 1-1.06-1.88c-.1-.33-.17-.67-.24-1.01-.2-.88-.29-1.78-.7-2.61-.73-1.58-2-2.4-3.84-2.47-1.81.05-3.16.81-3.95 2.4-.21.43-.36.88-.46 1.34-.17.76-.32 1.55-.5 2.32-.15.65-.45 1.21-.96 1.71-1.61 1.57-2.9 3.37-3.88 5.35-.14.29-.28.58-.37.88-.19.66.29 1.12.99.96.44-.09.88-.18 1.3-.31.41-.15.57-.05.67.35.65 2.15 2.07 3.66 4.24 4.5 4.12 1.56 8.93-.66 9.97-4.58.07-.27.17-.37.47-.27.46.14.93.24 1.4.35.49.09.85-.16.92-.64.03-.26-.06-.49-.16-.73"/></svg></span> Linux x64 (vcpkg)</label></div>
@@ -1970,7 +1976,7 @@ a silent fallback to CPU.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 8, 2026 07:36:16 UTC">2026-08-08 07:36:16</span>
   </span>
 
     

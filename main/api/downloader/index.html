@@ -1092,9 +1092,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#where-each-file-comes-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where each file comes from
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cache-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      The cache directory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integrity-hashing-and-atomic-writes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integrity: hashing and atomic writes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-downloadocrmodels-actually-writes" class="md-nav__link">
     <span class="md-ellipsis">
       What downloadOcrModels actually writes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#turning-it-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      Turning it off
     </span>
   </a>
   
@@ -1703,9 +1739,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#where-each-file-comes-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where each file comes from
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cache-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      The cache directory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integrity-hashing-and-atomic-writes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integrity: hashing and atomic writes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-downloadocrmodels-actually-writes" class="md-nav__link">
     <span class="md-ellipsis">
       What downloadOcrModels actually writes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#turning-it-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      Turning it off
     </span>
   </a>
   
@@ -1762,40 +1834,192 @@
 
 
 <h1 id="model-downloader">Model downloader<a class="headerlink" href="#model-downloader" title="Permanent link">&para;</a></h1>
-<p>arboOCR does not bundle model files. If you would rather fetch them at
-deploy time than ship them in your image, <code>model_downloader.hpp</code> gives you
-three functions:</p>
+<p>arboOCR still does not <em>bundle</em> model files — but it now knows where to get
+them. <code>model_downloader.hpp</code> is the layer underneath that: the default source,
+the integrity baseline, and the fetch functions the <code>Engine</code> calls on your
+behalf when a model is missing.</p>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">DownloadResult</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">errorMessage</span><span class="p">;</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">bytesWritten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">};</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">DownloadResult</span><span class="w"> </span><span class="nf">downloadFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">destPath</span><span class="p">);</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ocrModelFileNames</span><span class="p">(</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ocrVersion</span><span class="p">,</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelType</span><span class="p">);</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DownloadResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">downloadOcrModels</span><span class="p">(</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">baseUrl</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ocrVersion</span><span class="p">,</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelType</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelsDir</span><span class="p">);</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="nf">defaultModelsTag</span><span class="p">();</span><span class="w">       </span><span class="c1">// &quot;models-v1&quot;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">defaultModelsBaseUrl</span><span class="p">();</span><span class="w">   </span><span class="c1">// release assets pinned to that tag</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">defaultModelsCacheDir</span><span class="p">();</span><span class="w">  </span><span class="c1">// per-platform cache dir, scoped by tag</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">sha256File</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">path</span><span class="p">);</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">knownSha256</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">fileName</span><span class="p">);</span><span class="w">  </span><span class="c1">// &quot;&quot; for names we do not ship</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">DownloadResult</span><span class="w"> </span><span class="n">downloadFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">destPath</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">                            </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">expectedSha256</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ocrModelFileNames</span><span class="p">(</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ocrVersion</span><span class="p">,</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelType</span><span class="p">);</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DownloadResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">downloadOcrModels</span><span class="p">(</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">baseUrl</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ocrVersion</span><span class="p">,</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelType</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">modelsDir</span><span class="p">);</span>
 </span></code></pre></div>
-<p>Typical use:</p>
+<p>Typical use is now no use at all: construct an <code>Engine</code> and the files arrive.
+When you want to drive the fetch yourself — a provisioning step, a warm image
+layer, a prefetch before you drop network access:</p>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">downloadOcrModels</span><span class="p">(</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="s">&quot;https://your-host.example/models/PP-OCRv6/&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// baseUrl — you supply this</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// empty baseUrl — use the default, pinned source</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="s">&quot;PP-OCRv6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">);</span>
 </span></code></pre></div>
-<div class="admonition danger">
-<p class="admonition-title">There is no default URL, and there never will be</p>
-<p>arboOCR ships <strong>no default download URL</strong> — PP-OCR model hosting
-locations aren't stable across mirrors, so the caller picks the source.
-A hardcoded default would be a link that rots, silently, in every
-deployment that ever pinned this version. You supply <code>baseUrl</code>: your own
-artifact store, an internal mirror, a CDN bucket you control. That also
-means you control integrity, availability, and the license question of
-where those weights came from.</p>
+<div class="admonition info">
+<p class="admonition-title">There is a default URL now — and here is what had to be true first</p>
+<p>This page used to say there never would be one, and that was the right
+call while it stood. The objection had three parts, and a default is only
+safe when all three are answered:</p>
+<table>
+<thead>
+<tr>
+<th>The old objection</th>
+<th>What answers it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A hardcoded URL <strong>rots</strong></td>
+<td>The default resolves to an immutable release tag, <code>models-v1</code>. That makes it a version rather than a moving target — assets under a published tag do not change underneath you, and a future <code>models-v2</code> gets its own URL <em>and</em> its own cache directory instead of overwriting this one.</td>
+</tr>
+<tr>
+<td>You do not control <strong>integrity</strong></td>
+<td>Every stock file name carries a SHA-256 compiled into the binary. A host that serves different bytes — a stale mirror, a captive-portal HTML page, a truncated transfer — is rejected rather than handed to ONNX Runtime.</td>
+</tr>
+<tr>
+<td>You do not control the <strong>licence question</strong></td>
+<td>The weights live in <a href="https://github.com/ARBO-TEAM/arbo-ocr-models">arbo-ocr-models</a> with a NOTICE stating their PP-OCR provenance; upstream PaddleOCR is Apache-2.0. See <a href="../../license/">License</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>The escape hatch that used to be the <em>only</em> option is still there, and it
+still comes first: your own <code>baseUrl</code>, your own <code>modelsDir</code>, your own
+explicit paths. A default is what happens when you express no preference —
+it never overrides one. See <a href="#where-each-file-comes-from">Where each file comes from</a>.</p>
 </div>
+<h2 id="where-each-file-comes-from">Where each file comes from<a class="headerlink" href="#where-each-file-comes-from" title="Permanent link">&para;</a></h2>
+<p><code>EngineConfig</code> gained two fields, and the <code>Engine</code> constructor now calls
+<code>ensureOcrModels(config)</code> where it used to call <code>resolveModelPaths(config)</code>:</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">bool</span><span class="w"> </span><span class="n">autoDownload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w">    </span><span class="c1">// false forbids all fetching</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">modelsBaseUrl</span><span class="p">;</span><span class="w">   </span><span class="c1">// empty — use defaultModelsBaseUrl()</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">ModelPaths</span><span class="w"> </span><span class="nf">ensureOcrModels</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EngineConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cfg</span><span class="p">);</span>
+</span></code></pre></div>
+<p>Resolution is decided <strong>per file</strong>, not per engine, so a directory holding two
+of the four models downloads only the two it lacks:</p>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Source</th>
+<th>When it wins</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>An explicit <code>detModelPath</code> / <code>clsModelPath</code> / <code>recModelPath</code> / <code>dictPath</code></td>
+<td>Whenever that field is non-empty. Returned as-is — <strong>never</strong> substituted by a download.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>An existing, non-empty file under <code>cfg.modelsDir</code></td>
+<td>Whenever the file is already on disk. A fully populated <code>modelsDir</code> means zero network access.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>A download into the cache directory</td>
+<td>Only when 1 and 2 both miss, <code>autoDownload</code> is on, and <code>ARBOOCR_OFFLINE</code> is unset.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">An explicit path is never silently swapped for a stock one</p>
+<p>Rule 1 is the one worth internalising. If <code>recModelPath</code> points at a
+fine-tuned recognizer and the path is wrong — a typo, a volume that did not
+mount, a build step that skipped — arboOCR does <strong>not</strong> fall back to
+downloading the stock model and running with it. You get the missing-model
+failure you would have got before the downloader existed. OCR output from
+the wrong weights looks entirely plausible, so a silent substitution is a
+bug you would ship for months without noticing; a loud failure is one you
+fix in a minute.</p>
+</div>
+<p><code>cls</code> only enters the calculation when <code>useAngleCls</code> is on — there is no point
+fetching a classifier you will never run. A dict that cannot be fetched stays
+non-fatal for the reason it always was: the charset is frequently embedded in
+the rec ONNX <code>character</code> metadata, so there is often nothing to fetch.</p>
+<p><code>ensureOcrModels</code> <strong>never throws</strong>. Anything it cannot obtain keeps its
+resolved-but-missing path and is handed to the <code>Engine</code> unchanged, so an
+air-gapped box with a cold cache behaves exactly as it did before any of this
+existed — you get the same model-load failure at the same moment, not a new
+exception type to catch.</p>
+<h2 id="the-cache-directory">The cache directory<a class="headerlink" href="#the-cache-directory" title="Permanent link">&para;</a></h2>
+<p>Downloads land in a platform-correct cache directory rather than next to your
+binary or in the working directory, so multiple projects on one machine share
+one copy and no build tree accumulates 73 MB of weights:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>%LOCALAPPDATA%\arboOCR\models\models-v1</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>~/Library/Caches/arboOCR/models/models-v1</code></td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><code>$XDG_CACHE_HOME/arboOCR/models/models-v1</code>, else <code>~/.cache/arboOCR/models/models-v1</code></td>
+</tr>
+</tbody>
+</table>
+<p>The trailing <code>models-v1</code> is <code>defaultModelsTag()</code>, and it is the reason the
+cache is safe to keep forever. Weights are scoped by tag, so a future
+<code>models-v2</code> cannot reuse a <code>models-v1</code> file that happens to share a filename —
+the two live in different directories and never collide.</p>
+<h2 id="integrity-hashing-and-atomic-writes">Integrity: hashing and atomic writes<a class="headerlink" href="#integrity-hashing-and-atomic-writes" title="Permanent link">&para;</a></h2>
+<p><code>knownSha256(fileName)</code> returns the baked-in digest for a stock file name, or
+an empty string for a name arboOCR does not ship. <code>downloadOcrModels</code> looks it
+up per file, which means <strong>even a custom mirror gets integrity checking for
+stock file names</strong> — point <code>baseUrl</code> at your internal artifact store and a
+corrupted or substituted <code>PP-OCRv6_det.onnx</code> is still caught. Custom and
+fine-tuned names have no baseline to check against, so they stay unverified.</p>
+<p>When <code>downloadFile</code> is given a non-empty <code>expectedSha256</code> it does not write the
+destination directly. It writes a sibling <code>.&lt;pid&gt;.tmp</code>, hashes that, and only
+on a match does it <code>std::filesystem::rename</code> the temp file onto the
+destination — a replacing rename on both POSIX and Win32. Two consequences
+worth relying on:</p>
+<ul>
+<li>A reader never observes a partial file. There is no window in which the path
+  exists but holds half an ONNX model.</li>
+<li>Two processes racing the same model cannot corrupt each other. Each writes
+  its own pid-suffixed temp file; the loser's rename simply replaces an
+  already-correct file with an identical one.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">A hash also repairs a file you already have</p>
+<p>With a pinned hash, an <strong>already-existing</strong> destination is re-hashed and
+re-fetched if it does not match. That is what turns a truncated <code>.onnx</code>
+from a permanent problem into a self-healing one: a download killed by a
+dropped connection used to leave a file that existed, satisfied every
+"is it there?" check, and then failed to load forever. Now it is detected
+and replaced on the next run.</p>
+<p>Note that <code>sha256File</code> is exposed too, so you can verify a models directory
+you provisioned by other means without downloading anything.</p>
+</div>
+<p>SHA-256 is vendored in <code>model_downloader.cpp</code> — about seventy lines, not a
+link against OpenSSL. Integrity checking costs you no new dependency and no
+new build flag.</p>
 <h2 id="what-downloadocrmodels-actually-writes">What <code>downloadOcrModels</code> actually writes<a class="headerlink" href="#what-downloadocrmodels-actually-writes" title="Permanent link">&para;</a></h2>
 <p><strong>Four files</strong> — the three ONNX models <em>and</em> the recognizer dictionary. They
 are exactly the default flat filenames the <code>EngineConfig</code> path derivation
@@ -1806,18 +2030,19 @@ hooks.</p>
 (<code>baseUrl + name</code>) and the destination (<code>modelsDir/name</code>) are derived from it.
 Call it when you want to check what will land on disk, pre-seed a cache, or
 write a manifest, without performing a download:</p>
-<div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">ocrModelFileNames</span><span class="p">(</span><span class="s">&quot;PP-OCRv6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;medium&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">}</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">// PP-OCRv6_det.onnx</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">// PP-OCRv6_cls.onnx</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">// PP-OCRv6_rec_medium.onnx</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">// PP-OCRv6_rec_medium_dict.txt</span>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">ocrModelFileNames</span><span class="p">(</span><span class="s">&quot;PP-OCRv6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;medium&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">// PP-OCRv6_det.onnx</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1">// PP-OCRv6_cls.onnx</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1">// PP-OCRv6_rec_medium.onnx</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">// PP-OCRv6_rec_medium_dict.txt</span>
 </span></code></pre></div>
 <p><code>downloadOcrModels</code> returns <strong>one <code>DownloadResult</code> per name, always four
 entries, always in that same order</strong> — index 0 detector, 1 classifier, 2
 recognizer, 3 dictionary. The vector length does not vary with success or
-failure, so you can index it positionally.</p>
+failure, so you can index it positionally. An empty <code>baseUrl</code> means the
+default source; pass your own to override it.</p>
 <div class="admonition warning">
 <p class="admonition-title">The dictionary is best-effort — index 3 may be <code>ok=false</code> and still fine</p>
 <p>A recognizer that embeds its charset in the ONNX <code>character</code> metadata key
@@ -1841,21 +2066,87 @@ the stock file — call <code>downloadFile</code> once per artefact into explici
 destination paths, then point the matching <code>EngineConfig::*ModelPath</code> /
 <code>dictPath</code> field at each one. <code>downloadOcrModels</code> has no escape hatch for
 that; it is a convenience for the stock layout only.</p>
+<p>Pass your own <code>expectedSha256</code> if you want the same verify-then-rename
+guarantee for those files — <code>knownSha256</code> has no entry for a name arboOCR
+does not publish.</p>
 </div>
+<h2 id="turning-it-off">Turning it off<a class="headerlink" href="#turning-it-off" title="Permanent link">&para;</a></h2>
+<p>Auto-download is a default, not a policy. Five levers override it, listed in
+the order you would reach for them — code first, then environment:</p>
+<table>
+<thead>
+<tr>
+<th>Lever</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EngineConfig::autoDownload = false</code></td>
+<td>This engine fetches nothing; resolution stops after <code>modelsDir</code>.</td>
+</tr>
+<tr>
+<td><code>EngineConfig::modelsBaseUrl</code></td>
+<td>Fetch, but from your host instead of the default one.</td>
+</tr>
+<tr>
+<td><code>ARBOOCR_OFFLINE=1</code></td>
+<td>Process-wide: forbid all fetching, whatever the config says.</td>
+</tr>
+<tr>
+<td><code>ARBOOCR_CACHE_DIR</code></td>
+<td>Move the cache root — a shared read-only mount, a container volume, a build cache.</td>
+</tr>
+<tr>
+<td><code>ARBOOCR_MODELS_URL</code></td>
+<td>Override the base URL without touching code or config.</td>
+</tr>
+</tbody>
+</table>
+<p>The environment variables are the ones that matter in a container, because
+they let an operator who cannot recompile still pin the behaviour. Setting
+<code>ARBOOCR_OFFLINE=1</code> in a hardened image is the honest way to state "this box
+does not talk to the internet" — you get a model-load failure at startup
+instead of a network timeout on the first page.</p>
+<p>The CLI mirrors all of it: <code>--no-download</code>, <code>--models-url &lt;url&gt;</code>, and
+<code>--download-models</code> to prefetch and exit — the last is what you want in a
+Dockerfile <code>RUN</code> step, so the weights bake into a layer instead of being
+fetched on every container start. See <a href="../../cli/#model-selection">CLI</a>.</p>
 <h2 id="checking-results">Checking results<a class="headerlink" href="#checking-results" title="Permanent link">&para;</a></h2>
 <p>Both download functions return <code>DownloadResult</code>. Check it. A partial download
 leaves you with a file that exists and does not load, and by the time <code>Engine</code>
 sees it you get an empty-lines page rather than an exception — see the
 <a href="../#arboocrengine">API Reference</a>.</p>
 <p>Neither function throws: an unreachable host or an HTTP error comes back as
-<code>ok=false</code> with a message. <code>downloadFile</code> <strong>skips</strong> a destination that already
-exists and is non-empty, returning <code>ok=true</code> with <code>bytesWritten = 0</code> — so
-re-running a provisioning step is cheap and idempotent, and <code>bytesWritten == 0</code>
-means "already had it", not "wrote nothing useful".</p>
+<code>ok=false</code> with a message. What <code>downloadFile</code> does with a destination that
+already exists depends on whether a hash was pinned:</p>
+<table>
+<thead>
+<tr>
+<th><code>expectedSha256</code></th>
+<th>Existing, non-empty destination</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Empty</td>
+<td><strong>Skipped, unverified.</strong> Returns <code>ok=true</code> with <code>bytesWritten = 0</code>.</td>
+</tr>
+<tr>
+<td>Non-empty</td>
+<td><strong>Re-hashed.</strong> Matches, skipped the same way; does not match, re-fetched and replaced.</td>
+</tr>
+</tbody>
+</table>
+<p>So <code>bytesWritten == 0</code> still means "already had it", not "wrote nothing
+useful", and re-running a provisioning step is still cheap and idempotent. The
+difference is what "already had it" is allowed to mean: without a hash it means
+<em>a file is there</em>, and with one it means <em>the right file is there</em>.</p>
 <h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../models/">Models</a> — the expected layout, and how to get the files without downloading.</li>
+<li><a href="../../models/">Models</a> — the expected layout, and the three ways to get the files.</li>
 <li><a href="../../models/languages/">Languages</a> — which dictionary pairs with which recognizer.</li>
+<li><a href="../../license/">License</a> — what arboOCR's own licence covers, and what it does not.</li>
 </ul>
 
 
@@ -1879,7 +2170,7 @@ means "already had it", not "wrote nothing useful".</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 8, 2026 07:36:16 UTC">2026-08-08 07:36:16</span>
   </span>
 
     

@@ -13,6 +13,21 @@
     "language": "en",
     "items": [
         {
+            "id": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/08/we-said-there-would-never-be-a-default-model-url/",
+            "url": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/08/we-said-there-would-never-be-a-default-model-url/",
+            "title": "We said there would never be a default model URL",
+            "content_html": "arboOCR downloads its own weights now. That reverses a decision we reaffirmed yesterday \u2014 so here is what actually changed, and what did not.",
+            "image": null,
+            "date_modified": "2026-08-08T07:36:16+00:00",
+            "date_published": "2026-08-08T00:00:00+00:00",
+            "authors": [
+                {
+                    "name": "ARBO-TEAM"
+                }
+            ],
+            "tags": null
+        },
+        {
             "id": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/",
             "url": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/07/the-accuracy-cycle-the-recognizer-was-never-the-problem/",
             "title": "The accuracy cycle: the recognizer was never the problem",
