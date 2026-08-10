@@ -154,10 +154,20 @@ cache is frequently read-only, so it cannot be written into the way Composer's
 ### Pinned release
 
 All four wrappers are pinned to release
-[`v0.1.0-php1`](https://github.com/wafik/ArboOCR/releases/tag/v0.1.0-php1), and
-the auto-download is verified working end to end on both Windows and Linux
-against that tag. The model weights are pinned and cached the same way, one
-layer down — see [Models](#models).
+[`v0.3.0`](https://github.com/wafik/ArboOCR/releases/tag/v0.3.0), and the
+auto-download is verified working end to end on both Windows and Linux against
+that tag. The model weights are pinned and cached the same way, one layer
+down — see [Models](#models).
+
+!!! warning "GPU needs v0.3.0 — every earlier archive was CPU-only in practice"
+    Each wrapper exposes `useCuda` / `useTensorrt`, but the binary it downloads
+    has to be able to load the provider. Release archives before v0.3.0 shipped
+    no `onnxruntime_providers_shared` library, so CUDA and TensorRT could not
+    load from a published package on either platform — the engine fell back to
+    CPU and said nothing. The providers are `dlopen`'d at runtime, so they
+    appear in no import table and `ldd` could not report them missing either.
+    v0.3.0 is the first release whose archive can actually run on GPU. Read the
+    `backend` field on the result to confirm which one you got.
 
 !!! tip "Offline installs and unsupported platforms"
     If auto-download fails — air-gapped CI, a corporate proxy, an OS with no

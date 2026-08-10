@@ -78,6 +78,17 @@ cv::Mat decodeImageBytes(const uint8_t* data, size_t size);
 TensorRT but silently fell back to CPU is the single most common cause of
 "why is this 10× slower than the benchmark".
 
+!!! warning "`useCuda` / `useTensorrt` need a v0.3.0 or newer release archive"
+    Release archives before **v0.3.0** shipped no
+    `onnxruntime_providers_shared` library, so ONNX Runtime could not bring up
+    either GPU provider from a published package and `backend()` returned
+    `"cpu"` no matter what the config asked for. The provider libraries are
+    `dlopen`'d rather than linked, so they appeared in no import table and
+    `ldd` could not flag them as missing — the failure had no symptom other
+    than the backend string. v0.3.0 is the first release that ships them. If
+    you build arboOCR yourself, the same rule applies to whatever you copy
+    alongside the binary.
+
 ### `ensureOcrModels`: the constructor's first step, exposed
 
 `Engine`'s constructor now calls `ensureOcrModels(cfg)` where it used to call

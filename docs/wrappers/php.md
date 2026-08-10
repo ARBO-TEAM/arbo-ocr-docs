@@ -26,7 +26,7 @@ Cargo, and Go modules have no equivalent of, so those three download lazily
 instead.
 
 The pinned release is
-[`v0.1.0-php1`](https://github.com/wafik/ArboOCR/releases/tag/v0.1.0-php1). The
+[`v0.3.0`](https://github.com/wafik/ArboOCR/releases/tag/v0.3.0). The
 auto-download is live and verified working end to end — no manual binary step
 needed.
 

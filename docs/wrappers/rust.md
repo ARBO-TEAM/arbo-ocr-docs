@@ -23,8 +23,8 @@ arbo-ocr = { git = "https://github.com/ARBO-TEAM/arbo-ocr-rust" }
 `Engine::new` downloads the matching arboOCR release binary (Windows or Linux,
 auto-detected) the first time it is used **if `Config.bin_path` is `None`**.
 Verified working end to end against
-[`v0.1.0-php1`](https://github.com/wafik/ArboOCR/releases/tag/v0.1.0-php1) on
-both platforms.
+[`v0.3.0`](https://github.com/wafik/ArboOCR/releases/tag/v0.3.0) on both
+platforms.
 
 !!! tip "If the download fails"
     On an offline build or an unsupported OS, download a release manually from
