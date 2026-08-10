@@ -1937,7 +1937,11 @@ scaling and reading-order tolerance. See
 </tbody>
 </table>
 <h2 id="measured">Measured<a class="headerlink" href="#measured" title="Permanent link">&para;</a></h2>
-<p>Warm Python <code>Engine</code>, CPU, 5 SROIE receipts, char sim vs box GT:</p>
+<p>Warm <code>Engine</code>, CPU, the same 5 SROIE receipts for every row, char sim vs box
+GT. Latency is <strong>engine</strong> time — the OCR call only, excluding process start
+and language-side marshalling — because that is the one number all three
+engines report comparably. Reference engines are <code>ppu-paddle-ocr</code> and
+<code>rapidocr</code> <strong>3.9.2</strong>, run on those same five images.</p>
 <table>
 <thead>
 <tr>
@@ -1972,11 +1976,71 @@ scaling and reading-order tolerance. See
 <td style="text-align: right;">94.6%</td>
 <td style="text-align: right;">~793</td>
 </tr>
+<tr>
+<td>rapidocr (ref)</td>
+<td>tiny</td>
+<td style="text-align: right;">92.6%</td>
+<td style="text-align: right;">~345</td>
+</tr>
+<tr>
+<td>rapidocr (ref)</td>
+<td>small</td>
+<td style="text-align: right;">94.5%</td>
+<td style="text-align: right;">~930</td>
+</tr>
+<tr>
+<td>rapidocr (ref)</td>
+<td>medium</td>
+<td style="text-align: right;">94.7%</td>
+<td style="text-align: right;">~3070</td>
+</tr>
 </tbody>
 </table>
-<p>The reference row is the point of the table: at <code>small</code>, arbo lands within
-~0.2 pts of the PaddleOCR port while running faster on the same images.
-<code>medium</code> is ahead on similarity and roughly 4× the latency of <code>small</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Five receipts cannot rank three engines — do not read a winner out of this table</p>
+<p>At <code>small</code> the three land at <strong>94.4%</strong> (arbo), <strong>94.5%</strong> (rapidocr) and
+<strong>94.6%</strong> (ppu-paddle-ocr). The entire spread is ~0.4 pts across five
+images, which is inside the run-to-run noise — at this sample size the
+three engines are <strong>indistinguishable</strong>. If you are choosing between them,
+this table is not the evidence you need.</p>
+<p>The five-receipt set is also an easy one, and it flatters every engine by
+roughly 8–9 pts. Same harness, same ground-truth method, both engines at
+<code>small</code>, widened to 40 SROIE receipts:</p>
+<table>
+<thead>
+<tr>
+<th>Engine (<code>small</code>)</th>
+<th>n=5</th>
+<th>n=40</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>arbo</td>
+<td>94.2%</td>
+<td>86.1%</td>
+</tr>
+<tr>
+<td>rapidocr</td>
+<td>94.5%</td>
+<td>85.3%</td>
+</tr>
+</tbody>
+</table>
+<p>arbo moves from ~0.1 pt <em>behind</em> rapidocr to ~0.8 pt <em>ahead</em> of it purely
+by widening the sample: <strong>the ordering is not stable across sample sizes.</strong>
+Treat the n=40 column as the headline and the five-image numbers as the
+smoke test they were built to be.</p>
+<p>(arbo reads 94.2% here rather than the 94.4% above because this pair comes
+from a separate run of the harness — a 0.2 pt swing on byte-identical
+inputs, which is itself a fair measure of how little the five-image spread
+is worth.)</p>
+</div>
+<p>So the reference rows are calibration, not a leaderboard: at <code>small</code>, arbo sits
+inside half a point of both ports while running faster than either on the same
+images, which is what let <code>small</code> become the default. The one comparison here
+that does survive the sample size is <code>small</code> vs <code>medium</code> — same engine, same
+images, so the noise cancels: <strong>~+0.4 pts for roughly 4× the CPU latency.</strong></p>
 <h2 id="what-to-watch-when-integrating">What to watch when integrating<a class="headerlink" href="#what-to-watch-when-integrating" title="Permanent link">&para;</a></h2>
 <div class="admonition danger">
 <p class="admonition-title">Items 1, 2 and 6 are breaking for existing integrations</p>
@@ -2122,7 +2186,7 @@ baseline line by line.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 14:43:48 UTC">2026-08-07 14:43:48</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 10, 2026 04:15:16 UTC">2026-08-10 04:15:16</span>
   </span>
 
     
