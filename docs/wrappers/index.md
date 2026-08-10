@@ -4,12 +4,12 @@ title: Language wrappers
 
 # Language wrappers
 
-arboOCR is a C++ library, but you do not need a C++ toolchain to use it. Four
-official wrappers — [Python](python.md), [Go](go.md), [Rust](rust.md), and
-[PHP](php.md) — install with a single package-manager command and talk to the
-same prebuilt engine.
+arboOCR is a C++ library, but you do not need a C++ toolchain to use it. Five
+official wrappers — [Python](python.md), [Go](go.md), [Rust](rust.md),
+[PHP](php.md), and [JavaScript](js.md) — install with a single package-manager
+command and talk to the same prebuilt engine.
 
-## How all four work
+## How all five work
 
 Every wrapper is a thin process driver. None of them build, vendor, or link
 arboOCR's C++ source. They download a prebuilt, self-contained release
@@ -26,11 +26,11 @@ wrapper ──── spawn ────► arboocr_demo --image page.jpg --model
     └────── JSON on stdout ────────┘
 ```
 
-The compiled binary and its DLLs are language-agnostic: all four wrappers pull
+The compiled binary and its DLLs are language-agnostic: all five wrappers pull
 the *same* release asset (`arboocr-windows-x64.zip` on Windows,
 `arboocr-linux-x64.tar.gz` on Linux) and differ only in how they spawn it —
 `subprocess` in Python, `os/exec` in Go, `std::process::Command` in Rust,
-`proc_open` in PHP.
+`proc_open` in PHP, `child_process` in JavaScript.
 
 ### The trade-off, stated honestly
 
@@ -60,10 +60,13 @@ engine alive in your process and skip the spawn entirely.
 | [Go](go.md) | `go get github.com/ARBO-TEAM/arbo-ocr-go` | [ARBO-TEAM/arbo-ocr-go](https://github.com/ARBO-TEAM/arbo-ocr-go) | `PascalCase` |
 | [Rust](rust.md) | git dependency on `arbo-ocr` | [ARBO-TEAM/arbo-ocr-rust](https://github.com/ARBO-TEAM/arbo-ocr-rust) | `snake_case` |
 | [PHP](php.md) | `composer require arbo/ocr-php` | [ARBO-TEAM/ArboOcrPhp](https://github.com/ARBO-TEAM/ArboOcrPhp) | `camelCase` |
+| [JavaScript](js.md) | `npm install github:ARBO-TEAM/arbo-ocr-js` | [ARBO-TEAM/arbo-ocr-js](https://github.com/ARBO-TEAM/arbo-ocr-js) | `camelCase` |
 
-The API surface is deliberately identical across all four — construct an engine
+The API surface is deliberately identical across all five — construct an engine
 with a models directory, call `recognize` with an image path, read `backend`,
 `lines`, and `elapsed_ms` off the result. Only the naming convention changes.
+JavaScript is the one exception to the shape, and only because the language
+forces it: `recognize` returns a `Promise`.
 
 === "Python"
 
@@ -133,6 +136,23 @@ with a models directory, call `recognize` with an image path, read `backend`,
     }
     ```
 
+=== "JavaScript"
+
+    ```ts
+    import { Engine } from "arbo-ocr-js";
+
+    const engine = new Engine({
+      modelsDir: "/path/to/models",
+      modelType: "small",
+    });
+
+    const result = await engine.recognize("/path/to/image.jpg");
+
+    for (const line of result.lines) {
+      console.log(line.text, line.score.toFixed(3));
+    }
+    ```
+
 ## Getting the binary
 
 Every wrapper auto-downloads the matching release asset for the current
@@ -146,14 +166,16 @@ Cargo, Go modules, and pip do not.
 | Go | Lazily, on first `NewEngine` when `Config.BinPath` is empty | `os.UserCacheDir()/arbo-ocr-go/<platform>/` |
 | Rust | Lazily, on first `Engine::new` when `Config.bin_path` is `None` | `%LOCALAPPDATA%\arbo-ocr-rust\<platform>` (Windows), `$XDG_CACHE_HOME/arbo-ocr-rust/<platform>` or `~/.cache/arbo-ocr-rust/<platform>` (Linux) |
 | PHP | Composer post-install hook, at `composer require` / `composer install` time | `bin/<platform>/` inside the installed package |
+| JavaScript | Lazily, on the first `recognize()` when `binPath` is unset | `%LOCALAPPDATA%\arbo-ocr-js\v0.3.0\<platform>` (Windows), `$XDG_CACHE_HOME/arbo-ocr-js/v0.3.0/<platform>` or `~/.cache/…` (Linux) |
 
-Go and Rust cache outside their package directories on purpose: Go's module
-cache is frequently read-only, so it cannot be written into the way Composer's
+Go, Rust, and JavaScript cache outside their package directories on purpose:
+Go's module cache is frequently read-only, and `node_modules` is routinely
+deleted and rebuilt, so neither can be written into the way Composer's
 `vendor/` can.
 
 ### Pinned release
 
-All four wrappers are pinned to release
+All five wrappers are pinned to release
 [`v0.3.0`](https://github.com/wafik/ArboOCR/releases/tag/v0.3.0), and the
 auto-download is verified working end to end on both Windows and Linux against
 that tag. The model weights are pinned and cached the same way, one layer
@@ -174,14 +196,15 @@ down — see [Models](#models).
     published asset — fetch a release manually from the
     [arboOCR releases page](https://github.com/wafik/ArboOCR/releases), unpack
     it, and pass the binary path explicitly: `bin_path` (Python, Rust),
-    `Config.BinPath` (Go), or `binPath` (PHP). Go and Rust additionally expose
-    their installers directly (`installer.EnsureInstalled`,
-    `installer::ensure_installed`) so you can pull the binary during a Docker
-    or container build step and pass the returned path at runtime.
+    `Config.BinPath` (Go), or `binPath` (PHP, JavaScript). Go, Rust and
+    JavaScript additionally expose their installers directly
+    (`installer.EnsureInstalled`, `installer::ensure_installed`,
+    `ensureInstalled()`) so you can pull the binary during a Docker or container
+    build step and pass the returned path at runtime.
 
 ## Models
 
-**No wrapper bundles OCR models — and all four auto-download them anyway.** Not
+**No wrapper bundles OCR models — and all five auto-download them anyway.** Not
 one line of wrapper code makes that happen: every wrapper spawns the same
 `arboocr_demo` binary, and that binary fetches the stock weights it is missing,
 so the wrappers inherit the behaviour for free. Point a models directory at
@@ -239,10 +262,11 @@ pinned tag, a platform cache directory, a lazy fetch on first use. Same pattern,
 second artifact — the wrappers cache the CLI under their own name, and the CLI
 caches the weights under arboOCR's.
 
-!!! tip "Turning the download off from any of the four languages"
-    The wrappers do not expose `arboocr_demo`'s `--no-download` and
-    `--models-url` flags, but a spawned process inherits your environment, so
-    the env vars reach it from every language. `ARBOOCR_OFFLINE=1` makes a
+!!! tip "Turning the download off from any of the five languages"
+    Only the JavaScript wrapper exposes `arboocr_demo`'s `--no-download` and
+    `--models-url` flags directly (as `noDownload` and `modelsUrl`). Everywhere
+    else, a spawned process inherits your environment, so the env vars reach it
+    from every language. `ARBOOCR_OFFLINE=1` makes a
     missing model an immediate error instead of a network call — the setting you
     want in an air-gapped runtime, where a stalled socket is indistinguishable
     from a hang. `ARBOOCR_MODELS_URL` points at an internal mirror, and
@@ -267,15 +291,25 @@ tiny / small / medium on the reference SROIE sample. The numbers below measure
 wrapper overhead only: subprocess spawn cost minus the engine's own reported
 inference time, over a 40-image SROIE sample.
 
-| Model size | PHP | Go | Rust | Python |
-|---|---:|---:|---:|---:|
-| `tiny` | 192 ms | 138 ms | 131 ms | 203 ms |
-| `small` | 234 ms | 184 ms | 174 ms | 249 ms |
-| `medium` | 302 ms | 253 ms | 245 ms | 321 ms |
+| Model size | Rust | Go | JavaScript | PHP | Python |
+|---|---:|---:|---:|---:|---:|
+| `tiny` | 135 ms | 174 ms | 186 ms | 196 ms | 218 ms |
+| `small` | 162 ms | 177 ms | 216 ms | 217 ms | 246 ms |
+| `medium` | 233 ms | 235 ms | 282 ms | 291 ms | 317 ms |
 
-Go and Rust track each other closely — both are compiled binaries paying only
-process-spawn cost. PHP and Python each add their interpreter's own startup on
-top of the same spawn, landing in the same ballpark as one another.
+The raw binary — no wrapper at all, just `arboocr_demo` spawned directly —
+costs 127 / 184 / 234 ms on the same run. That is the floor every row is
+measured against, and it is most of every row.
+
+Go and Rust track each other closely: both are compiled binaries paying only
+process-spawn cost. JavaScript sits between them and the interpreted wrappers,
+since Node's startup is cheaper than PHP's or Python's but not free. PHP and
+Python land in the same ballpark as one another.
+
+Overhead rises with model size for every language, which is the tell that this
+is not purely spawn cost — a larger recognizer takes longer to load into memory,
+and that load happens inside the process on every call without appearing in the
+engine's own reported time.
 
 !!! note "Pick on ecosystem, not on this table"
     A 60 ms spread is noise next to the 130–320 ms floor every wrapper shares.
@@ -287,5 +321,6 @@ top of the same spawn, landing in the same ballpark as one another.
 - [Go](go.md) — `go get`, lazy binary download
 - [Rust](rust.md) — Cargo git dependency
 - [PHP](php.md) — Composer with a post-install hook
+- [JavaScript](js.md) — npm or Bun, zero runtime dependencies
 - [Models](../models/index.md) — what to download and where to put it
 - [Quickstart](../quickstart.md) — the CLI, C++, and in-process Python bindings

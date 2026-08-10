@@ -10,10 +10,11 @@ description: >-
 
 `arboocr_demo` is the binary that ships in every arboOCR release. It looks like
 a demo, and for a C++ user it is one. For everyone else it is **the public
-API**: all four wrappers — [Python](wrappers/python.md), [Go](wrappers/go.md),
-[Rust](wrappers/rust.md), [PHP](wrappers/php.md) — spawn this exact executable
-as a subprocess and parse its stdout. `subprocess`, `os/exec`,
-`std::process::Command`, `proc_open`: different words, one binary.
+API**: all five wrappers — [Python](wrappers/python.md), [Go](wrappers/go.md),
+[Rust](wrappers/rust.md), [PHP](wrappers/php.md), [JavaScript](wrappers/js.md) —
+spawn this exact executable as a subprocess and parse its stdout. `subprocess`,
+`os/exec`, `std::process::Command`, `proc_open`, `child_process`: different
+words, one binary.
 
 That is why this page matters more than a demo page should. Until recently the
 CLI exposed no accuracy knobs at all — no detection thresholds, no
@@ -21,7 +22,7 @@ CLI exposed no accuracy knobs at all — no detection thresholds, no
 library's own tuning story: you could read
 [Accuracy defaults](models/accuracy-defaults.md), agree with all of it, and
 have no way to act on it from Python. The flags below close that gap. A knob
-that exists here exists in all four languages.
+that exists here exists in all five languages.
 
 ```text
 arboocr_demo --image <path>        [options]
@@ -588,7 +589,7 @@ produced zero lines.
 With `--json`, stdout carries **pure JSON and nothing else** — one compact
 object, one trailing newline. This is load-bearing: wrappers pipe the entire
 stream into a JSON parser without pre-filtering it, so a single stray
-`printf` would break all four languages at once. Everything that is not the
+`printf` would break all five languages at once. Everything that is not the
 result — engine logs, `--draw` confirmations, `--draw` failures — goes to
 stderr.
 
@@ -744,7 +745,8 @@ output path cannot hold N overlays.
 
 ---
 
-Next: [Wrappers](wrappers/index.md) to call this from Python, Go, Rust or PHP,
+Next: [Wrappers](wrappers/index.md) to call this from Python, Go, Rust, PHP or
+JavaScript,
 [Accuracy defaults](models/accuracy-defaults.md) for what the tuning flags
 actually do, or the [API reference](api/index.md) if you would rather link the
 library than spawn it.
