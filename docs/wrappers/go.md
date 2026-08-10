@@ -20,9 +20,9 @@ go get github.com/ARBO-TEAM/arbo-ocr-go
 
 `NewEngine` downloads the matching arboOCR release binary (Windows or Linux,
 auto-detected) the first time it is used. The pinned release is
-[`v0.1.0-php1`](https://github.com/wafik/ArboOCR/releases/tag/v0.1.0-php1), and
-the auto-download is live and verified working end to end — no manual binary
-step needed.
+[`v0.3.0`](https://github.com/wafik/ArboOCR/releases/tag/v0.3.0), and the
+auto-download is live and verified working end to end — no manual binary step
+needed.
 
 !!! tip "If the download fails"
     On an offline build or an unsupported OS, download a release manually from

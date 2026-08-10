@@ -212,10 +212,24 @@ arbo::ocr::Engine engine(cfg);
 std::cout << "Running on: " << engine.backend() << "\n";
 ```
 
-!!! note
+!!! note "One binary, every machine — but log what it picked"
 
     This means the same binary degrades gracefully across machines: build once
     with GPU providers available, ship it, and it will fall back to CPU on a
     host that has none rather than failing to start. Always log
     `engine.backend()` when a benchmark result looks wrong — the usual cause is
     a silent fallback to CPU.
+
+!!! warning "Ship `onnxruntime_providers_shared` or GPU never comes up"
+
+    Graceful degradation cuts both ways: a package that is *missing* the
+    provider library degrades to CPU just as quietly as a host with no GPU.
+    Every arboOCR release archive before **v0.3.0** had exactly that bug — no
+    `onnxruntime_providers_shared` was published, so `--cuda` and `--tensorrt`
+    could not load from the release package on either platform. It stayed
+    hidden because ONNX Runtime `dlopen`s the providers instead of linking
+    them: nothing shows up in the import table, and `ldd` lists no missing
+    dependency. v0.3.0 packages them on both platforms. If you assemble your
+    own distribution, copy `onnxruntime_providers_shared.dll` (Windows) or
+    `libonnxruntime_providers_shared.so` (Linux) next to the binary, and verify
+    with `engine.backend()` rather than with a linker tool.

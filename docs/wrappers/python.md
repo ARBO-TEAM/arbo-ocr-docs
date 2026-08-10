@@ -42,7 +42,7 @@ detects the platform (Windows or Linux), downloads the matching arboOCR release
 binary, and unpacks it into `arbo_ocr/bin/<platform>/`.
 
 The pinned release is
-[`v0.1.0-php1`](https://github.com/wafik/ArboOCR/releases/tag/v0.1.0-php1).
+[`v0.3.0`](https://github.com/wafik/ArboOCR/releases/tag/v0.3.0).
 
 !!! tip "If the download fails"
     On an offline install or an unsupported OS, grab a release manually from

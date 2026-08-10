@@ -466,6 +466,20 @@ Requests are requests, not guarantees. The engine probes
 `--json` output (and the `Backend:` line otherwise) reports what was *actually*
 selected — check it before you trust a benchmark.
 
+!!! warning "GPU works from a release archive starting with v0.3.0"
+
+    Every release archive before **v0.3.0** shipped without
+    `onnxruntime_providers_shared` — the loader stub ONNX Runtime needs before
+    it can bring up CUDA or TensorRT. `--cuda` and `--tensorrt` therefore could
+    not load from a published package on either platform, and reported
+    `backend: cpu` with no error to explain it. The providers are `dlopen`'d at
+    runtime rather than linked, so they showed up in no import table and `ldd`
+    could not report them missing either — which is exactly why this went
+    unnoticed. v0.3.0 ships `onnxruntime_providers_shared.dll` in the Windows
+    zip and `libonnxruntime_providers_shared.so` in the Linux tarball, and is
+    the first release where GPU can actually load from the package. If you
+    tried GPU on an older archive and silently got CPU, that was this.
+
 !!! warning "Changing `--fp16` or `--rec-batch-num` invalidates cached TRT engines"
 
     TensorRT engines under `--trt-cache-dir` are built for a specific precision
