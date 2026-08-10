@@ -77,6 +77,16 @@ ground truth:
 | arbo | medium | 94.8% | ~2120 |
 | ppu-paddle-ocr (ref) | small | 94.6% | ~793 |
 
+!!! info "Since this post: a second reference engine, and why this table cannot rank engines"
+
+    A later run added `rapidocr` 3.9.2 alongside the PaddleOCR port and
+    re-measured on 40 receipts. Two things came out of it. At `small`, all
+    three engines sit within ~0.4 pts on these five images — that is noise,
+    not a ranking. And the wider sample drops every engine to the mid-80s
+    while *reversing* the arbo/rapidocr ordering, so the five-image ordering
+    does not hold. The current table and the full caveat are in
+    [Accuracy defaults](../../models/accuracy-defaults.md#measured).
+
 Read the `small` and `medium` rows together: **medium buys ~+0.4 pts for
 roughly 4x the CPU latency.** That is why `small` is now the default for both
 the library and the CLI. Medium is still the right call when you have GPU or
