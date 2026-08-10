@@ -4,8 +4,18 @@ title: Benchmarks
 
 # Benchmarks
 
-All numbers measured on a **Jetson Nano**, real inference (not synthetic
-timing), on a mix of document types — not just one lucky sample image.
+All numbers measured on the project's **Jetson** reference board, real
+inference (not synthetic timing), on a mix of document types — not just one
+lucky sample image. That board is a **Jetson Orin Nano Super** running
+JetPack 7.2 (CUDA 13.2, TensorRT 10.16, onnxruntime 1.28); see
+[Verified configuration](build/jetson.md#verified-configuration).
+
+!!! note "Not an original Jetson Nano"
+    Earlier revisions of this page said "Jetson Nano", which reads as the 2019
+    Maxwell board. It cannot be that one: that device tops out at JetPack 4.6
+    (CUDA 10.2, TensorRT 8.2), so it cannot run the onnxruntime 1.28 /
+    TensorRT 10 stack these numbers depend on. Scale expectations to an
+    Orin-generation board, not to the older Nano.
 
 !!! note "This page is latency, not accuracy"
     Character-similarity measurements live in
@@ -32,6 +42,28 @@ Note what the spread says: latency tracks line count far more than layout
 complexity. A 60-line bilingual table and a 48-line newspaper cost about the
 same; an 11-line whiteboard menu is cheap regardless of how ugly the
 handwriting is.
+
+### Backend comparison (tiny recognizer, 31-line receipt)
+
+`engineMs` is the engine's own reported inference time, read back from the
+`backend` field of `--json` so the provider is confirmed rather than assumed.
+
+| Requested | `backend` reported | engineMs | vs CPU |
+|---|---|---:|---|
+| *(default)* | `cpu` | 968 ms | — |
+| `--cuda` | `cuda` | 2426 ms | 2.5× slower |
+| `--tensorrt` | `tensorrt` | **277–322 ms** | **3× faster** |
+
+!!! warning "CUDA can be slower than CPU — and that is expected here"
+    On one small image, the CUDA execution provider's per-process
+    initialisation dominates the work it saves. TensorRT wins the same
+    comparison because it loads a **pre-built engine** from `trtCacheDir`
+    rather than compiling kernels at startup.
+
+    So `--cuda` being slow is not evidence of a broken install. Two things to
+    check before concluding anything: that `backend` actually says `cuda`, and
+    that you are not measuring one process per image. Both effects vanish when
+    a single Engine handles many images — which is what `--images-from` is for.
 
 ### Batching: CPU vs. TensorRT
 

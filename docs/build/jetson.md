@@ -16,11 +16,59 @@ sit inside a system `site-packages`; it is not easy to keep that working after
 someone upgrades a virtualenv. Copying the runtime into `vendor/` costs a few
 hundred megabytes and buys a build that only depends on files you control.
 
+## Verified configuration
+
+The procedure below was last run end to end on this stack, with `backend`
+confirming TensorRT actually loaded:
+
+| | |
+|---|---|
+| Board | Jetson Orin Nano Super (8 GB, 6 cores) |
+| JetPack / L4T | 7.2 / R39.2 |
+| OS | Ubuntu 24.04 LTS |
+| CUDA / TensorRT | 13.2 / 10.16.2 |
+| onnxruntime | 1.28.0 (CUDA + TensorRT providers) |
+| OpenCV / GCC / CMake | 4.8.0 (apt) / 13.3 / 3.28 |
+
+!!! warning "The original Jetson Nano cannot run this"
+    This page's stack needs JetPack 6 or newer. The original Jetson Nano
+    (Maxwell, 2019) tops out at JetPack 4.6 — CUDA 10.2, TensorRT 8.2,
+    Ubuntu 18.04 — so neither onnxruntime 1.28 nor TensorRT 10 is available
+    there. "Jetson" on this site means an Orin-generation board.
+
 ## System packages
 
 ```bash
-sudo apt install -y libopencv-dev libcurl4-openssl-dev doctest-dev cxxopts-dev cmake build-essential
+sudo apt install -y libopencv-dev libcurl4-openssl-dev doctest-dev libcxxopts-dev cmake build-essential
 ```
+
+!!! bug "The package is `libcxxopts-dev`, not `cxxopts-dev`"
+    Earlier revisions of this page said `cxxopts-dev`. No such package exists
+    on Ubuntu 24.04 — `apt` fails with `E: Unable to locate package
+    cxxopts-dev`, and because one bad name aborts the whole command, *nothing*
+    in the line gets installed. The correct name is **`libcxxopts-dev`**
+    (3.1.1 on 24.04), which ships `/usr/lib/cmake/cxxopts/cxxopts-config.cmake`
+    and so satisfies `find_package(cxxopts CONFIG REQUIRED)`.
+
+??? tip "If your distribution has no cxxopts package at all"
+    cxxopts is a single header, so you can vendor it and skip the system
+    package rather than hunting for a backport. Point `cxxopts_DIR` at a
+    directory containing a two-line config:
+
+    ```bash
+    mkdir -p .deps/cxxopts/include
+    curl -sSfL -o .deps/cxxopts/include/cxxopts.hpp \
+      https://raw.githubusercontent.com/jarro2783/cxxopts/v3.2.0/include/cxxopts.hpp
+    cat > .deps/cxxopts/cxxopts-config.cmake <<'CFG'
+    add_library(cxxopts::cxxopts INTERFACE IMPORTED)
+    set_target_properties(cxxopts::cxxopts PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_LIST_DIR}/include")
+    CFG
+    ```
+
+    Then add `-Dcxxopts_DIR=$PWD/.deps/cxxopts` to the configure step. This
+    touches nothing outside the build tree, which is the right move on a shared
+    or production device.
 
 ## Vendoring onnxruntime
 
@@ -84,6 +132,30 @@ cmake --build build/jetson -j$(nproc)
 `vendor/onnxruntime/lib` you just populated, so if you keep onnxruntime
 somewhere else you override that one variable rather than editing the preset.
 
+!!! tip "On a device that is doing other work, do not use `-j$(nproc)`"
+    A full build takes about 90 seconds on an Orin Nano at `-j3`, and half the
+    cores is enough to stay off the critical path of anything else on the box:
+
+    ```bash
+    nice -n 10 cmake --build build/jetson -j3
+    ```
+
+    Peak extra RAM is well under 1 GB, so memory is not the constraint — CPU
+    contention is. `nice` matters more than the job count: it lets any
+    latency-sensitive process preempt the compiler outright.
+
+!!! warning "`ARBOOCR_ORT_LIB_DIR` is burned into the binary as an RPATH"
+    The build sets `INSTALL_RPATH` from this variable with
+    `BUILD_WITH_INSTALL_RPATH`, so the resulting `arboocr_demo` hardcodes an
+    **absolute** path to the onnxruntime directory. Check it with
+    `readelf -d build/jetson/arboocr_demo | grep RUNPATH`.
+
+    Two consequences worth knowing before you tidy anything up. Renaming or
+    moving the source tree breaks the binary — use a symlink if you want a
+    shorter path. And if you point `ARBOOCR_ORT_LIB_DIR` at another project's
+    `vendor/onnxruntime`, you have made that project a permanent runtime
+    dependency; give each checkout its own copy instead.
+
 ## Verify
 
 ```bash
@@ -97,15 +169,43 @@ TensorRT, then CUDA, then CPU via `Ort::GetAvailableProviders()`, and
 Jetson, step 2 did not take.
 
 ```bash
-./arboocr_demo --image page.jpg --models-dir models
+./arboocr_demo --image page.jpg --models-dir models --json | grep -o '"backend":"[a-z]*"'
 ```
 
 ```text
-Backend: tensorrt
+"backend":"tensorrt"
 ```
+
+Read `backend` rather than trusting the flag. Requesting a provider is not the
+same as getting one: if TensorRT cannot load, the engine falls back to CPU and
+says nothing.
+
+### What each backend costs
+
+Same 31-line receipt, `tiny` recognizer, on the [verified
+configuration](#verified-configuration) above. `engineMs` is the engine's own
+reported inference time; wall clock adds process start and model load.
+
+| Requested | `backend` | engineMs |
+|---|---|---:|
+| *(default)* | `cpu` | 968 ms |
+| `--cuda` | `cuda` | 2426 ms |
+| `--tensorrt` | `tensorrt` | **277–322 ms** |
+
+TensorRT is roughly **3× faster than CPU**. CUDA being 2.5× *slower* than CPU
+is not a misconfiguration — it is per-process execution-provider
+initialisation, which a single small image cannot amortise. TensorRT avoids it
+by loading a pre-built engine from `trtCacheDir` instead of compiling kernels
+at startup.
+
+!!! tip "One image per process hides most of the win"
+    The first TensorRT run above was 479 ms and the warm ones 277–322 ms — the
+    difference is engine cache loading, paid on every process start. If you are
+    measuring throughput rather than one-shot latency, use `--images-from` so a
+    single process handles the whole list with one Engine construction.
+    Spawning the binary per image measures startup, not inference.
 
 ---
 
-Every number on the [Benchmarks](../benchmarks.md) page was measured on a
-**Jetson Nano** with this build, so it is the right reference for what to
+The [Benchmarks](../benchmarks.md) page is the right reference for what to
 expect once the above is working.
