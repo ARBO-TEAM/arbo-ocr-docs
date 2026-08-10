@@ -13,6 +13,21 @@
     "language": "en",
     "items": [
         {
+            "id": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/10/--cuda-never-worked-from-a-release-archive-until-today/",
+            "url": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/10/--cuda-never-worked-from-a-release-archive-until-today/",
+            "title": "--cuda never worked from a release archive until today",
+            "content_html": "v0.3.0 is the first release whose archive can actually run on GPU \u2014 every earlier one was missing a library nothing could tell you was missing.",
+            "image": null,
+            "date_modified": "2026-08-10T03:49:01+00:00",
+            "date_published": "2026-08-10T00:00:00+00:00",
+            "authors": [
+                {
+                    "name": "ARBO-TEAM"
+                }
+            ],
+            "tags": null
+        },
+        {
             "id": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/08/we-said-there-would-never-be-a-default-model-url/",
             "url": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/08/we-said-there-would-never-be-a-default-model-url/",
             "title": "We said there would never be a default model URL",

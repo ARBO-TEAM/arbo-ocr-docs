@@ -1634,6 +1634,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#-cuda-never-worked-from-a-release-archive-until-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      --cuda never worked from a release archive until today
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#we-said-there-would-never-be-a-default-model-url" class="md-nav__link">
     <span class="md-ellipsis">
       We said there would never be a default model URL
@@ -1711,6 +1720,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#-cuda-never-worked-from-a-release-archive-until-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      --cuda never worked from a release archive until today
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#we-said-there-would-never-be-a-default-model-url" class="md-nav__link">
     <span class="md-ellipsis">
       We said there would never be a default model URL
@@ -1751,6 +1769,59 @@
       <header class="md-typeset">
         <h1 id="release-notes">Release notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://github.com/ARBO-TEAM.png" alt="ARBO-TEAM">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2026-08-10 00:00:00+00:00">8/10/26</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="./" class="md-meta__link">Release notes</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              4 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="-cuda-never-worked-from-a-release-archive-until-today"><a class="toclink" href="../../2026/08/10/--cuda-never-worked-from-a-release-archive-until-today/"><code>--cuda</code> never worked from a release archive until today</a></h2>
+<p>If you ever passed <code>--cuda</code> or <code>--tensorrt</code> to a binary you unpacked from an
+arboOCR release, you got CPU. Not an error, not a warning — CPU, and a
+<code>backend</code> field quietly reading <code>cpu</code>. Every release before <strong>v0.3.0</strong> shipped
+without <code>onnxruntime_providers_shared</code>, the loader stub ONNX Runtime needs
+before it can bring up either GPU provider.</p>
+<p>v0.3.0 fixes that, takes model auto-download live, and refuses to publish a
+package it has not run first. All four wrappers are pinned to it.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2026/08/10/--cuda-never-worked-from-a-release-archive-until-today/">
+          Continue reading
+        </a>
+      </nav>
+    
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">

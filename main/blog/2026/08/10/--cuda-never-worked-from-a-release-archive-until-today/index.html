@@ -6,37 +6,35 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="arboOCR is a standalone C++ OCR library — text detection, orientation classification, and recognition over PP-OCRv6 ONNX models via ONNXRuntime, running on CPU, CUDA, or TensorRT. Wrappers for Python, Go, Rust, and PHP.">
+        <meta name="description" content="v0.3.0 is the first release whose archive can actually run on GPU — every earlier one was missing a library nothing could tell you was missing.">
       
       
         <meta name="author" content="ARBO-TEAM">
       
       
-        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/wrappers/python/">
+        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/10/--cuda-never-worked-from-a-release-archive-until-today/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../../08/we-said-there-would-never-be-a-default-model-url/">
       
       
-        <link rel="next" href="../go/">
       
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../../../../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../../../../feed_rss_updated.xml">
       
-        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
-        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../feed_rss_updated.xml">
-      
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>Python - arboOCR Docs</title>
+        <title>--cuda never worked from a release archive until today - arboOCR Docs</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -84,9 +82,9 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -112,7 +110,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#python" class="md-skip">
+        <a href="#-cuda-never-worked-from-a-release-archive-until-today" class="md-skip">
           Skip to content
         </a>
       
@@ -132,7 +130,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="arboOCR Docs" class="md-header__button md-logo" aria-label="arboOCR Docs" data-md-component="logo">
+    <a href="../../../../.." title="arboOCR Docs" class="md-header__button md-logo" aria-label="arboOCR Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 4c0-1.1.9-2 2-2h4v2H4v4H2zm20 16c0 1.11-.89 2-2 2h-4v-2h4v-4h2zM4 22a2 2 0 0 1-2-2v-4h2v4h4v2zM20 2a2 2 0 0 1 2 2v4h-2V4h-4V2zM9 7v2h2v8h2V9h2V7z"/></svg>
@@ -152,7 +150,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Python
+              --cuda never worked from a release archive until today
             
           </span>
         </div>
@@ -276,7 +274,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href="../../../../.." class="md-tabs__link">
           
   
   
@@ -298,7 +296,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../build/" class="md-tabs__link">
+        <a href="../../../../../build/" class="md-tabs__link">
           
   
   
@@ -320,7 +318,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../models/" class="md-tabs__link">
+        <a href="../../../../../models/" class="md-tabs__link">
           
   
   
@@ -342,7 +340,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../api/" class="md-tabs__link">
+        <a href="../../../../../api/" class="md-tabs__link">
           
   
   
@@ -360,13 +358,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../../../wrappers/" class="md-tabs__link">
           
   
   
@@ -388,7 +384,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../benchmarks/" class="md-tabs__link">
+        <a href="../../../../../benchmarks/" class="md-tabs__link">
           
   
   
@@ -406,11 +402,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../blog/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../../" class="md-tabs__link">
           
   
   
@@ -441,7 +439,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -452,7 +452,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="arboOCR Docs" class="md-nav__button md-logo" aria-label="arboOCR Docs" data-md-component="logo">
+    <a href="../../../../.." title="arboOCR Docs" class="md-nav__button md-logo" aria-label="arboOCR Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 4c0-1.1.9-2 2-2h4v2H4v4H2zm20 16c0 1.11-.89 2-2 2h-4v-2h4v-4h2zM4 22a2 2 0 0 1-2-2v-4h2v4h4v2zM20 2a2 2 0 0 1 2 2v4h-2V4h-4V2zM9 7v2h2v8h2V9h2V7z"/></svg>
@@ -511,7 +511,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../.." class="md-nav__link ">
+            <a href="../../../../.." class="md-nav__link ">
               
   
   
@@ -546,7 +546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quickstart/" class="md-nav__link">
+      <a href="../../../../../quickstart/" class="md-nav__link">
         
   
   
@@ -569,7 +569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/" class="md-nav__link">
+      <a href="../../../../../cli/" class="md-nav__link">
         
   
   
@@ -592,7 +592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../faq/" class="md-nav__link">
+      <a href="../../../../../faq/" class="md-nav__link">
         
   
   
@@ -647,7 +647,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../build/" class="md-nav__link ">
+            <a href="../../../../../build/" class="md-nav__link ">
               
   
   
@@ -682,7 +682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../build/jetson/" class="md-nav__link">
+      <a href="../../../../../build/jetson/" class="md-nav__link">
         
   
   
@@ -743,7 +743,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../models/" class="md-nav__link ">
+            <a href="../../../../../models/" class="md-nav__link ">
               
   
   
@@ -778,7 +778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/sizes/" class="md-nav__link">
+      <a href="../../../../../models/sizes/" class="md-nav__link">
         
   
   
@@ -801,7 +801,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/languages/" class="md-nav__link">
+      <a href="../../../../../models/languages/" class="md-nav__link">
         
   
   
@@ -824,7 +824,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/clahe/" class="md-nav__link">
+      <a href="../../../../../models/clahe/" class="md-nav__link">
         
   
   
@@ -847,7 +847,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/accuracy-defaults/" class="md-nav__link">
+      <a href="../../../../../models/accuracy-defaults/" class="md-nav__link">
         
   
   
@@ -910,7 +910,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../api/" class="md-nav__link ">
+            <a href="../../../../../api/" class="md-nav__link ">
               
   
   
@@ -945,7 +945,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/visualize/" class="md-nav__link">
+      <a href="../../../../../api/visualize/" class="md-nav__link">
         
   
   
@@ -968,7 +968,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/markdown/" class="md-nav__link">
+      <a href="../../../../../api/markdown/" class="md-nav__link">
         
   
   
@@ -991,7 +991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/logging/" class="md-nav__link">
+      <a href="../../../../../api/logging/" class="md-nav__link">
         
   
   
@@ -1014,7 +1014,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/custom-pipeline/" class="md-nav__link">
+      <a href="../../../../../api/custom-pipeline/" class="md-nav__link">
         
   
   
@@ -1037,7 +1037,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/downloader/" class="md-nav__link">
+      <a href="../../../../../api/downloader/" class="md-nav__link">
         
   
   
@@ -1064,8 +1064,6 @@
       
   
   
-    
-  
   
   
     
@@ -1087,23 +1085,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../../../../wrappers/" class="md-nav__link ">
               
   
   
@@ -1116,13 +1111,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Wrappers
@@ -1135,32 +1130,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Python
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../../../wrappers/python/" class="md-nav__link">
         
   
   
@@ -1171,155 +1144,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Install">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-the-second-command-exists" class="md-nav__link">
-    <span class="md-ellipsis">
-      Why the second command exists
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#models" class="md-nav__link">
-    <span class="md-ellipsis">
-      Models
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Usage
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Usage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#manual-binary-path" class="md-nav__link">
-    <span class="md-ellipsis">
-      Manual binary path
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#result-shape" class="md-nav__link">
-    <span class="md-ellipsis">
-      Result shape
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-example-tiny-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick example: tiny model
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      How it works
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#performance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Performance
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      License
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      See also
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1332,7 +1156,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../go/" class="md-nav__link">
+      <a href="../../../../../wrappers/go/" class="md-nav__link">
         
   
   
@@ -1355,7 +1179,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rust/" class="md-nav__link">
+      <a href="../../../../../wrappers/rust/" class="md-nav__link">
         
   
   
@@ -1378,7 +1202,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../php/" class="md-nav__link">
+      <a href="../../../../../wrappers/php/" class="md-nav__link">
         
   
   
@@ -1461,7 +1285,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../benchmarks/" class="md-nav__link">
+      <a href="../../../../../benchmarks/" class="md-nav__link">
         
   
   
@@ -1484,7 +1308,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../architecture/" class="md-nav__link">
+      <a href="../../../../../architecture/" class="md-nav__link">
         
   
   
@@ -1507,7 +1331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/" class="md-nav__link">
+      <a href="../../../../../contributing/" class="md-nav__link">
         
   
   
@@ -1530,7 +1354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../license/" class="md-nav__link">
+      <a href="../../../../../license/" class="md-nav__link">
         
   
   
@@ -1557,6 +1381,8 @@
       
   
   
+    
+  
   
   
     
@@ -1574,20 +1400,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../blog/" class="md-nav__link ">
+            <a href="../../../../" class="md-nav__link ">
               
   
   
@@ -1600,13 +1429,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Blog
@@ -1632,17 +1461,20 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
         
           
-          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="">
             
   
   
@@ -1669,7 +1501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/archive/2026/" class="md-nav__link">
+      <a href="../../../../archive/2026/" class="md-nav__link">
         
   
   
@@ -1710,17 +1542,20 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
         
           
-          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="">
             
   
   
@@ -1747,7 +1582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/category/release-notes/" class="md-nav__link">
+      <a href="../../../../category/release-notes/" class="md-nav__link">
         
   
   
@@ -1786,6 +1621,8 @@
             
             
               
+                
+              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -1805,129 +1642,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
+  <a href="#the-bug-that-leaves-no-evidence" class="md-nav__link">
     <span class="md-ellipsis">
-      Install
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Install">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-the-second-command-exists" class="md-nav__link">
-    <span class="md-ellipsis">
-      Why the second command exists
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#models" class="md-nav__link">
-    <span class="md-ellipsis">
-      Models
+      The bug that leaves no evidence
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
+  <a href="#auto-download-is-live" class="md-nav__link">
     <span class="md-ellipsis">
-      Usage
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Usage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#manual-binary-path" class="md-nav__link">
-    <span class="md-ellipsis">
-      Manual binary path
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
+      Auto-download is live
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#result-shape" class="md-nav__link">
+  <a href="#a-package-that-cannot-run-does-not-get-published" class="md-nav__link">
     <span class="md-ellipsis">
-      Result shape
+      A package that cannot run does not get published
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-example-tiny-model" class="md-nav__link">
+  <a href="#smaller-build-same-download" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick example: tiny model
+      Smaller build, same download
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
+  <a href="#upgrading" class="md-nav__link">
     <span class="md-ellipsis">
-      How it works
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#performance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Performance
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      License
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      See also
+      Upgrading
     </span>
   </a>
   
@@ -1942,14 +1695,116 @@
             
           
           
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
                 
-                  
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://github.com/ARBO-TEAM.png" alt="ARBO-TEAM">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          ARBO-TEAM
+                        
+                      </strong>
+                      <br>
+                      arboOCR maintainers
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2026-08-10 00:00:00+00:00" class="md-ellipsis">8/10/26</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../../../../category/release-notes/">Release notes</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              4 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <a href="../../../../../tags/#tag:models" class="md-tag">models</a>
+      
+    
+      
+      
+      
+        <a href="../../../../../tags/#tag:performance" class="md-tag">performance</a>
+      
+    
+  </nav>
 
 
   
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/wrappers/python.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/blog/posts/2026-08-10-v0-3-0.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
     </a>
@@ -1958,266 +1813,134 @@
     
       
     
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/wrappers/python.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/blog/posts/2026-08-10-v0-3-0.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
     </a>
   
 
 
-<h1 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h1>
-<p>Python wrapper for arboOCR. It runs the prebuilt <code>arboocr_demo</code> binary via
-<code>subprocess</code> — <strong>no C++ build required</strong>.</p>
-<ul>
-<li><strong>Package:</strong> <code>arbo-ocr-python</code> (PyPI)</li>
-<li><strong>Import name:</strong> <code>arbo_ocr</code></li>
-<li><strong>Repo:</strong> <a href="https://github.com/ARBO-TEAM/arbo-ocr-python">ARBO-TEAM/arbo-ocr-python</a></li>
-<li><strong>Config field style:</strong> <code>snake_case</code></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Two different Python paths into arboOCR</p>
-<p>This page covers the <strong>subprocess wrapper</strong> — it spawns <code>arboocr_demo</code> once
-per image and parses its JSON. That is not the same thing as the in-process
-<strong>pybind11 bindings</strong> described in
-<a href="../../quickstart/#python-bindings-optional">Quickstart</a>, which load the C++
-engine into your interpreter, accept NumPy arrays directly, and have no
-per-call process spawn — at the cost of needing a built arboOCR. Use this
-package when you want a one-line install; use the bindings when you want
-throughput.</p>
-</div>
-<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>arbo-ocr-python
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>arbo-ocr-install
-</span></code></pre></div>
-<h3 id="why-the-second-command-exists">Why the second command exists<a class="headerlink" href="#why-the-second-command-exists" title="Permanent link">&para;</a></h3>
-<p>Composer can run arbitrary code after installing a package via its
-<code>post-install-cmd</code> hook. <strong>pip cannot</strong> — installing a wheel does not reliably
-execute package code, so there is no safe place to hang a binary download off
-<code>pip install</code>.</p>
-<p>So this package ships an explicit console script instead. <code>arbo-ocr-install</code> is
-run once after installing, exactly the same pattern as <code>playwright install</code>. It
-detects the platform (Windows or Linux), downloads the matching arboOCR release
-binary, and unpacks it into <code>arbo_ocr/bin/&lt;platform&gt;/</code>.</p>
-<p>The pinned release is
-<a href="https://github.com/wafik/ArboOCR/releases/tag/v0.3.0"><code>v0.3.0</code></a>.</p>
+<h1 id="-cuda-never-worked-from-a-release-archive-until-today"><code>--cuda</code> never worked from a release archive until today<a class="headerlink" href="#-cuda-never-worked-from-a-release-archive-until-today" title="Permanent link">&para;</a></h1>
+<p>If you ever passed <code>--cuda</code> or <code>--tensorrt</code> to a binary you unpacked from an
+arboOCR release, you got CPU. Not an error, not a warning — CPU, and a
+<code>backend</code> field quietly reading <code>cpu</code>. Every release before <strong>v0.3.0</strong> shipped
+without <code>onnxruntime_providers_shared</code>, the loader stub ONNX Runtime needs
+before it can bring up either GPU provider.</p>
+<p>v0.3.0 fixes that, takes model auto-download live, and refuses to publish a
+package it has not run first. All four wrappers are pinned to it.</p>
+<!-- more -->
+
+<h2 id="the-bug-that-leaves-no-evidence">The bug that leaves no evidence<a class="headerlink" href="#the-bug-that-leaves-no-evidence" title="Permanent link">&para;</a></h2>
+<p>ONNX Runtime does not link the execution providers. It <code>dlopen</code>s them at
+runtime, on demand, after <code>Ort::GetAvailableProviders()</code> decides which ones are
+present. That is a reasonable design — it is what lets one binary run on a
+GPU host and a CPU host without two builds — but it has a nasty consequence
+for packaging: <strong>a missing provider library is invisible to every tool you
+would normally check with.</strong></p>
+<table>
+<thead>
+<tr>
+<th>What you would reach for</th>
+<th>What it told you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The import table (<code>dumpbin /dependents</code>, <code>objdump -p</code>)</td>
+<td>Nothing. The providers are never imported, so they are never listed.</td>
+</tr>
+<tr>
+<td><code>ldd</code> on the Linux binary</td>
+<td>No missing dependency. <code>ldd</code> walks <code>DT_NEEDED</code>, and <code>dlopen</code> does not create one.</td>
+</tr>
+<tr>
+<td>Running the binary</td>
+<td>Ran fine. Detection, recognition, JSON output — all correct, all on CPU.</td>
+</tr>
+</tbody>
+</table>
+<p>So the failure had exactly one symptom: the <code>backend</code> string said <code>cpu</code> when
+you asked for <code>tensorrt</code>. That is the same symptom as <em>a host with no GPU</em>,
+which is a real and common situation, so the reading was always "this machine
+does not have it" rather than "the package does not have it".</p>
 <div class="admonition tip">
-<p class="admonition-title">If the download fails</p>
-<p>On an offline install or an unsupported OS, grab a release manually from
-the <a href="https://github.com/wafik/ArboOCR/releases">arboOCR releases page</a> and
-pass <code>bin_path</code> explicitly — see <a href="#manual-binary-path">Manual binary path</a>.</p>
+<p class="admonition-title">How to tell whether this was you</p>
+<p>Run the packaged binary with <code>--json</code> on any image and read the <code>backend</code>
+field, on a machine you know has a working CUDA or TensorRT install. On a
+pre-v0.3.0 archive it reads <code>cpu</code> no matter what you passed. On v0.3.0 it
+reads what actually loaded. Do not use a linker tool to check this — see
+the table above for why it will lie to you.</p>
 </div>
-<h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
-<p><code>arbo-ocr-python</code> does not bundle OCR models — it does not have to. The
-<code>arboocr_demo</code> binary it spawns downloads the stock weights it is missing on
-first use, checks each file against a SHA-256 baked into the binary, and caches
-it per platform. Point <code>models_dir</code> at a folder that already holds the PP-OCRv6
-ONNX files and nothing touches the network. For the default
-<code>model_type="small"</code> that means three files:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>models/
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── PP-OCRv6_det.onnx
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── PP-OCRv6_rec_small.onnx
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>└── PP-OCRv6_rec_small_dict.txt
+<p>v0.3.0 ships <code>onnxruntime_providers_shared.dll</code> in the Windows zip and
+<code>libonnxruntime_providers_shared.so</code> in the Linux tarball. It is the first
+release where <code>--cuda</code> and <code>--tensorrt</code> can load from a published package at
+all. Nothing about the flags, the fallback order, or <code>backend()</code> changed — they
+finally have something to find.</p>
+<h2 id="auto-download-is-live">Auto-download is live<a class="headerlink" href="#auto-download-is-live" title="Permanent link">&para;</a></h2>
+<p>The default model URL described in
+<a href="../../08/we-said-there-would-never-be-a-default-model-url/">We said there would never be a default model URL</a>
+is in a release now. Missing weights are fetched from</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://github.com/ARBO-TEAM/arbo-ocr-models/releases/download/models-v1/
 </span></code></pre></div>
-<p><code>PP-OCRv6_cls.onnx</code> is only needed when angle classification is on. Swap the
-<code>_small</code> files for <code>_tiny</code> or <code>_medium</code> to change size — or keep all three in
-the same directory and switch with <code>model_type</code>.</p>
-<p>Full file matrix, the cache locations, and how to turn the download off:
-<a href="../#models">Models</a> on the wrappers overview, or
-<a href="../../models/">Models</a> for the complete treatment.</p>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">arbo_ocr</span><span class="w"> </span><span class="kn">import</span> <span class="n">Engine</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">Engine</span><span class="p">(</span><span class="n">models_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/models&quot;</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;small&quot;</span><span class="p">)</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">result</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="s2">&quot;/path/to/image.png&quot;</span><span class="p">)</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+<p>verified against a SHA-256 manifest compiled into the binary, and cached
+per-platform. First run downloads; every run after that is offline. An
+explicit path you set is still never substituted by a download, and
+<code>ARBOOCR_OFFLINE=1</code> still turns the whole thing off. Full precedence rules are
+on <a href="../../../../../api/downloader/">Model downloader</a>.</p>
+<h2 id="a-package-that-cannot-run-does-not-get-published">A package that cannot run does not get published<a class="headerlink" href="#a-package-that-cannot-run-does-not-get-published" title="Permanent link">&para;</a></h2>
+<p>The GPU bug survived every release before this one because nothing in the
+pipeline ever executed the thing it was about to upload. Both release jobs now
+do, from the package's own directory rather than from the build tree:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Run the packaged binary where a user would run it — not where it was built,</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># which is the only place its dependencies happen to be lying around.</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">cd</span><span class="w"> </span>dist/arboocr<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./arboocr_demo<span class="w"> </span>--json<span class="w"> </span>--draw<span class="w"> </span>out.png<span class="w"> </span>--clahe<span class="w"> </span>--angle
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>./arboocr_demo<span class="w"> </span>--download-models
 </span></code></pre></div>
-<h3 id="manual-binary-path">Manual binary path<a class="headerlink" href="#manual-binary-path" title="Permanent link">&para;</a></h3>
-<p>Pass <code>bin_path</code> to point at a manually-downloaded binary instead of relying on
-the one <code>arbo-ocr-install</code> placed:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">Engine</span><span class="p">(</span><span class="n">bin_path</span><span class="o">=</span><span class="s2">&quot;/custom/path/to/arboocr_demo&quot;</span><span class="p">,</span> <span class="n">models_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/models&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>models_dir</code></td>
-<td><code>str</code></td>
-<td>—</td>
-<td>Directory holding the PP-OCRv6 ONNX files</td>
-</tr>
-<tr>
-<td><code>model_type</code></td>
-<td><code>str</code></td>
-<td><code>"small"</code></td>
-<td>Recognizer size: <code>"tiny"</code>, <code>"small"</code>, or <code>"medium"</code></td>
-</tr>
-<tr>
-<td><code>bin_path</code></td>
-<td><code>str</code></td>
-<td>Auto-installed path</td>
-<td>Explicit path to <code>arboocr_demo</code>, bypassing auto-install</td>
-</tr>
-</tbody>
-</table>
+<p>Packaging also resolves the real dependency closure instead of a hand-kept
+list. A package that cannot start is a failed release, not a support ticket
+three weeks later.</p>
+<h2 id="smaller-build-same-download">Smaller build, same download<a class="headerlink" href="#smaller-build-same-download" title="Permanent link">&para;</a></h2>
+<p>OpenCV now builds <strong>9 modules instead of 14</strong> — <code>calib3d</code>, <code>dnn</code>, <code>highgui</code>,
+<code>objdetect</code> and <code>stitching</code> are gone, which also drops <code>quirc</code> out of the
+dependency graph entirely. The Linux CI apt list went from 21 packages to
+9–10. Both are build-time wins: less to compile, less to install, fewer things
+that can break a runner.</p>
 <div class="admonition warning">
-<p class="admonition-title">Angle classification and CUDA</p>
-<p>The <code>arbo-ocr-python</code> README documents only the three parameters above. The
-Go, Rust, and PHP wrappers additionally document angle-classification and
-CUDA toggles (<code>use_angle_cls</code> / <code>use_cuda</code> and their per-language spellings).
-If you need those from Python, check the installed package's own
-<code>Engine.__init__</code> signature before relying on them — see
-<a href="../go/#configuration">Go</a>, <a href="../rust/#configuration">Rust</a>, and
-<a href="../php/#configuration">PHP</a> for the equivalents.</p>
+<p class="admonition-title">This did not make your download smaller</p>
+<p>We initially measured a 27% reduction and it was wrong — it compared
+against a polluted local build directory, not against a shipped package.
+vcpkg's applocal deployment was already trimming the package to what the
+binary actually loads, so there was nothing left for the module cut to
+remove. Windows went <strong>12.66 MB → 12.69 MB</strong>: it grew slightly, because the
+missing provider DLL is now in it. Treat the module reduction as a build
+improvement and nothing else.</p>
 </div>
-<h2 id="result-shape">Result shape<a class="headerlink" href="#result-shape" title="Permanent link">&para;</a></h2>
-<p><code>Engine.recognize()</code> returns a result object with these attributes:</p>
 <table>
 <thead>
 <tr>
-<th>Attribute</th>
-<th>Description</th>
+<th>Asset</th>
+<th>Size</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>backend</code></td>
-<td>Execution provider actually used: <code>cpu</code>, <code>cuda</code>, or <code>tensorrt</code></td>
+<td><code>arboocr-windows-x64.zip</code></td>
+<td>12.69 MB</td>
 </tr>
 <tr>
-<td><code>lines</code></td>
-<td>List of recognized lines, in detection order</td>
-</tr>
-<tr>
-<td><code>elapsed_ms</code></td>
-<td>Engine-reported inference time in milliseconds</td>
+<td><code>arboocr-linux-x64.tar.gz</code></td>
+<td>23.63 MB</td>
 </tr>
 </tbody>
 </table>
-<p>Each entry in <code>lines</code> carries:</p>
-<table>
-<thead>
-<tr>
-<th>Attribute</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>text</code></td>
-<td>Recognized text for the line</td>
-</tr>
-<tr>
-<td><code>score</code></td>
-<td>Recognition confidence, <code>0.0</code>–<code>1.0</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="quick-example-tiny-model">Quick example: tiny model<a class="headerlink" href="#quick-example-tiny-model" title="Permanent link">&para;</a></h2>
-<p>For a fast local smoke test, use <code>model_type="tiny"</code> — the smallest and fastest
-PP-OCRv6 recognizer. A local arboOCR checkout's <code>models/</code> folder already
-contains the tiny det/rec/cls ONNX files, so no extra download is needed:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">arbo_ocr</span><span class="w"> </span><span class="kn">import</span> <span class="n">Engine</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">Engine</span><span class="p">(</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">models_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/arboOCR/models&quot;</span><span class="p">,</span>  <span class="c1"># e.g. a local arboOCR checkout&#39;s models/ dir</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;tiny&quot;</span><span class="p">,</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">)</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">result</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="s2">&quot;/path/to/receipt.jpg&quot;</span><span class="p">)</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;backend=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s2"> lines=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span><span class="si">}</span><span class="s2"> elapsed_ms=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">elapsed_ms</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="si">:</span><span class="s2">&lt;40</span><span class="si">}</span><span class="s2"> score=</span><span class="si">{</span><span class="n">line</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<p><code>tiny</code> trades accuracy for speed — good for quick local testing. Switch to
-<code>small</code> (the default) or <code>medium</code> for production-quality recognition.</p>
-<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
-<p>The package never builds or vendors arboOCR's C++ source. <code>arbo-ocr-install</code>
-downloads a prebuilt, self-contained bundle from arboOCR's GitHub Releases —
-the binary plus its required shared libraries, no source and no ONNX models.
-<code>Engine.recognize()</code> then invokes that binary as a subprocess per image with a
-<code>--json</code> flag and parses the JSON result.</p>
-<p>Two implementation details worth knowing, both already fixed upstream:</p>
-<ul>
-<li><strong>UTF-8 decoding is explicit.</strong> <code>subprocess.run(text=True)</code> without an
-  explicit <code>encoding</code> decodes using the Windows locale default (<code>cp1252</code>), not
-  UTF-8. Recognized text containing a byte <code>cp1252</code> cannot map raises
-  <code>UnicodeDecodeError</code> inside <code>subprocess</code>'s internal reader thread, where it is
-  silently swallowed — surfacing only as <code>stdout</code>/<code>stderr</code> being <code>None</code> despite
-  <code>returncode == 0</code>. <code>Engine.recognize()</code> now passes <code>encoding="utf-8"</code>
-  explicitly.</li>
-<li><strong>Import cost was trimmed.</strong> <code>installer.py</code> used to import <code>urllib.request</code>,
-  <code>zipfile</code>, and <code>tarfile</code> at module level even though <code>engine.py</code> only needs
-  <code>detect_platform()</code> / <code>default_bin_path()</code>. Those are heavy stdlib imports
-  (<code>urllib.request</code> alone pulls in <code>ssl</code> and <code>http.client</code>), costing ~50 ms of
-  interpreter startup per call for nothing. Moving them into the functions that
-  actually use them cut measured overhead by ~35–40 ms per call at every model
-  size.</li>
-</ul>
-<h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
-<p>Wrapper overhead only — subprocess spawn minus the engine's own reported
-inference time, over a 40-image SROIE sample. Accuracy is identical across all
-four wrappers because they call the same binary.</p>
-<table>
-<thead>
-<tr>
-<th>Model size</th>
-<th style="text-align: right;">Python</th>
-<th style="text-align: right;">Go</th>
-<th style="text-align: right;">Rust</th>
-<th style="text-align: right;">PHP</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>tiny</code></td>
-<td style="text-align: right;">203 ms</td>
-<td style="text-align: right;">138 ms</td>
-<td style="text-align: right;">131 ms</td>
-<td style="text-align: right;">192 ms</td>
-</tr>
-<tr>
-<td><code>small</code></td>
-<td style="text-align: right;">249 ms</td>
-<td style="text-align: right;">184 ms</td>
-<td style="text-align: right;">174 ms</td>
-<td style="text-align: right;">234 ms</td>
-</tr>
-<tr>
-<td><code>medium</code></td>
-<td style="text-align: right;">321 ms</td>
-<td style="text-align: right;">245 ms</td>
-<td style="text-align: right;">253 ms</td>
-<td style="text-align: right;">302 ms</td>
-</tr>
-</tbody>
-</table>
-<p>Python sits alongside PHP: both pay their interpreter's startup cost on top of
-the same <code>arboocr_demo</code> spawn that Go and Rust pay alone. If that floor is
-unacceptable, use the in-process
-<a href="../../quickstart/#python-bindings-optional">pybind11 bindings</a> instead.</p>
-<h2 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>pytest
-</span></code></pre></div>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>Apache-2.0.</p>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="../">Language wrappers</a> — shared architecture and the trade-off</li>
-<li><a href="../../models/">Models</a> — obtaining PP-OCRv6 ONNX files</li>
-<li><a href="../../quickstart/">Quickstart</a> — CLI, C++, and in-process Python bindings</li>
-</ul>
+<p>The Linux build is fully static, so the tarball is close to just the 72 MB
+binary, the provider <code>.so</code>, <code>LICENSE</code> and <code>THIRD_PARTY_NOTICES</code> — the
+compression ratio is doing the work, not a lean file list.</p>
+<h2 id="upgrading">Upgrading<a class="headerlink" href="#upgrading" title="Permanent link">&para;</a></h2>
+<p>Nothing in the API or the CLI changed shape. If you are on the wrappers, the
+pinned release moved and you get it on the next install. If you tried GPU
+before and concluded arboOCR was slow, re-run the check in the tip above —
+you were measuring CPU.</p>
 
 
 
@@ -2226,11 +1949,33 @@ unacceptable, use the in-process
 
 
   
+    
+  
+  
+    
   
 
 
   <aside class="md-source-file">
     
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 10, 2026 03:49:01 UTC">2026-08-10 03:49:01</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 10, 2026 03:49:01 UTC">2026-08-10 03:49:01</span>
+  </span>
+
     
     
     
@@ -2261,12 +2006,14 @@ unacceptable, use the in-process
 
 
 
+  
 
 
-                
-              </article>
-            </div>
-          
+
+      
+    </article>
+  </div>
+
           
   <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
 
@@ -2285,10 +2032,12 @@ unacceptable, use the in-process
   
     
       
+        
+      
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Language wrappers">
+          <a href="../../08/we-said-there-would-never-be-a-default-model-url/" class="md-footer__link md-footer__link--prev" aria-label="Previous: We said there would never be a default model URL">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
@@ -2298,27 +2047,11 @@ unacceptable, use the in-process
                 Previous
               </span>
               <div class="md-ellipsis">
-                Language wrappers
+                We said there would never be a default model URL
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../go/" class="md-footer__link md-footer__link--next" aria-label="Next: Go">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Go
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M247.1 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L179.2 256 41.9 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
-            </div>
-          </a>
         
       </nav>
     
@@ -2400,10 +2133,10 @@ unacceptable, use the in-process
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.tooltips", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit", "content.action.view", "content.footnote.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.footer", "navigation.indexes", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../../../../..", "features": ["announce.dismiss", "content.tooltips", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit", "content.action.view", "content.footnote.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.footer", "navigation.indexes", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
     
   </body>

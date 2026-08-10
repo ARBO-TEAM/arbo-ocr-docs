@@ -1950,10 +1950,21 @@ cache is frequently read-only, so it cannot be written into the way Composer's
 <code>vendor/</code> can.</p>
 <h3 id="pinned-release">Pinned release<a class="headerlink" href="#pinned-release" title="Permanent link">&para;</a></h3>
 <p>All four wrappers are pinned to release
-<a href="https://github.com/wafik/ArboOCR/releases/tag/v0.1.0-php1"><code>v0.1.0-php1</code></a>, and
-the auto-download is verified working end to end on both Windows and Linux
-against that tag. The model weights are pinned and cached the same way, one
-layer down — see <a href="#models">Models</a>.</p>
+<a href="https://github.com/wafik/ArboOCR/releases/tag/v0.3.0"><code>v0.3.0</code></a>, and the
+auto-download is verified working end to end on both Windows and Linux against
+that tag. The model weights are pinned and cached the same way, one layer
+down — see <a href="#models">Models</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">GPU needs v0.3.0 — every earlier archive was CPU-only in practice</p>
+<p>Each wrapper exposes <code>useCuda</code> / <code>useTensorrt</code>, but the binary it downloads
+has to be able to load the provider. Release archives before v0.3.0 shipped
+no <code>onnxruntime_providers_shared</code> library, so CUDA and TensorRT could not
+load from a published package on either platform — the engine fell back to
+CPU and said nothing. The providers are <code>dlopen</code>'d at runtime, so they
+appear in no import table and <code>ldd</code> could not report them missing either.
+v0.3.0 is the first release whose archive can actually run on GPU. Read the
+<code>backend</code> field on the result to confirm which one you got.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Offline installs and unsupported platforms</p>
 <p>If auto-download fails — air-gapped CI, a corporate proxy, an OS with no

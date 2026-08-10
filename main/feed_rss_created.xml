@@ -13,8 +13,8 @@
     <language>en</language>
 
     
-    <pubDate>Sat, 08 Aug 2026 07:39:22 -0000</pubDate>
-    <lastBuildDate>Sat, 08 Aug 2026 07:39:22 -0000</lastBuildDate>
+    <pubDate>Mon, 10 Aug 2026 04:03:43 -0000</pubDate>
+    <lastBuildDate>Mon, 10 Aug 2026 04:03:43 -0000</lastBuildDate>
     <ttl>1440</ttl>
 
     
@@ -30,6 +30,25 @@
     
 
     
+    
+    <item>
+      <title>--cuda never worked from a release archive until today</title>
+      
+      
+        
+      <author>ARBO-TEAM</author>
+        
+      
+      
+      
+      <description>v0.3.0 is the first release whose archive can actually run on GPU — every earlier one was missing a library nothing could tell you was missing.</description>
+      <link>https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/10/--cuda-never-worked-from-a-release-archive-until-today/</link>
+      <pubDate>Mon, 10 Aug 2026 00:00:00 +0000</pubDate>
+      <source url="https://arbo-team.github.io/arbo-ocr-docs/main/feed_rss_created.xml">arboOCR Docs</source>
+      
+      <guid isPermaLink="true">https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/10/--cuda-never-worked-from-a-release-archive-until-today/</guid>
+      
+    </item>
     
     <item>
       <title>We said there would never be a default model URL</title>
