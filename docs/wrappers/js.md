@@ -16,15 +16,14 @@ JavaScript wrapper for arboOCR. It runs the prebuilt `arboocr_demo` binary via
 ## Install
 
 ```bash
-npm install github:ARBO-TEAM/arbo-ocr-js
+npm install arbo-ocr-js
 # or
-bun add github:ARBO-TEAM/arbo-ocr-js
+bun add arbo-ocr-js
 ```
 
-!!! note "Not on the npm registry yet"
-    Install from GitHub for now. The package's `prepare` script builds `dist/`
-    at install time, so a git install behaves exactly like a registry one — you
-    still need no compiler and no `node-gyp`.
+Installing from GitHub also works (`npm install github:ARBO-TEAM/arbo-ocr-js`)
+— the package's `prepare` script builds `dist/` at install time, so a git
+install behaves exactly like a registry one.
 
 The first `recognize()` call downloads the matching arboOCR release binary
 (Windows or Linux, auto-detected). The pinned release is

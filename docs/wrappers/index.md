@@ -60,7 +60,7 @@ engine alive in your process and skip the spawn entirely.
 | [Go](go.md) | `go get github.com/ARBO-TEAM/arbo-ocr-go` | [ARBO-TEAM/arbo-ocr-go](https://github.com/ARBO-TEAM/arbo-ocr-go) | `PascalCase` |
 | [Rust](rust.md) | git dependency on `arbo-ocr` | [ARBO-TEAM/arbo-ocr-rust](https://github.com/ARBO-TEAM/arbo-ocr-rust) | `snake_case` |
 | [PHP](php.md) | `composer require arbo/ocr-php` | [ARBO-TEAM/ArboOcrPhp](https://github.com/ARBO-TEAM/ArboOcrPhp) | `camelCase` |
-| [JavaScript](js.md) | `npm install github:ARBO-TEAM/arbo-ocr-js` | [ARBO-TEAM/arbo-ocr-js](https://github.com/ARBO-TEAM/arbo-ocr-js) | `camelCase` |
+| [JavaScript](js.md) | `npm install arbo-ocr-js` or `bun add arbo-ocr-js` | [ARBO-TEAM/arbo-ocr-js](https://github.com/ARBO-TEAM/arbo-ocr-js) | `camelCase` |
 
 The API surface is deliberately identical across all five — construct an engine
 with a models directory, call `recognize` with an image path, read `backend`,
