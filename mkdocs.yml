@@ -194,6 +194,7 @@ nav:
     - wrappers/go.md
     - wrappers/rust.md
     - wrappers/php.md
+    - wrappers/js.md
   - Reference:
     - benchmarks.md
     - architecture.md

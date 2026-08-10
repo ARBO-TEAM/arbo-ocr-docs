@@ -66,13 +66,14 @@ server, no dataset tooling, just the inference core.
     [RapidOcrOnnx](https://github.com/RapidAI/RapidOcrOnnx) (Apache-2.0) —
     battle-tested logic, renamed and reorganized for a clean public API.
 
--   :material-language-python: **Wrappers for four languages**
+-   :material-language-python: **Wrappers for five languages**
 
     ---
 
     [Python](wrappers/python.md), [Go](wrappers/go.md),
-    [Rust](wrappers/rust.md), and [PHP](wrappers/php.md) wrappers drive the
-    prebuilt binary via subprocess — no C++ build required.
+    [Rust](wrappers/rust.md), [PHP](wrappers/php.md), and
+    [JavaScript](wrappers/js.md) wrappers drive the prebuilt binary via
+    subprocess — no C++ build required.
 
 </div>
 

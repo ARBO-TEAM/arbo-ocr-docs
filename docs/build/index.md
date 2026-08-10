@@ -110,8 +110,8 @@ What lands where, relative to the prefix (via `GNUInstallDirs`, so `lib` may be
 
 Two things are deliberately *not* installed. `arboocr_tests` and the
 `examples/` programs stay build-tree only — they are for developing arboOCR,
-not for consuming it. `arboocr_demo` is installed, because the Python, Go, Rust
-and PHP wrappers all spawn it as a subprocess; for those languages it is the
+not for consuming it. `arboocr_demo` is installed, because the Python, Go, Rust,
+PHP and JavaScript wrappers all spawn it as a subprocess; for those languages it is the
 delivered artifact rather than a demo. See [Command line](../cli.md).
 
 `arboocr_clipper` is installed alongside the main library for a linker reason,

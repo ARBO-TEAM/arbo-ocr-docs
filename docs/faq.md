@@ -234,3 +234,25 @@ Short answers with a link to the page that has the full one.
     needs no bindings at all.
 
     See [Wrappers](wrappers/index.md) and [Python](wrappers/python.md).
+
+??? question "Can I use arboOCR from Node.js or Bun? Why not `bun:ffi`?"
+
+    `npm install arbo-ocr-js` (or `bun add`). One package covers both runtimes:
+    it is plain ESM with **no runtime dependencies** and no native module, so
+    there is no `node-gyp` step and nothing to compile.
+
+    `bun:ffi` is the natural next question, and the two arguments usually made
+    for it do not hold. **GPU does not need it** — CUDA and TensorRT already
+    work through the subprocess, because `arboocr_demo` loads the same ONNX
+    Runtime providers either way. And **the pybind11 bindings cannot be
+    reused**: they emit a Python extension module, while `bun:ffi` can only
+    call a plain C ABI, so a shim would be new code rather than reuse.
+
+    What FFI would genuinely buy is the process spawn and the model reload —
+    not raw call speed, since inference dominates by orders of magnitude. It
+    would cost ~50 MB of transitive DLLs that `dlopen` must locate, a
+    versioned ABI, and segfaults in place of catchable exit codes — and it
+    would be Bun-only. Worth it for a video loop you cannot batch; not for
+    "user uploads a receipt".
+
+    See [JavaScript](wrappers/js.md#in-process-bindings).

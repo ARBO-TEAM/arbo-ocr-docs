@@ -230,14 +230,16 @@ Wrapper overhead only — subprocess spawn minus the engine's own reported
 inference time. Accuracy is identical across all wrappers because they call the
 same binary.
 
-| Model size | Go | Rust | PHP | Python |
-|---|---:|---:|---:|---:|
-| `tiny` | 138 ms | 131 ms | 192 ms | 203 ms |
-| `small` | 184 ms | 174 ms | 234 ms | 249 ms |
-| `medium` | 253 ms | 245 ms | 302 ms | 321 ms |
+| Model size | Go | Rust | JavaScript | PHP | Python |
+|---|---:|---:|---:|---:|---:|
+| `tiny` | 174 ms | 135 ms | 186 ms | 196 ms | 218 ms |
+| `small` | 177 ms | 162 ms | 216 ms | 217 ms | 246 ms |
+| `medium` | 235 ms | 233 ms | 282 ms | 291 ms | 317 ms |
 
-Go and Rust are effectively tied — both are compiled binaries paying only
-process-spawn cost, with no interpreter startup.
+Go and Rust are effectively tied at `small` and `medium` — both are compiled
+binaries paying only process-spawn cost, with no interpreter startup. Against
+the raw binary spawned directly (127 / 184 / 234 ms on the same run), both are
+close to the floor.
 
 ## License
 

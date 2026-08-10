@@ -181,13 +181,13 @@ Two implementation details worth knowing, both already fixed upstream:
 
 Wrapper overhead only — subprocess spawn minus the engine's own reported
 inference time, over a 40-image SROIE sample. Accuracy is identical across all
-four wrappers because they call the same binary.
+five wrappers because they call the same binary.
 
-| Model size | Python | Go | Rust | PHP |
-|---|---:|---:|---:|---:|
-| `tiny` | 203 ms | 138 ms | 131 ms | 192 ms |
-| `small` | 249 ms | 184 ms | 174 ms | 234 ms |
-| `medium` | 321 ms | 245 ms | 253 ms | 302 ms |
+| Model size | Python | Go | Rust | JavaScript | PHP |
+|---|---:|---:|---:|---:|---:|
+| `tiny` | 218 ms | 174 ms | 135 ms | 186 ms | 196 ms |
+| `small` | 246 ms | 177 ms | 162 ms | 216 ms | 217 ms |
+| `medium` | 317 ms | 235 ms | 233 ms | 282 ms | 291 ms |
 
 Python sits alongside PHP: both pay their interpreter's startup cost on top of
 the same `arboocr_demo` spawn that Go and Rust pay alone. If that floor is

@@ -197,11 +197,11 @@ Wrapper overhead only — subprocess spawn minus the engine's own reported
 inference time. Accuracy is identical across all wrappers because they call the
 same binary.
 
-| Model size | PHP | Go | Rust | Python |
-|---|---:|---:|---:|---:|
-| `tiny` | 192 ms | 138 ms | 131 ms | 203 ms |
-| `small` | 234 ms | 184 ms | 174 ms | 249 ms |
-| `medium` | 302 ms | 253 ms | 245 ms | 321 ms |
+| Model size | PHP | Go | Rust | JavaScript | Python |
+|---|---:|---:|---:|---:|---:|
+| `tiny` | 196 ms | 174 ms | 135 ms | 186 ms | 218 ms |
+| `small` | 217 ms | 177 ms | 162 ms | 216 ms | 246 ms |
+| `medium` | 291 ms | 235 ms | 233 ms | 282 ms | 317 ms |
 
 PHP runs roughly 55–65 ms above Go and Rust: `php.exe` interpreter startup on
 top of `proc_open`, versus a compiled binary paying only process-spawn cost.
