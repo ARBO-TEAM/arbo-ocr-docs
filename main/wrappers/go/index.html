@@ -1083,6 +1083,8 @@
       
         
       
+        
+      
     
     
     
@@ -1402,6 +1404,29 @@
   
   <span class="md-ellipsis">
     PHP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../js/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JavaScript
     
   </span>
   
@@ -2265,6 +2290,7 @@ same binary.</p>
 <th>Model size</th>
 <th style="text-align: right;">Go</th>
 <th style="text-align: right;">Rust</th>
+<th style="text-align: right;">JavaScript</th>
 <th style="text-align: right;">PHP</th>
 <th style="text-align: right;">Python</th>
 </tr>
@@ -2272,29 +2298,34 @@ same binary.</p>
 <tbody>
 <tr>
 <td><code>tiny</code></td>
-<td style="text-align: right;">138 ms</td>
-<td style="text-align: right;">131 ms</td>
-<td style="text-align: right;">192 ms</td>
-<td style="text-align: right;">203 ms</td>
+<td style="text-align: right;">174 ms</td>
+<td style="text-align: right;">135 ms</td>
+<td style="text-align: right;">186 ms</td>
+<td style="text-align: right;">196 ms</td>
+<td style="text-align: right;">218 ms</td>
 </tr>
 <tr>
 <td><code>small</code></td>
-<td style="text-align: right;">184 ms</td>
-<td style="text-align: right;">174 ms</td>
-<td style="text-align: right;">234 ms</td>
-<td style="text-align: right;">249 ms</td>
+<td style="text-align: right;">177 ms</td>
+<td style="text-align: right;">162 ms</td>
+<td style="text-align: right;">216 ms</td>
+<td style="text-align: right;">217 ms</td>
+<td style="text-align: right;">246 ms</td>
 </tr>
 <tr>
 <td><code>medium</code></td>
-<td style="text-align: right;">253 ms</td>
-<td style="text-align: right;">245 ms</td>
-<td style="text-align: right;">302 ms</td>
-<td style="text-align: right;">321 ms</td>
+<td style="text-align: right;">235 ms</td>
+<td style="text-align: right;">233 ms</td>
+<td style="text-align: right;">282 ms</td>
+<td style="text-align: right;">291 ms</td>
+<td style="text-align: right;">317 ms</td>
 </tr>
 </tbody>
 </table>
-<p>Go and Rust are effectively tied — both are compiled binaries paying only
-process-spawn cost, with no interpreter startup.</p>
+<p>Go and Rust are effectively tied at <code>small</code> and <code>medium</code> — both are compiled
+binaries paying only process-spawn cost, with no interpreter startup. Against
+the raw binary spawned directly (127 / 184 / 234 ms on the same run), both are
+close to the floor.</p>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p>Apache-2.0.</p>
 <h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>

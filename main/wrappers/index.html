@@ -1083,6 +1083,8 @@
       
         
       
+        
+      
     
     
     
@@ -1213,6 +1215,29 @@
   
   <span class="md-ellipsis">
     PHP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="js/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JavaScript
     
   </span>
   
@@ -1634,13 +1659,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-all-four-work" class="md-nav__link">
+  <a href="#how-all-five-work" class="md-nav__link">
     <span class="md-ellipsis">
-      How all four work
+      How all five work
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="How all four work">
+    <nav class="md-nav" aria-label="How all five work">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1765,11 +1790,11 @@
 
 
 <h1 id="language-wrappers">Language wrappers<a class="headerlink" href="#language-wrappers" title="Permanent link">&para;</a></h1>
-<p>arboOCR is a C++ library, but you do not need a C++ toolchain to use it. Four
-official wrappers — <a href="python/">Python</a>, <a href="go/">Go</a>, <a href="rust/">Rust</a>, and
-<a href="php/">PHP</a> — install with a single package-manager command and talk to the
-same prebuilt engine.</p>
-<h2 id="how-all-four-work">How all four work<a class="headerlink" href="#how-all-four-work" title="Permanent link">&para;</a></h2>
+<p>arboOCR is a C++ library, but you do not need a C++ toolchain to use it. Five
+official wrappers — <a href="python/">Python</a>, <a href="go/">Go</a>, <a href="rust/">Rust</a>,
+<a href="php/">PHP</a>, and <a href="js/">JavaScript</a> — install with a single package-manager
+command and talk to the same prebuilt engine.</p>
+<h2 id="how-all-five-work">How all five work<a class="headerlink" href="#how-all-five-work" title="Permanent link">&para;</a></h2>
 <p>Every wrapper is a thin process driver. None of them build, vendor, or link
 arboOCR's C++ source. They download a prebuilt, self-contained release
 bundle — the <code>arboocr_demo</code> binary plus its required shared libraries, no
@@ -1782,11 +1807,11 @@ source and no ONNX models — and run it as a subprocess per image with a
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    ▲                              │
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    └────── JSON on stdout ────────┘
 </span></code></pre></div>
-<p>The compiled binary and its DLLs are language-agnostic: all four wrappers pull
+<p>The compiled binary and its DLLs are language-agnostic: all five wrappers pull
 the <em>same</em> release asset (<code>arboocr-windows-x64.zip</code> on Windows,
 <code>arboocr-linux-x64.tar.gz</code> on Linux) and differ only in how they spawn it —
 <code>subprocess</code> in Python, <code>os/exec</code> in Go, <code>std::process::Command</code> in Rust,
-<code>proc_open</code> in PHP.</p>
+<code>proc_open</code> in PHP, <code>child_process</code> in JavaScript.</p>
 <h3 id="the-trade-off-stated-honestly">The trade-off, stated honestly<a class="headerlink" href="#the-trade-off-stated-honestly" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">One process per image</p>
@@ -1840,12 +1865,20 @@ engine alive in your process and skip the spawn entirely.</p>
 <td><a href="https://github.com/ARBO-TEAM/ArboOcrPhp">ARBO-TEAM/ArboOcrPhp</a></td>
 <td><code>camelCase</code></td>
 </tr>
+<tr>
+<td><a href="js/">JavaScript</a></td>
+<td><code>npm install github:ARBO-TEAM/arbo-ocr-js</code></td>
+<td><a href="https://github.com/ARBO-TEAM/arbo-ocr-js">ARBO-TEAM/arbo-ocr-js</a></td>
+<td><code>camelCase</code></td>
+</tr>
 </tbody>
 </table>
-<p>The API surface is deliberately identical across all four — construct an engine
+<p>The API surface is deliberately identical across all five — construct an engine
 with a models directory, call <code>recognize</code> with an image path, read <code>backend</code>,
-<code>lines</code>, and <code>elapsed_ms</code> off the result. Only the naming convention changes.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python</label><label for="__tabbed_1_2">Go</label><label for="__tabbed_1_3">Rust</label><label for="__tabbed_1_4">PHP</label></div>
+<code>lines</code>, and <code>elapsed_ms</code> off the result. Only the naming convention changes.
+JavaScript is the one exception to the shape, and only because the language
+forces it: <code>recognize</code> returns a <code>Promise</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python</label><label for="__tabbed_1_2">Go</label><label for="__tabbed_1_3">Rust</label><label for="__tabbed_1_4">PHP</label><label for="__tabbed_1_5">JavaScript</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">arbo_ocr</span><span class="w"> </span><span class="kn">import</span> <span class="n">Engine</span>
@@ -1907,6 +1940,21 @@ with a models directory, call <code>recognize</code> with an image path, read <c
 </span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="x">}</span>
 </span></code></pre></div>
 </div>
+<div class="tabbed-block">
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Engine</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;arbo-ocr-js&quot;</span><span class="p">;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">engine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Engine</span><span class="p">({</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nx">modelsDir</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/path/to/models&quot;</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="nx">modelType</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;small&quot;</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">});</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">engine</span><span class="p">.</span><span class="nx">recognize</span><span class="p">(</span><span class="s2">&quot;/path/to/image.jpg&quot;</span><span class="p">);</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">lines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">line</span><span class="p">.</span><span class="nx">text</span><span class="p">,</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">score</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">3</span><span class="p">));</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="p">}</span>
+</span></code></pre></div>
+</div>
 </div>
 </div>
 <h2 id="getting-the-binary">Getting the binary<a class="headerlink" href="#getting-the-binary" title="Permanent link">&para;</a></h2>
@@ -1943,13 +1991,19 @@ Cargo, Go modules, and pip do not.</p>
 <td>Composer post-install hook, at <code>composer require</code> / <code>composer install</code> time</td>
 <td><code>bin/&lt;platform&gt;/</code> inside the installed package</td>
 </tr>
+<tr>
+<td>JavaScript</td>
+<td>Lazily, on the first <code>recognize()</code> when <code>binPath</code> is unset</td>
+<td><code>%LOCALAPPDATA%\arbo-ocr-js\v0.3.0\&lt;platform&gt;</code> (Windows), <code>$XDG_CACHE_HOME/arbo-ocr-js/v0.3.0/&lt;platform&gt;</code> or <code>~/.cache/…</code> (Linux)</td>
+</tr>
 </tbody>
 </table>
-<p>Go and Rust cache outside their package directories on purpose: Go's module
-cache is frequently read-only, so it cannot be written into the way Composer's
+<p>Go, Rust, and JavaScript cache outside their package directories on purpose:
+Go's module cache is frequently read-only, and <code>node_modules</code> is routinely
+deleted and rebuilt, so neither can be written into the way Composer's
 <code>vendor/</code> can.</p>
 <h3 id="pinned-release">Pinned release<a class="headerlink" href="#pinned-release" title="Permanent link">&para;</a></h3>
-<p>All four wrappers are pinned to release
+<p>All five wrappers are pinned to release
 <a href="https://github.com/wafik/ArboOCR/releases/tag/v0.3.0"><code>v0.3.0</code></a>, and the
 auto-download is verified working end to end on both Windows and Linux against
 that tag. The model weights are pinned and cached the same way, one layer
@@ -1971,13 +2025,14 @@ v0.3.0 is the first release whose archive can actually run on GPU. Read the
 published asset — fetch a release manually from the
 <a href="https://github.com/wafik/ArboOCR/releases">arboOCR releases page</a>, unpack
 it, and pass the binary path explicitly: <code>bin_path</code> (Python, Rust),
-<code>Config.BinPath</code> (Go), or <code>binPath</code> (PHP). Go and Rust additionally expose
-their installers directly (<code>installer.EnsureInstalled</code>,
-<code>installer::ensure_installed</code>) so you can pull the binary during a Docker
-or container build step and pass the returned path at runtime.</p>
+<code>Config.BinPath</code> (Go), or <code>binPath</code> (PHP, JavaScript). Go, Rust and
+JavaScript additionally expose their installers directly
+(<code>installer.EnsureInstalled</code>, <code>installer::ensure_installed</code>,
+<code>ensureInstalled()</code>) so you can pull the binary during a Docker or container
+build step and pass the returned path at runtime.</p>
 </div>
 <h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
-<p><strong>No wrapper bundles OCR models — and all four auto-download them anyway.</strong> Not
+<p><strong>No wrapper bundles OCR models — and all five auto-download them anyway.</strong> Not
 one line of wrapper code makes that happen: every wrapper spawns the same
 <code>arboocr_demo</code> binary, and that binary fetches the stock weights it is missing,
 so the wrappers inherit the behaviour for free. Point a models directory at
@@ -2075,10 +2130,11 @@ pinned tag, a platform cache directory, a lazy fetch on first use. Same pattern,
 second artifact — the wrappers cache the CLI under their own name, and the CLI
 caches the weights under arboOCR's.</p>
 <div class="admonition tip">
-<p class="admonition-title">Turning the download off from any of the four languages</p>
-<p>The wrappers do not expose <code>arboocr_demo</code>'s <code>--no-download</code> and
-<code>--models-url</code> flags, but a spawned process inherits your environment, so
-the env vars reach it from every language. <code>ARBOOCR_OFFLINE=1</code> makes a
+<p class="admonition-title">Turning the download off from any of the five languages</p>
+<p>Only the JavaScript wrapper exposes <code>arboocr_demo</code>'s <code>--no-download</code> and
+<code>--models-url</code> flags directly (as <code>noDownload</code> and <code>modelsUrl</code>). Everywhere
+else, a spawned process inherits your environment, so the env vars reach it
+from every language. <code>ARBOOCR_OFFLINE=1</code> makes a
 missing model an immediate error instead of a network call — the setting you
 want in an air-gapped runtime, where a stalled socket is indistinguishable
 from a hang. <code>ARBOOCR_MODELS_URL</code> points at an internal mirror, and
@@ -2104,39 +2160,51 @@ inference time, over a 40-image SROIE sample.</p>
 <thead>
 <tr>
 <th>Model size</th>
-<th style="text-align: right;">PHP</th>
-<th style="text-align: right;">Go</th>
 <th style="text-align: right;">Rust</th>
+<th style="text-align: right;">Go</th>
+<th style="text-align: right;">JavaScript</th>
+<th style="text-align: right;">PHP</th>
 <th style="text-align: right;">Python</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>tiny</code></td>
-<td style="text-align: right;">192 ms</td>
-<td style="text-align: right;">138 ms</td>
-<td style="text-align: right;">131 ms</td>
-<td style="text-align: right;">203 ms</td>
+<td style="text-align: right;">135 ms</td>
+<td style="text-align: right;">174 ms</td>
+<td style="text-align: right;">186 ms</td>
+<td style="text-align: right;">196 ms</td>
+<td style="text-align: right;">218 ms</td>
 </tr>
 <tr>
 <td><code>small</code></td>
-<td style="text-align: right;">234 ms</td>
-<td style="text-align: right;">184 ms</td>
-<td style="text-align: right;">174 ms</td>
-<td style="text-align: right;">249 ms</td>
+<td style="text-align: right;">162 ms</td>
+<td style="text-align: right;">177 ms</td>
+<td style="text-align: right;">216 ms</td>
+<td style="text-align: right;">217 ms</td>
+<td style="text-align: right;">246 ms</td>
 </tr>
 <tr>
 <td><code>medium</code></td>
-<td style="text-align: right;">302 ms</td>
-<td style="text-align: right;">253 ms</td>
-<td style="text-align: right;">245 ms</td>
-<td style="text-align: right;">321 ms</td>
+<td style="text-align: right;">233 ms</td>
+<td style="text-align: right;">235 ms</td>
+<td style="text-align: right;">282 ms</td>
+<td style="text-align: right;">291 ms</td>
+<td style="text-align: right;">317 ms</td>
 </tr>
 </tbody>
 </table>
-<p>Go and Rust track each other closely — both are compiled binaries paying only
-process-spawn cost. PHP and Python each add their interpreter's own startup on
-top of the same spawn, landing in the same ballpark as one another.</p>
+<p>The raw binary — no wrapper at all, just <code>arboocr_demo</code> spawned directly —
+costs 127 / 184 / 234 ms on the same run. That is the floor every row is
+measured against, and it is most of every row.</p>
+<p>Go and Rust track each other closely: both are compiled binaries paying only
+process-spawn cost. JavaScript sits between them and the interpreted wrappers,
+since Node's startup is cheaper than PHP's or Python's but not free. PHP and
+Python land in the same ballpark as one another.</p>
+<p>Overhead rises with model size for every language, which is the tell that this
+is not purely spawn cost — a larger recognizer takes longer to load into memory,
+and that load happens inside the process on every call without appearing in the
+engine's own reported time.</p>
 <div class="admonition note">
 <p class="admonition-title">Pick on ecosystem, not on this table</p>
 <p>A 60 ms spread is noise next to the 130–320 ms floor every wrapper shares.
@@ -2148,6 +2216,7 @@ If that floor is the problem, no wrapper fixes it — go in-process instead.</p>
 <li><a href="go/">Go</a> — <code>go get</code>, lazy binary download</li>
 <li><a href="rust/">Rust</a> — Cargo git dependency</li>
 <li><a href="php/">PHP</a> — Composer with a post-install hook</li>
+<li><a href="js/">JavaScript</a> — npm or Bun, zero runtime dependencies</li>
 <li><a href="../models/">Models</a> — what to download and where to put it</li>
 <li><a href="../quickstart/">Quickstart</a> — the CLI, C++, and in-process Python bindings</li>
 </ul>

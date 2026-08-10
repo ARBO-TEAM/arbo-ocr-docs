@@ -12,13 +12,13 @@
         <meta name="author" content="ARBO-TEAM">
       
       
-        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/build/jetson/">
+        <link rel="canonical" href="https://arbo-team.github.io/arbo-ocr-docs/main/wrappers/js/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../php/">
       
       
-        <link rel="next" href="../../models/">
+        <link rel="next" href="../../benchmarks/">
       
       
         <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../feed_rss_created.xml">
@@ -29,7 +29,7 @@
     
     
       
-        <title>Jetson / aarch64 - arboOCR Docs</title>
+        <title>JavaScript - arboOCR Docs</title>
       
     
     
@@ -112,7 +112,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#jetson-aarch64" class="md-skip">
+        <a href="#javascript-nodejs-bun" class="md-skip">
           Skip to content
         </a>
       
@@ -152,7 +152,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Jetson / aarch64
+              JavaScript
             
           </span>
         </div>
@@ -294,13 +294,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../build/" class="md-tabs__link">
           
   
   
@@ -362,11 +360,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../wrappers/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -619,8 +619,6 @@
       
   
   
-    
-  
   
   
     
@@ -636,23 +634,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../build/" class="md-nav__link ">
               
   
   
@@ -665,13 +660,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Build
@@ -684,32 +679,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Jetson / aarch64
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../build/jetson/" class="md-nav__link">
         
   
   
@@ -720,86 +693,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#system-packages" class="md-nav__link">
-    <span class="md-ellipsis">
-      System packages
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vendoring-onnxruntime" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vendoring onnxruntime
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Vendoring onnxruntime">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-onnxruntime-c-headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. onnxruntime C++ headers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-onnxruntime-runtime-so-with-cudatensorrt" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. onnxruntime runtime .so with CUDA/TensorRT
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configure-and-build" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configure and build
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verify" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verify
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1171,6 +1064,8 @@
       
   
   
+    
+  
   
   
     
@@ -1194,20 +1089,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../wrappers/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1220,13 +1118,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Wrappers
@@ -1242,7 +1140,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wrappers/python/" class="md-nav__link">
+      <a href="../python/" class="md-nav__link">
         
   
   
@@ -1265,7 +1163,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wrappers/go/" class="md-nav__link">
+      <a href="../go/" class="md-nav__link">
         
   
   
@@ -1288,7 +1186,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wrappers/rust/" class="md-nav__link">
+      <a href="../rust/" class="md-nav__link">
         
   
   
@@ -1311,7 +1209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wrappers/php/" class="md-nav__link">
+      <a href="../php/" class="md-nav__link">
         
   
   
@@ -1331,10 +1229,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../wrappers/js/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    JavaScript
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1345,6 +1265,200 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unset-means-unset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unset means unset
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-binary-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual binary path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#result-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      Result shape
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bun" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bun
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How it works
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zero-runtime-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zero runtime dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binary-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binary cache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interrupted-installs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interrupted installs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deadlock-avoidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deadlock avoidance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-process-bindings" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-process bindings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      License
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1761,37 +1875,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#system-packages" class="md-nav__link">
+  <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
-      System packages
+      Install
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#vendoring-onnxruntime" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
-      Vendoring onnxruntime
+      Usage
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Vendoring onnxruntime">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-onnxruntime-c-headers" class="md-nav__link">
+  <a href="#unset-means-unset" class="md-nav__link">
     <span class="md-ellipsis">
-      1. onnxruntime C++ headers
+      Unset means unset
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-onnxruntime-runtime-so-with-cudatensorrt" class="md-nav__link">
+  <a href="#manual-binary-path" class="md-nav__link">
     <span class="md-ellipsis">
-      2. onnxruntime runtime .so with CUDA/TensorRT
+      Manual binary path
     </span>
   </a>
   
@@ -1803,18 +1935,114 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-and-build" class="md-nav__link">
+  <a href="#result-shape" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure and build
+      Result shape
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#verify" class="md-nav__link">
+  <a href="#error-handling" class="md-nav__link">
     <span class="md-ellipsis">
-      Verify
+      Error handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bun" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bun
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How it works
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zero-runtime-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zero runtime dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binary-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binary cache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interrupted-installs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interrupted installs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deadlock-avoidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deadlock avoidance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-process-bindings" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-process bindings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      License
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See also
     </span>
   </a>
   
@@ -1836,7 +2064,7 @@
 
 
   
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/build/jetson.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/edit/main/docs/wrappers/js.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
     </a>
@@ -1845,90 +2073,433 @@
     
       
     
-    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/build/jetson.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/ARBO-TEAM/arbo-ocr-docs/raw/main/docs/wrappers/js.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
     </a>
   
 
 
-<h1 id="jetson-aarch64">Jetson / aarch64<a class="headerlink" href="#jetson-aarch64" title="Permanent link">&para;</a></h1>
-<p>vcpkg builds everything from source, which is impractical on a Jetson. This
-path uses apt for OpenCV/cURL and a <strong>fully self-contained</strong> vendored
-onnxruntime — both the C++ headers <em>and</em> the CUDA/TensorRT-enabled runtime
-<code>.so</code> live under <code>vendor/onnxruntime/</code>, so arboOCR doesn't depend on any other
-project's Python environment once set up.</p>
-<p>That last point is the design goal of the whole procedure. It is easy to get a
-Jetson build working by linking against whatever <code>libonnxruntime.so</code> happens to
-sit inside a system <code>site-packages</code>; it is not easy to keep that working after
-someone upgrades a virtualenv. Copying the runtime into <code>vendor/</code> costs a few
-hundred megabytes and buys a build that only depends on files you control.</p>
-<h2 id="system-packages">System packages<a class="headerlink" href="#system-packages" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libopencv-dev<span class="w"> </span>libcurl4-openssl-dev<span class="w"> </span>doctest-dev<span class="w"> </span>cxxopts-dev<span class="w"> </span>cmake<span class="w"> </span>build-essential
+<h1 id="javascript-nodejs-bun">JavaScript (Node.js &amp; Bun)<a class="headerlink" href="#javascript-nodejs-bun" title="Permanent link">&para;</a></h1>
+<p>JavaScript wrapper for arboOCR. It runs the prebuilt <code>arboocr_demo</code> binary via
+<code>child_process</code> — <strong>no C++ build required</strong>, no native module, no <code>node-gyp</code>.</p>
+<ul>
+<li><strong>Package:</strong> <code>arbo-ocr-js</code></li>
+<li><strong>Repo:</strong> <a href="https://github.com/ARBO-TEAM/arbo-ocr-js">ARBO-TEAM/arbo-ocr-js</a></li>
+<li><strong>Runtime:</strong> Node.js ≥ 18, or Bun ≥ 1.0</li>
+<li><strong>Config field style:</strong> <code>camelCase</code></li>
+<li><strong>Runtime dependencies:</strong> none</li>
+</ul>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>npm<span class="w"> </span>install<span class="w"> </span>github:ARBO-TEAM/arbo-ocr-js
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># or</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>bun<span class="w"> </span>add<span class="w"> </span>github:ARBO-TEAM/arbo-ocr-js
 </span></code></pre></div>
-<h2 id="vendoring-onnxruntime">Vendoring onnxruntime<a class="headerlink" href="#vendoring-onnxruntime" title="Permanent link">&para;</a></h2>
-<p>onnxruntime arrives in two pieces from two different sources, because no single
-distribution ships both what you need to compile and what you need to run.</p>
-<div class="admonition warning">
-<p class="admonition-title">The official aarch64 release tarball is CPU-only</p>
-<p>Microsoft's <code>onnxruntime-linux-aarch64-*.tgz</code> release asset contains a
-CPU-only runtime. It is the right source for the <strong>headers</strong>, but if you
-link against its <code>.so</code> you will get a working build with no GPU
-acceleration at all — <code>engine.backend()</code> will report <code>cpu</code> and every
-TensorRT/CUDA benchmark on this site will be unreachable. Source the
-accelerated <code>.so</code> from a pip wheel (<code>pip install onnxruntime</code>) or from
-JetPack's preinstalled onnxruntime instead.</p>
+<div class="admonition note">
+<p class="admonition-title">Not on the npm registry yet</p>
+<p>Install from GitHub for now. The package's <code>prepare</code> script builds <code>dist/</code>
+at install time, so a git install behaves exactly like a registry one — you
+still need no compiler and no <code>node-gyp</code>.</p>
 </div>
-<h3 id="1-onnxruntime-c-headers">1. onnxruntime C++ headers<a class="headerlink" href="#1-onnxruntime-c-headers" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. onnxruntime C++ headers (the pip wheel ships none). Use the latest</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># release tarball whose headers are ABI-compatible with your runtime — e.g.</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># v1.27.1 headers work against a 1.28.x runtime .so (the C API is stable):</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>vendor/onnxruntime<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>vendor/onnxruntime
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>curl<span class="w"> </span>-sL<span class="w"> </span>-o<span class="w"> </span>ort.tgz<span class="w"> </span>https://github.com/microsoft/onnxruntime/releases/download/v1.27.1/onnxruntime-linux-aarch64-1.27.1.tgz
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>tar<span class="w"> </span>xzf<span class="w"> </span>ort.tgz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>ort.tgz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>mv<span class="w"> </span>onnxruntime-linux-aarch64-1.27.1<span class="w"> </span>dist
+<p>The first <code>recognize()</code> call downloads the matching arboOCR release binary
+(Windows or Linux, auto-detected). The pinned release is
+<a href="https://github.com/wafik/ArboOCR/releases/tag/v0.3.0"><code>v0.3.0</code></a>, and the
+auto-download is verified in CI on both platforms and both runtimes.</p>
+<div class="admonition tip">
+<p class="admonition-title">If the download fails</p>
+<p>On an offline build or an unsupported OS, download a release manually from
+the <a href="https://github.com/wafik/ArboOCR/releases">arboOCR releases page</a> and
+pass <code>binPath</code> explicitly — see <a href="#manual-binary-path">Manual binary path</a>.</p>
+</div>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Engine</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;arbo-ocr-js&quot;</span><span class="p">;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">engine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Engine</span><span class="p">({</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nx">modelsDir</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/path/to/models&quot;</span><span class="p">,</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nx">modelType</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;small&quot;</span><span class="p">,</span><span class="w">   </span><span class="c1">// tiny/small/medium — default small</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="c1">// useAngleCls: true,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="c1">// useCuda: true,</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">});</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="kd">const</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">engine</span><span class="p">.</span><span class="nx">recognize</span><span class="p">(</span><span class="s2">&quot;/path/to/image.jpg&quot;</span><span class="p">);</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">page</span><span class="p">.</span><span class="nx">backend</span><span class="p">);</span><span class="w"> </span><span class="c1">// cpu / cuda / tensorrt</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">lines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">line</span><span class="p">.</span><span class="nx">text</span><span class="p">,</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">score</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">3</span><span class="p">));</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The header/runtime version mismatch is intentional and safe: onnxruntime's C
-API is stable, so a 1.27.1 header set links correctly against a 1.28.x runtime.
-You do not need to hunt for an exactly matching tarball.</p>
-<h3 id="2-onnxruntime-runtime-so-with-cudatensorrt">2. onnxruntime runtime <code>.so</code> with CUDA/TensorRT<a class="headerlink" href="#2-onnxruntime-runtime-so-with-cudatensorrt" title="Permanent link">&para;</a></h3>
-<p>Continue in the same <code>vendor/onnxruntime</code> directory.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 2. onnxruntime runtime .so with CUDA/TensorRT support. The official aarch64</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># release tarball above is CPU-only — a pip wheel (`pip install onnxruntime`)</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># or JetPack&#39;s preinstalled one ships the accelerated build instead. Copy it</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># in (point SRC at wherever onnxruntime is installed on your machine):</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">SRC</span><span class="o">=</span>/path/to/your/onnxruntime/capi
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>lib
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>cp<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SRC</span><span class="s2">&quot;</span>/libonnxruntime.so.*<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SRC</span><span class="s2">&quot;</span>/libonnxruntime_providers_*.so<span class="w"> </span>lib/
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>ln<span class="w"> </span>-sf<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SRC</span><span class="s2">&quot;</span>/libonnxruntime.so.*.*.*<span class="k">)</span><span class="w"> </span>lib/libonnxruntime.so.1
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>ln<span class="w"> </span>-sf<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SRC</span><span class="s2">&quot;</span>/libonnxruntime.so.*.*.*<span class="k">)</span><span class="w"> </span>lib/libonnxruntime.so
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nb">cd</span><span class="w"> </span>../..
+<p>Construction is synchronous and touches nothing — no network, no filesystem. The
+binary is resolved on the first <code>recognize()</code> or <code>ensureModels()</code> call, and the
+promise is memoized, so several concurrent first calls share one download rather
+than racing.</p>
+<h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
+<p><code>arbo-ocr-js</code> does not bundle OCR models — it does not have to. The
+<code>arboocr_demo</code> binary it spawns downloads the stock weights it is missing on
+first use, checks each file against a SHA-256 baked into the binary, and caches
+it per platform. Point <code>modelsDir</code> at a folder that already holds the PP-OCRv6
+ONNX files and nothing touches the network. For the default <code>small</code> that means
+three files:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>models/
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├── PP-OCRv6_det.onnx
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>├── PP-OCRv6_rec_small.onnx
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>└── PP-OCRv6_rec_small_dict.txt
 </span></code></pre></div>
-<p>The <code>libonnxruntime_providers_*.so</code> glob is what carries CUDA and TensorRT. If
-that copy silently matches nothing, you have a CPU-only source directory — go
-back and point <code>SRC</code> at the accelerated install.</p>
-<h2 id="configure-and-build">Configure and build<a class="headerlink" href="#configure-and-build" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cmake<span class="w"> </span>--preset<span class="w"> </span>jetson<span class="w">   </span><span class="c1"># ARBOOCR_ORT_LIB_DIR defaults to vendor/onnxruntime/lib</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build/jetson<span class="w"> </span>-j<span class="k">$(</span>nproc<span class="k">)</span>
+<p><code>PP-OCRv6_cls.onnx</code> is only needed when <code>useAngleCls</code> is on.</p>
+<p>To prefetch during a container build so the first request never waits:</p>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">await</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Engine</span><span class="p">({</span><span class="w"> </span><span class="nx">modelType</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;small&quot;</span><span class="w"> </span><span class="p">}).</span><span class="nx">ensureModels</span><span class="p">();</span>
 </span></code></pre></div>
-<p><code>ARBOOCR_ORT_LIB_DIR</code> is the single knob: it defaults to the
-<code>vendor/onnxruntime/lib</code> you just populated, so if you keep onnxruntime
-somewhere else you override that one variable rather than editing the preset.</p>
-<h2 id="verify">Verify<a class="headerlink" href="#verify" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>build/jetson
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ctest<span class="w">                 </span><span class="c1"># or: ./arboocr_tests</span>
+<p>Full file matrix, the cache locations, and how to turn the download off:
+<a href="../#models">Models</a> on the wrappers overview, or
+<a href="../../models/">Models</a> for the complete treatment.</p>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<p>Every field is optional.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>modelsDir</code></td>
+<td><code>string</code></td>
+<td>—</td>
+<td>Directory holding the PP-OCRv6 ONNX files</td>
+</tr>
+<tr>
+<td><code>binPath</code></td>
+<td><code>string</code></td>
+<td>auto-download</td>
+<td>Explicit path to <code>arboocr_demo</code></td>
+</tr>
+<tr>
+<td><code>modelType</code></td>
+<td><code>string</code></td>
+<td><code>"small"</code></td>
+<td>Recognizer size: <code>tiny</code>, <code>small</code>, <code>medium</code></td>
+</tr>
+<tr>
+<td><code>ocrVersion</code></td>
+<td><code>string</code></td>
+<td><code>"PP-OCRv6"</code></td>
+<td>Model family</td>
+</tr>
+<tr>
+<td><code>detModelPath</code> <code>clsModelPath</code> <code>recModelPath</code> <code>dictPath</code></td>
+<td><code>string</code></td>
+<td>—</td>
+<td>Per-file overrides; never substituted by a download</td>
+</tr>
+<tr>
+<td><code>logLevel</code></td>
+<td><code>string</code></td>
+<td>silent</td>
+<td><code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code> — engine events on stderr</td>
+</tr>
+<tr>
+<td><code>minConfidence</code></td>
+<td><code>number</code></td>
+<td><code>0.5</code></td>
+<td>Drop lines below this score; <code>0</code> disables filtering</td>
+</tr>
+<tr>
+<td><code>recBatchNum</code></td>
+<td><code>number</code></td>
+<td><code>6</code></td>
+<td>Crops per recognition inference call</td>
+</tr>
+<tr>
+<td><code>detLimitSideLen</code></td>
+<td><code>number</code></td>
+<td><code>960</code></td>
+<td>Longest image side for detection resize</td>
+</tr>
+<tr>
+<td><code>useAngleCls</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Angle classification (requires <code>PP-OCRv6_cls.onnx</code>)</td>
+</tr>
+<tr>
+<td><code>useCuda</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Request the CUDA execution provider</td>
+</tr>
+<tr>
+<td><code>useTensorrt</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Request the TensorRT execution provider</td>
+</tr>
+<tr>
+<td><code>useFp16</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>TensorRT FP16; only used with <code>useTensorrt</code></td>
+</tr>
+<tr>
+<td><code>useClahe</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>CLAHE contrast enhancement before detection</td>
+</tr>
+<tr>
+<td><code>wordBoxes</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Adds <code>line.words</code> — a polygon per word</td>
+</tr>
+<tr>
+<td><code>noDownload</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Fail instead of fetching a missing model</td>
+</tr>
+<tr>
+<td><code>modelsUrl</code></td>
+<td><code>string</code></td>
+<td>—</td>
+<td>Fetch missing models from an internal mirror</td>
+</tr>
+</tbody>
+</table>
+<h3 id="unset-means-unset">Unset means unset<a class="headerlink" href="#unset-means-unset" title="Permanent link">&para;</a></h3>
+<p>An omitted field emits <strong>no CLI flag at all</strong>, leaving the binary's own default
+in place. That is a deliberate difference from the Go wrapper, which cannot
+represent "unset" for a <code>bool</code> and so always emits <code>--angle=true|false</code>.</p>
+<p>It buys real compatibility: point <code>binPath</code> at a pre-v0.3.0 binary and the flags
+that release never had — <code>--no-download</code>, <code>--models-url</code>, <code>--word-boxes</code> — are
+simply never sent. <code>cxxopts</code> exits 1 on an unknown option, so a flag that is
+never emitted can never break an older binary.</p>
+<h3 id="manual-binary-path">Manual binary path<a class="headerlink" href="#manual-binary-path" title="Permanent link">&para;</a></h3>
+<p>Setting <code>binPath</code> suppresses the auto-download entirely.</p>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">engine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Engine</span><span class="p">({</span><span class="w"> </span><span class="nx">binPath</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/opt/arboocr/arboocr_demo&quot;</span><span class="w"> </span><span class="p">});</span>
 </span></code></pre></div>
-<p>Then confirm the accelerated provider actually loaded. <code>Engine</code> auto-detects
-TensorRT, then CUDA, then CPU via <code>Ort::GetAvailableProviders()</code>, and
-<code>engine.backend()</code> reports what was selected at runtime — if it says <code>cpu</code> on a
-Jetson, step 2 did not take.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>./arboocr_demo<span class="w"> </span>--image<span class="w"> </span>page.jpg<span class="w"> </span>--models-dir<span class="w"> </span>models
+<p>Or drive the installer yourself — useful in a Docker build step, so runtime
+never touches the network:</p>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ensureInstalled</span><span class="p">,</span><span class="w"> </span><span class="nx">detectPlatform</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;arbo-ocr-js&quot;</span><span class="p">;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">detectPlatform</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;no release asset for this platform&quot;</span><span class="p">);</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kd">const</span><span class="w"> </span><span class="nx">binPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">ensureInstalled</span><span class="p">();</span>
 </span></code></pre></div>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Backend: tensorrt
+<div class="admonition note">
+<p class="admonition-title">The models download is the binary's job, not this package's</p>
+<p><code>ensureInstalled</code> gets you the binary and <em>not</em> the models, so the first
+request would still reach for the network. Prefetch both in the same step by
+also calling <code>engine.ensureModels()</code>, or set <code>ARBOOCR_OFFLINE=1</code> at runtime
+so a missing model fails fast instead of opening a socket.</p>
+</div>
+<h2 id="result-shape">Result shape<a class="headerlink" href="#result-shape" title="Permanent link">&para;</a></h2>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">interface</span><span class="w"> </span><span class="nx">PageResult</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nx">backend</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">      </span><span class="c1">// &quot;cpu&quot; | &quot;cuda&quot; | &quot;tensorrt&quot; — what actually ran</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nx">image</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nx">elapsedMs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w">    </span><span class="c1">// engine-reported inference time</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nx">lines</span><span class="o">:</span><span class="w"> </span><span class="kt">LineResult</span><span class="p">[];</span><span class="w">  </span><span class="c1">// in detection order</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">}</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="kd">interface</span><span class="w"> </span><span class="nx">LineResult</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="nx">score</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w">        </span><span class="c1">// recognition confidence, 0.0–1.0</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="nx">detScore</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w">     </span><span class="c1">// detection confidence</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">  </span><span class="nx">polygon</span><span class="o">:</span><span class="w"> </span><span class="kt">Point</span><span class="p">[];</span><span class="w">     </span><span class="c1">// 4 points, clockwise from top-left-ish</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">  </span><span class="nx">words?</span><span class="o">:</span><span class="w"> </span><span class="kt">WordResult</span><span class="p">[];</span><span class="w"> </span><span class="c1">// only when wordBoxes is set</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="p">}</span>
 </span></code></pre></div>
-<hr />
-<p>Every number on the <a href="../../benchmarks/">Benchmarks</a> page was measured on a
-<strong>Jetson Nano</strong> with this build, so it is the right reference for what to
-expect once the above is working.</p>
+<h2 id="error-handling">Error handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<p><code>recognize()</code> rejects with an <code>OcrError</code> — carrying <code>exitCode</code> and <code>stderr</code> —
+only when the process fails to start, exits non-zero, or emits output that is
+not JSON.</p>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Engine</span><span class="p">,</span><span class="w"> </span><span class="nx">OcrError</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;arbo-ocr-js&quot;</span><span class="p">;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">engine</span><span class="p">.</span><span class="nx">recognize</span><span class="p">(</span><span class="s2">&quot;scan.png&quot;</span><span class="p">);</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="nx">OcrError</span><span class="p">)</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">exitCode</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">.</span><span class="nx">stderr</span><span class="p">);</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="nx">err</span><span class="p">;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Empty results are not errors</p>
+<p>An empty <code>page.lines</code> array means no text was found. That is a successful
+call with zero detections, not a failure. Check <code>page.lines.length</code>, not the
+rejection, to distinguish "no text" from "broken pipeline".</p>
+</div>
+<h2 id="bun">Bun<a class="headerlink" href="#bun" title="Permanent link">&para;</a></h2>
+<p>The package is plain ESM built by <code>tsc</code>, with no native module and no
+Bun-specific code, so the same <code>dist/</code> runs on both runtimes. CI exercises Node
+and Bun on Linux and Windows against a real download and a real image.</p>
+<p>Bun is not faster here in any way that matters: the cost is dominated by the
+subprocess, not by the JavaScript runtime around it.</p>
+<div class="admonition question">
+<p class="admonition-title">Why not <code>bun:ffi</code> instead of a subprocess?</p>
+<p>It is a fair question, and the answer is not the obvious one — see
+<a href="#in-process-bindings">In-process bindings</a> below.</p>
+</div>
+<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<p>The package never builds or vendors arboOCR's C++ source. It downloads the exact
+same release asset every other wrapper uses — <code>arboocr-windows-x64.zip</code> or
+<code>arboocr-linux-x64.tar.gz</code> — and runs the same CLI tool via <code>child_process</code>
+instead of Go's <code>os/exec</code> or PHP's <code>proc_open</code>.</p>
+<h3 id="zero-runtime-dependencies">Zero runtime dependencies<a class="headerlink" href="#zero-runtime-dependencies" title="Permanent link">&para;</a></h3>
+<p>An npm package that downloads and unpacks an archive would normally pull in a
+HTTP client and two archive libraries. This one pulls in nothing:</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>What it uses instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Download</td>
+<td>The global <code>fetch</code>, built into Node 18+ and Bun</td>
+</tr>
+<tr>
+<td>Extract</td>
+<td><code>tar -xf</code>, shelled out</td>
+</tr>
+<tr>
+<td>Types</td>
+<td><code>tsc</code> only — no bundler, no dual CJS build</td>
+</tr>
+</tbody>
+</table>
+<p>The extraction choice is the interesting one. GNU <code>tar</code> handles the Linux
+<code>.tar.gz</code>, and Windows has shipped <strong>bsdtar</strong> (libarchive) in <code>System32</code> since
+Windows 10 1803 — which reads the <code>.zip</code> too. One tool covers both release
+formats.</p>
+<div class="admonition warning">
+<p class="admonition-title">Why the Windows path is absolute</p>
+<p>The wrapper invokes <code>%SystemRoot%\System32\tar.exe</code> by full path, not <code>tar</code>
+by <code>PATH</code>. Git for Windows puts GNU tar on <code>PATH</code>, and <strong>GNU tar cannot read
+a zip file</strong>. Resolving by <code>PATH</code> would work or fail depending on which
+shell the user happened to install — the worst kind of bug to receive a
+report about.</p>
+</div>
+<h3 id="binary-cache">Binary cache<a class="headerlink" href="#binary-cache" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>%LOCALAPPDATA%\arbo-ocr-js\v0.3.0\windows-x64\</code></td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><code>$XDG_CACHE_HOME/arbo-ocr-js/v0.3.0/linux-x64/</code> (or <code>~/.cache/…</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>The version is a path segment on purpose. The extracted binary has the same name
+in every release, so a version-less path would be the same path for every
+version — and the "already installed" check would report a v0.1.0 binary as
+current forever, making a version bump a silent no-op for everyone who had ever
+run an older pin.</p>
+<h3 id="interrupted-installs">Interrupted installs<a class="headerlink" href="#interrupted-installs" title="Permanent link">&para;</a></h3>
+<p>The install stages into a temp directory and moves files into place with the
+<strong>executable last</strong>. Since "already installed" is a <code>stat</code> on the executable,
+publishing it before its DLLs would let a half-finished download look complete
+and then fail to load. Moving it last makes its presence a genuine completion
+marker.</p>
+<h3 id="deadlock-avoidance">Deadlock avoidance<a class="headerlink" href="#deadlock-avoidance" title="Permanent link">&para;</a></h3>
+<p><code>execFile</code> drains stdout and stderr concurrently. <code>arboocr_demo</code> can write
+~200 KB of ONNX Runtime warnings to stderr before any stdout appears — enough to
+deadlock a reader that consumes one stream to completion before touching the
+other. <code>maxBuffer</code> is raised to 64 MB, well past Node's 1 MB default, which
+<code>--word-boxes</code> output on a dense page can otherwise exceed.</p>
+<h2 id="in-process-bindings">In-process bindings<a class="headerlink" href="#in-process-bindings" title="Permanent link">&para;</a></h2>
+<p><code>bun:ffi</code> looks like the obvious upgrade, and it is worth stating plainly why
+this package does not use it.</p>
+<p><strong>It is not needed for GPU.</strong> CUDA and TensorRT already work through the
+subprocess — <code>arboocr_demo</code> loads the same ONNX Runtime providers either way,
+and v0.3.0 is the release that ships <code>onnxruntime_providers_shared</code>. Set
+<code>useCuda: true</code> and read <code>page.backend</code>. FFI changes nothing here.</p>
+<p><strong>The pybind11 bindings cannot be reused.</strong> They emit a <em>Python extension
+module</em>, which exports Python C-API symbols. <code>bun:ffi</code> can only call a plain C
+ABI — <code>extern "C"</code>, primitives and pointers. It cannot call a C++ class, receive
+a <code>std::string</code>, or load a <code>.pyd</code>. A shim would be new code, not reuse.</p>
+<p><strong>What FFI would actually buy</strong> is not raw call speed — inference runs 750 ms to
+4 s per image, against 130–320 ms of spawn overhead. It buys back the spawn and,
+more importantly, the <strong>model reload</strong> on every call. It would also allow passing
+a <code>Uint8Array</code> straight in: <code>Engine::recognize(const cv::Mat&amp;)</code> and
+<code>recognizeEncoded(const uint8_t*, size_t)</code> both already exist, and the latter is
+already a C-ABI-shaped signature.</p>
+<p><strong>What it would cost:</strong> ~50 MB of transitive DLLs that <code>dlopen</code> must locate on
+every platform, a second CI packaging matrix, a permanently versioned ABI, and
+crashes that become segfaults inside your process instead of a non-zero exit you
+can catch. It would also be Bun-only — Node would need Koffi or a Node-API
+addon.</p>
+<p>Model load is the real fixed cost, and the CLI's <code>--images-from</code> batch mode
+already amortizes it across many images with one Engine construction. For "user
+uploads a receipt, we OCR it", the subprocess is the correct call. FFI earns its
+keep only when you need per-call latency under ~50 ms on already-decoded frames —
+a video or camera loop you genuinely cannot batch.</p>
+<h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
+<p>Wrapper overhead only — subprocess spawn minus the engine's own reported
+inference time, over a 40-image SROIE sample. Accuracy is identical across all
+wrappers because they call the same binary.</p>
+<table>
+<thead>
+<tr>
+<th>Model size</th>
+<th style="text-align: right;">JavaScript</th>
+<th style="text-align: right;">Rust</th>
+<th style="text-align: right;">Go</th>
+<th style="text-align: right;">PHP</th>
+<th style="text-align: right;">Python</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tiny</code></td>
+<td style="text-align: right;">186 ms</td>
+<td style="text-align: right;">135 ms</td>
+<td style="text-align: right;">174 ms</td>
+<td style="text-align: right;">196 ms</td>
+<td style="text-align: right;">218 ms</td>
+</tr>
+<tr>
+<td><code>small</code></td>
+<td style="text-align: right;">216 ms</td>
+<td style="text-align: right;">162 ms</td>
+<td style="text-align: right;">177 ms</td>
+<td style="text-align: right;">217 ms</td>
+<td style="text-align: right;">246 ms</td>
+</tr>
+<tr>
+<td><code>medium</code></td>
+<td style="text-align: right;">282 ms</td>
+<td style="text-align: right;">233 ms</td>
+<td style="text-align: right;">235 ms</td>
+<td style="text-align: right;">291 ms</td>
+<td style="text-align: right;">317 ms</td>
+</tr>
+</tbody>
+</table>
+<p>JavaScript sits between the compiled wrappers and the interpreted ones: Node's
+startup is cheaper than PHP's or Python's, and not free the way Go's and Rust's
+are. Against the raw binary spawned with no wrapper at all — 127 / 184 / 234 ms
+on the same run — the JavaScript layer itself accounts for roughly 30–60 ms.</p>
+<p>Bun is not measurably different here. The cost is the subprocess, not the
+runtime around it.</p>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p>Apache-2.0.</p>
+<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../">Language wrappers</a> — shared architecture and the trade-off</li>
+<li><a href="../go/">Go</a> — the closest analogue, same lazy-download design</li>
+<li><a href="../../models/">Models</a> — obtaining PP-OCRv6 ONNX files</li>
+</ul>
 
 
 
@@ -1937,33 +2508,11 @@ expect once the above is working.</p>
 
 
   
-    
-  
-  
-    
   
 
 
   <aside class="md-source-file">
     
-      
-  <span class="md-source-file__fact">
-    <span class="md-icon" title="Last update">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
-    </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
-  </span>
-
-    
-    
-      
-  <span class="md-source-file__fact">
-    <span class="md-icon" title="Created">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
-    </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 7, 2026 12:05:42 UTC">2026-08-07 12:05:42</span>
-  </span>
-
     
     
     
@@ -2021,7 +2570,7 @@ expect once the above is working.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Build">
+          <a href="../php/" class="md-footer__link md-footer__link--prev" aria-label="Previous: PHP">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
@@ -2031,20 +2580,20 @@ expect once the above is working.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Build
+                PHP
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../models/" class="md-footer__link md-footer__link--next" aria-label="Next: Models">
+          <a href="../../benchmarks/" class="md-footer__link md-footer__link--next" aria-label="Next: Benchmarks">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Models
+                Benchmarks
               </div>
             </div>
             <div class="md-footer__button md-icon">
