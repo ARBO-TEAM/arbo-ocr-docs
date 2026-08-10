@@ -32,7 +32,11 @@ title: Accuracy defaults
 
 ## Measured
 
-Warm Python `Engine`, CPU, 5 SROIE receipts, char sim vs box GT:
+Warm `Engine`, CPU, the same 5 SROIE receipts for every row, char sim vs box
+GT. Latency is **engine** time — the OCR call only, excluding process start
+and language-side marshalling — because that is the one number all three
+engines report comparably. Reference engines are `ppu-paddle-ocr` and
+`rapidocr` **3.9.2**, run on those same five images.
 
 | Engine | Size | Avg sim | Avg ms |
 |--------|------|--------:|-------:|
@@ -40,10 +44,42 @@ Warm Python `Engine`, CPU, 5 SROIE receipts, char sim vs box GT:
 | arbo | **small** | **94.4%** | ~530 |
 | arbo | medium | 94.8% | ~2120 |
 | ppu-paddle-ocr (ref) | small | 94.6% | ~793 |
+| rapidocr (ref) | tiny | 92.6% | ~345 |
+| rapidocr (ref) | small | 94.5% | ~930 |
+| rapidocr (ref) | medium | 94.7% | ~3070 |
 
-The reference row is the point of the table: at `small`, arbo lands within
-~0.2 pts of the PaddleOCR port while running faster on the same images.
-`medium` is ahead on similarity and roughly 4× the latency of `small`.
+!!! warning "Five receipts cannot rank three engines — do not read a winner out of this table"
+
+    At `small` the three land at **94.4%** (arbo), **94.5%** (rapidocr) and
+    **94.6%** (ppu-paddle-ocr). The entire spread is ~0.4 pts across five
+    images, which is inside the run-to-run noise — at this sample size the
+    three engines are **indistinguishable**. If you are choosing between them,
+    this table is not the evidence you need.
+
+    The five-receipt set is also an easy one, and it flatters every engine by
+    roughly 8–9 pts. Same harness, same ground-truth method, both engines at
+    `small`, widened to 40 SROIE receipts:
+
+    | Engine (`small`) | n=5 | n=40 |
+    |---|---|---|
+    | arbo | 94.2% | 86.1% |
+    | rapidocr | 94.5% | 85.3% |
+
+    arbo moves from ~0.1 pt *behind* rapidocr to ~0.8 pt *ahead* of it purely
+    by widening the sample: **the ordering is not stable across sample sizes.**
+    Treat the n=40 column as the headline and the five-image numbers as the
+    smoke test they were built to be.
+
+    (arbo reads 94.2% here rather than the 94.4% above because this pair comes
+    from a separate run of the harness — a 0.2 pt swing on byte-identical
+    inputs, which is itself a fair measure of how little the five-image spread
+    is worth.)
+
+So the reference rows are calibration, not a leaderboard: at `small`, arbo sits
+inside half a point of both ports while running faster than either on the same
+images, which is what let `small` become the default. The one comparison here
+that does survive the sample size is `small` vs `medium` — same engine, same
+images, so the noise cancels: **~+0.4 pts for roughly 4× the CPU latency.**
 
 ## What to watch when integrating
 
