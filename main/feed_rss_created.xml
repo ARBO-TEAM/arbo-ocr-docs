@@ -13,8 +13,8 @@
     <language>en</language>
 
     
-    <pubDate>Mon, 10 Aug 2026 06:07:18 -0000</pubDate>
-    <lastBuildDate>Mon, 10 Aug 2026 06:07:18 -0000</lastBuildDate>
+    <pubDate>Sat, 12 Sep 2026 18:48:55 -0000</pubDate>
+    <lastBuildDate>Sat, 12 Sep 2026 18:48:55 -0000</lastBuildDate>
     <ttl>1440</ttl>
 
     
@@ -30,6 +30,25 @@
     
 
     
+    
+    <item>
+      <title>We padded every batch to 320px for no reason</title>
+      
+      
+        
+      <author>ARBO-TEAM</author>
+        
+      
+      
+      
+      <description>v0.4.0 is a recognition speed release — −26% engine latency on the small tier — and the one change behind most of it was a floor we had no reason to keep.</description>
+      <link>https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/09/13/we-padded-every-batch-to-320px-for-no-reason/</link>
+      <pubDate>Sun, 13 Sep 2026 00:00:00 +0000</pubDate>
+      <source url="https://arbo-team.github.io/arbo-ocr-docs/main/feed_rss_created.xml">arboOCR Docs</source>
+      
+      <guid isPermaLink="true">https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/09/13/we-padded-every-batch-to-320px-for-no-reason/</guid>
+      
+    </item>
     
     <item>
       <title>--cuda never worked from a release archive until today</title>

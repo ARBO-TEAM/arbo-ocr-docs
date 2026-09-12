@@ -1528,7 +1528,7 @@
   
   
   <span class="md-ellipsis">
-    2026/08
+    2026/09
     
   </span>
   
@@ -1776,8 +1776,8 @@ first, per file, so this costs zero network access even with
 <details class="note">
 <summary>Option C — download programmatically</summary>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">downloadOcrModels</span><span class="p">(</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// empty baseUrl — the default, pinned source</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="s">&quot;PP-OCRv6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">);</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="s">""</span><span class="p">,</span><span class="w">  </span><span class="c1">// empty baseUrl — the default, pinned source</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="s">"PP-OCRv6"</span><span class="p">,</span><span class="w"> </span><span class="s">"medium"</span><span class="p">,</span><span class="w"> </span><span class="s">"models"</span><span class="p">);</span>
 </span></code></pre></div>
 <p>Pass your own <code>baseUrl</code> — an internal mirror, an artifact store, a CDN
 bucket you control — to fetch from somewhere else instead. Stock filenames

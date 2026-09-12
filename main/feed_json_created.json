@@ -13,6 +13,21 @@
     "language": "en",
     "items": [
         {
+            "id": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/09/13/we-padded-every-batch-to-320px-for-no-reason/",
+            "url": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/09/13/we-padded-every-batch-to-320px-for-no-reason/",
+            "title": "We padded every batch to 320px for no reason",
+            "content_html": "v0.4.0 is a recognition speed release \u2014 \u221226% engine latency on the small tier \u2014 and the one change behind most of it was a floor we had no reason to keep.",
+            "image": null,
+            "date_modified": "2026-09-12T18:25:58+00:00",
+            "date_published": "2026-09-13T00:00:00+00:00",
+            "authors": [
+                {
+                    "name": "ARBO-TEAM"
+                }
+            ],
+            "tags": null
+        },
+        {
             "id": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/10/--cuda-never-worked-from-a-release-archive-until-today/",
             "url": "https://arbo-team.github.io/arbo-ocr-docs/main/blog/2026/08/10/--cuda-never-worked-from-a-release-archive-until-today/",
             "title": "--cuda never worked from a release archive until today",

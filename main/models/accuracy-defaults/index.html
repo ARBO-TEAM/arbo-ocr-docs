@@ -971,6 +971,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#v040-recognition-batching-and-output-that-now-moves" class="md-nav__link">
+    <span class="md-ellipsis">
+      v0.4.0: recognition batching, and output that now moves
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="v0.4.0: recognition batching, and output that now moves">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-the-strip-width-changes-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why the strip width changes output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mindetboxarea" class="md-nav__link">
+    <span class="md-ellipsis">
+      minDetBoxArea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spacerecovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      spaceRecovery
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#typical-production-cpu-defaults" class="md-nav__link">
     <span class="md-ellipsis">
       Typical production CPU defaults
@@ -1648,7 +1690,7 @@
   
   
   <span class="md-ellipsis">
-    2026/08
+    2026/09
     
   </span>
   
@@ -1837,6 +1879,48 @@
   <a href="#memory-footprint-the-onnxruntime-cpu-arena-is-off" class="md-nav__link">
     <span class="md-ellipsis">
       Memory footprint: the ONNXRuntime CPU arena is off
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v040-recognition-batching-and-output-that-now-moves" class="md-nav__link">
+    <span class="md-ellipsis">
+      v0.4.0: recognition batching, and output that now moves
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="v0.4.0: recognition batching, and output that now moves">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-the-strip-width-changes-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why the strip width changes output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mindetboxarea" class="md-nav__link">
+    <span class="md-ellipsis">
+      minDetBoxArea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spacerecovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      spaceRecovery
     </span>
   </a>
   
@@ -2162,19 +2246,106 @@ on those pages was the buggy one.</p>
 </div>
 <h3 id="memory-footprint-the-onnxruntime-cpu-arena-is-off">Memory footprint: the ONNXRuntime CPU arena is off<a class="headerlink" href="#memory-footprint-the-onnxruntime-cpu-arena-is-off" title="Permanent link">&para;</a></h3>
 <p>Not an accuracy change, and it <strong>does not affect output</strong> — but anyone
-benchmarking will see it. All three sessions (det, cls, rec) now disable the
-ONNXRuntime CPU memory arena. The arena never returns memory to the OS;
-RapidOCR measured <strong>5695.5 MiB peak RSS with it on versus 82.1 MiB with it
-off</strong>, a 5618 MiB delta on a <em>single</em> inference, in exchange for roughly 13%
+benchmarking will see it. All three sessions (det, cls, rec) disable the
+ONNXRuntime CPU memory arena <strong>by default</strong>. The arena never returns memory to
+the OS; RapidOCR measured <strong>5695.5 MiB peak RSS with it on versus 82.1 MiB with
+it off</strong>, a 5618 MiB delta on a <em>single</em> inference, in exchange for roughly 13%
 inference latency. On a 4 GB Jetson that is the difference between running and
 being OOM-killed, so the memory is the better trade. Expect slightly higher
 per-inference latency and dramatically lower RSS than before.</p>
+<p>Opt back in when RAM is plentiful and latency matters:
+<code>EngineConfig::enableCpuMemArena = true</code>, or <code>--enable-cpu-mem-arena</code> on the
+CLI. With the flag on, arboOCR matches oar-ocr's arena-on default: −26%
+engine latency on the small tier (566→419 ms avg cold-spawn) with
+byte-identical OCR output on 40/40 test images — a pure runtime win. See
+<a href="../../benchmarks/#arboocr-vs-oar-ocr">Benchmarks</a>.</p>
+<h2 id="v040-recognition-batching-and-output-that-now-moves">v0.4.0: recognition batching, and output that now moves<a class="headerlink" href="#v040-recognition-batching-and-output-that-now-moves" title="Permanent link">&para;</a></h2>
+<p>v0.4.0 is a recognition-performance release. Unlike the arena flag above, it
+<strong>does change OCR output</strong>. If you diff against a stored baseline, regenerate it.</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Old behaviour</th>
+<th>New behaviour</th>
+<th>Affects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recognition batch strip width</td>
+<td>Every batch padded up to a <strong>320px floor</strong></td>
+<td>Sized to the batch's own widest crop (32px minimum floor)</td>
+<td>Latency drops sharply; logits for the last characters of a crop can shift</td>
+</tr>
+<tr>
+<td>CTC decode length</td>
+<td>Decoded all <code>timeSteps</code> of the padded strip</td>
+<td>Decoded only each crop's own share of it</td>
+<td>Speed only — the trailing timesteps covered zero padding</td>
+</tr>
+<tr>
+<td>ORT session flags</td>
+<td>Default execution mode, no memory pattern</td>
+<td><code>ORT_SEQUENTIAL</code> + <code>EnableMemPattern</code> on all three sessions</td>
+<td>Speed and RSS only</td>
+</tr>
+<tr>
+<td>Detector box filter</td>
+<td>Every detected box got a crop and an inference</td>
+<td>Boxes under <code>minDetBoxArea</code> (default <code>20</code>, detector-input px²) are dropped first</td>
+<td>Dust and speckle no longer produce one-character lines</td>
+</tr>
+</tbody>
+</table>
+<h3 id="why-the-strip-width-changes-output">Why the strip width changes output<a class="headerlink" href="#why-the-strip-width-changes-output" title="Permanent link">&para;</a></h3>
+<p>The batched recognizer forces every crop in a batch to share one width, and it
+used to seed that width from the model's <em>reference</em> width — <code>rec_image_shape</code>'s
+320 — growing from there. Nothing required that floor: the crops' own widths are
+what the model actually reads. A batch of six ~90px line items was therefore
+running the conv stack over 320px of mostly zeros.</p>
+<p>The strip is now sized to the widest crop the batch actually holds. That is a
+large latency win, but a narrower strip feeds the convolutional stack different
+right-edge context, so the logits for the <strong>last few characters of each crop</strong>
+move slightly. Measured on a 40-image receipt sample: average similarity
+86.31% → 86.40%, but only <strong>8 of 40</strong> stems character-identical (20 better, 12
+worse, worst −0.46pp).</p>
+<div class="admonition warning">
+<p class="admonition-title">This is not the free kind of speed change</p>
+<p>Compare it to the arena flag above, which was byte-identical on 40/40 images
+and therefore safe to enable blind. This one is not: it is a genuine
+decode-path change with a small, mixed, corpus-dependent effect on output.
+Net flat-to-slightly-up on the sample it was measured on — but <strong>measure on
+your own corpus before adopting it</strong>, and never adopt it in a pipeline that
+diffs against a frozen baseline without regenerating that baseline.</p>
+<p>The unit tests cannot warn you about this. They feed synthetic fixtures
+through the decode, so they pin the decode <em>algebra</em> (padding must not move
+content) but never touch real model logits, which is where the difference
+actually appears.</p>
+</div>
+<h3 id="mindetboxarea"><code>minDetBoxArea</code><a class="headerlink" href="#mindetboxarea" title="Permanent link">&para;</a></h3>
+<p>Defaults to <code>20</code>, and measured <strong>identical output on 40/40 images</strong> versus
+disabled — so for ordinary documents it is not a behaviour change. It stops
+pathological detection noise from paying for a crop and a recognition call.</p>
+<p>It is expressed in <strong>detector-input</strong> pixels (area, not a side length), so it
+scales with <code>detLimitSideLen</code> and means the same thing at any source resolution.
+Set it to <code>0</code> when hunting for genuinely tiny text. See Detection tuning.</p>
+<h3 id="spacerecovery"><code>spaceRecovery</code><a class="headerlink" href="#spacerecovery" title="Permanent link">&para;</a></h3>
+<p>Off by default, and opt-in for a reason. Recognition models routinely drop
+inter-word spaces, so "ATAS NAMA" can come back as "ATASNAMA". With this
+enabled, a timestep whose winner is a real character but whose <em>space</em> logit is
+a strong runner-up emits the space as well.</p>
+<p>It is a heuristic resting on a near-miss, which means it can also insert
+spurious spaces in dense symbol and number runs where the space class is a
+common runner-up. It showed <strong>no benefit on this receipt corpus</strong>, which is part
+of why it is off by default: treat it as a targeted fix for a specific
+run-together-words problem, not as a setting to flip on and forget.</p>
 <h2 id="typical-production-cpu-defaults">Typical production CPU defaults<a class="headerlink" href="#typical-production-cpu-defaults" title="Permanent link">&para;</a></h2>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// Typical production CPU defaults after the accuracy cycle (these are already</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">// the EngineConfig defaults — shown explicitly for upgrades):</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">EngineConfig</span><span class="w"> </span><span class="n">cfg</span><span class="p">;</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">cfg</span><span class="p">.</span><span class="n">modelsDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">;</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">cfg</span><span class="p">.</span><span class="n">modelType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;small&quot;</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">cfg</span><span class="p">.</span><span class="n">modelsDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"models"</span><span class="p">;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">cfg</span><span class="p">.</span><span class="n">modelType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"small"</span><span class="p">;</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">cfg</span><span class="p">.</span><span class="n">detLimitSideLen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">960</span><span class="p">;</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">cfg</span><span class="p">.</span><span class="n">minimumConfidence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">;</span><span class="w">  </span><span class="c1">// 0 = keep all boxes</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">// cfg.splitOvermerged = true; // only if side-by-side fields fuse</span>
@@ -2211,7 +2382,7 @@ baseline line by line.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="August 10, 2026 04:15:16 UTC">2026-08-10 04:15:16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="September 12, 2026 18:25:58 UTC">2026-09-12 18:25:58</span>
   </span>
 
     

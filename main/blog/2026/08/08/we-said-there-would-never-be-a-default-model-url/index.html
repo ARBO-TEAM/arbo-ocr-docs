@@ -1533,7 +1533,7 @@
   
   
   <span class="md-ellipsis">
-    2026/08
+    2026/09
     
   </span>
   
@@ -2070,7 +2070,7 @@ wins. <code>ensureOcrModels(cfg)</code> resolves <strong>per file</strong>, in t
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">// Or point at an internal mirror. Stock filenames stay checksum-verified,</span>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">// so a mirror serving different bytes is rejected, not accepted quietly.</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">cfg</span><span class="p">.</span><span class="n">modelsBaseUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://models.internal.example/arboocr/models-v1/&quot;</span><span class="p">;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">cfg</span><span class="p">.</span><span class="n">modelsBaseUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"https://models.internal.example/arboocr/models-v1/"</span><span class="p">;</span>
 </span></code></pre></div>
 <p>The same controls exist outside C++, because for the Go, Rust, and PHP wrappers
 the CLI <em>is</em> the API:</p>
@@ -2172,7 +2172,7 @@ established from the graphs themselves, not from where they were found:</p>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>p2o.pd_op.conv2d.0
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>p2o.pd_op.batch_norm.3
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a># Initializers keep Paddle&#39;s original tensor naming.
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a># Initializers keep Paddle's original tensor naming.
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>conv2d_0.w_0
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>batch_norm2d_1.b_0
 </span></code></pre></div>

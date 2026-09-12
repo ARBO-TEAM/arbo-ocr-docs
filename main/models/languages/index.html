@@ -1588,7 +1588,7 @@
   
   
   <span class="md-ellipsis">
-    2026/08
+    2026/09
     
   </span>
   
@@ -1804,9 +1804,9 @@ different weights.</p>
 <p>For scripts outside the model's training set, or a fine-tuned ONNX, point
 explicit paths at your files (empty = default names under <code>modelsDir</code>):</p>
 <div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">arbo</span><span class="o">::</span><span class="n">ocr</span><span class="o">::</span><span class="n">EngineConfig</span><span class="w"> </span><span class="n">cfg</span><span class="p">;</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">cfg</span><span class="p">.</span><span class="n">modelsDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">cfg</span><span class="p">.</span><span class="n">recModelPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models/custom_rec.onnx&quot;</span><span class="p">;</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">cfg</span><span class="p">.</span><span class="n">dictPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;models/custom_dict.txt&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// only if ONNX metadata has no character list</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">cfg</span><span class="p">.</span><span class="n">modelsDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"models"</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">cfg</span><span class="p">.</span><span class="n">recModelPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"models/custom_rec.onnx"</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">cfg</span><span class="p">.</span><span class="n">dictPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"models/custom_dict.txt"</span><span class="p">;</span><span class="w"> </span><span class="c1">// only if ONNX metadata has no character list</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">// cfg.detModelPath / cfg.clsModelPath likewise if needed</span>
 </span></code></pre></div>
 <p>Note the <code>dictPath</code> comment: a dict file is only required when the ONNX

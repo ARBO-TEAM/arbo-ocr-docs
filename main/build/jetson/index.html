@@ -1630,7 +1630,7 @@
   
   
   <span class="md-ellipsis">
-    2026/08
+    2026/09
     
   </span>
   
@@ -1894,13 +1894,13 @@ You do not need to hunt for an exactly matching tarball.</p>
 <p>Continue in the same <code>vendor/onnxruntime</code> directory.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 2. onnxruntime runtime .so with CUDA/TensorRT support. The official aarch64</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># release tarball above is CPU-only — a pip wheel (`pip install onnxruntime`)</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># or JetPack&#39;s preinstalled one ships the accelerated build instead. Copy it</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># or JetPack's preinstalled one ships the accelerated build instead. Copy it</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># in (point SRC at wherever onnxruntime is installed on your machine):</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">SRC</span><span class="o">=</span>/path/to/your/onnxruntime/capi
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>lib
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>cp<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SRC</span><span class="s2">&quot;</span>/libonnxruntime.so.*<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SRC</span><span class="s2">&quot;</span>/libonnxruntime_providers_*.so<span class="w"> </span>lib/
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>ln<span class="w"> </span>-sf<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SRC</span><span class="s2">&quot;</span>/libonnxruntime.so.*.*.*<span class="k">)</span><span class="w"> </span>lib/libonnxruntime.so.1
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>ln<span class="w"> </span>-sf<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SRC</span><span class="s2">&quot;</span>/libonnxruntime.so.*.*.*<span class="k">)</span><span class="w"> </span>lib/libonnxruntime.so
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>cp<span class="w"> </span><span class="s2">"</span><span class="nv">$SRC</span><span class="s2">"</span>/libonnxruntime.so.*<span class="w"> </span><span class="s2">"</span><span class="nv">$SRC</span><span class="s2">"</span>/libonnxruntime_providers_*.so<span class="w"> </span>lib/
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>ln<span class="w"> </span>-sf<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">"</span><span class="nv">$SRC</span><span class="s2">"</span>/libonnxruntime.so.*.*.*<span class="k">)</span><span class="w"> </span>lib/libonnxruntime.so.1
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>ln<span class="w"> </span>-sf<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">"</span><span class="nv">$SRC</span><span class="s2">"</span>/libonnxruntime.so.*.*.*<span class="k">)</span><span class="w"> </span>lib/libonnxruntime.so
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nb">cd</span><span class="w"> </span>../..
 </span></code></pre></div>
 <p>The <code>libonnxruntime_providers_*.so</code> glob is what carries CUDA and TensorRT. If

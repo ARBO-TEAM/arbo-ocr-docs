@@ -1531,7 +1531,7 @@
   
   
   <span class="md-ellipsis">
-    2026/08
+    2026/09
     
   </span>
   
@@ -1665,6 +1665,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#we-padded-every-batch-to-320px-for-no-reason" class="md-nav__link">
+    <span class="md-ellipsis">
+      We padded every batch to 320px for no reason
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#-cuda-never-worked-from-a-release-archive-until-today" class="md-nav__link">
     <span class="md-ellipsis">
       --cuda never worked from a release archive until today
@@ -1718,6 +1727,56 @@
 a default, the failure mode that motivated a flag, and what we tried that did
 not work. An RSS feed is linked from the site footer.</p>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://github.com/ARBO-TEAM.png" alt="ARBO-TEAM">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2026-09-13 00:00:00+00:00">9/13/26</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="category/release-notes/" class="md-meta__link">Release notes</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              4 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="we-padded-every-batch-to-320px-for-no-reason"><a class="toclink" href="2026/09/13/we-padded-every-batch-to-320px-for-no-reason/">We padded every batch to 320px for no reason</a></h2>
+<p>Recognition is 76% of arboOCR's CPU engine time and <code>Session::Run</code> alone is 95%
+of recognition, so if you want the engine faster there is exactly one place to
+look. v0.4.0 cuts <strong>−26% engine latency</strong> on the small tier, and most of it came
+from deleting a constant.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="2026/09/13/we-padded-every-batch-to-320px-for-no-reason/">
+          Continue reading
+        </a>
+      </nav>
+    
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
