@@ -162,12 +162,29 @@ sample, same session, same harness:
     characters of a crop — this is a real behaviour change, not a measurement
     artifact. Net flat-to-slightly-up here; **re-measure on your own corpus.**
 
-!!! note "The three engines bundle different onnxruntime versions"
+!!! note "The three engines bundle different onnxruntime versions — and it does not explain the result"
 
     arboOCR 1.23.2 (the vcpkg default), oar-ocr 1.28.0, ppu-paddle-ocr 1.29.0 via
-    `onnxruntime-node`. These were **not** equalised, so part of the remaining
-    latency distance is plausibly the runtime rather than either engine's code.
-    arboOCR can opt into 1.28.0 with `-DARBOOCR_ORT_VERSION=1.28.0`.
+    `onnxruntime-node`. Those were **not** equalised in the table above, so we
+    measured the gap directly: the same arboOCR source tree built against both
+    runtimes, 40 stems, one session. arboOCR can opt in with
+    `-DARBOOCR_ORT_VERSION=1.28.0`.
+
+    | arboOCR small | Avg engine ms | Avg sim |
+    |---|---|---|
+    | ORT 1.23.2 | 373 | 86.40% |
+    | ORT 1.28.0 | **366** | 86.40% |
+
+    **−1.9% engine (−0.5% wall, i.e. noise), with byte-identical text on 40/40
+    stems** — the newer runtime changes decoding not at all and speed very
+    little. Paired per stem, 1.28 was faster on 30 of 40 (median −9.9 ms), which
+    is a real if small effect, and squarely inside the single-digit-percent
+    band the methodology notes below tell you to distrust.
+
+    The consequence for this page: **the runtime does not account for arboOCR's
+    remaining distance from ppu-paddle-ocr.** arboOCR is ahead on engine time at
+    *both* runtime versions, so the comparison above stands as code-for-code.
+    An earlier version of this note guessed the opposite; it was wrong.
 
 Same advice as ever on sizes: small→medium buys ~+0.3–0.4 pts for ~4× latency
 on either engine.
