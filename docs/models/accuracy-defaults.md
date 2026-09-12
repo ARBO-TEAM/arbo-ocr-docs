@@ -167,13 +167,20 @@ input — one line, or boxes too few to estimate from — still behaves.
 ### Memory footprint: the ONNXRuntime CPU arena is off
 
 Not an accuracy change, and it **does not affect output** — but anyone
-benchmarking will see it. All three sessions (det, cls, rec) now disable the
-ONNXRuntime CPU memory arena. The arena never returns memory to the OS;
-RapidOCR measured **5695.5 MiB peak RSS with it on versus 82.1 MiB with it
-off**, a 5618 MiB delta on a *single* inference, in exchange for roughly 13%
+benchmarking will see it. All three sessions (det, cls, rec) disable the
+ONNXRuntime CPU memory arena **by default**. The arena never returns memory to
+the OS; RapidOCR measured **5695.5 MiB peak RSS with it on versus 82.1 MiB with
+it off**, a 5618 MiB delta on a *single* inference, in exchange for roughly 13%
 inference latency. On a 4 GB Jetson that is the difference between running and
 being OOM-killed, so the memory is the better trade. Expect slightly higher
 per-inference latency and dramatically lower RSS than before.
+
+Opt back in when RAM is plentiful and latency matters:
+`EngineConfig::enableCpuMemArena = true`, or `--enable-cpu-mem-arena` on the
+CLI. With the flag on, arboOCR matches oar-ocr's arena-on default: −26%
+engine latency on the small tier (566→419 ms avg cold-spawn) with
+byte-identical OCR output on 40/40 test images — a pure runtime win. See
+[Benchmarks](../benchmarks.md#arboocr-vs-oar-ocr).
 
 ## Typical production CPU defaults
 

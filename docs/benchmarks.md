@@ -95,6 +95,34 @@ cfg.useFp16 = true;   // default — keep for production edge latency
 // cfg.useFp16 = false; // FP32 engines for accuracy A/B only
 ```
 
+## arboOCR vs oar-ocr
+
+Against [oar-ocr](https://github.com/GreatV/oar-ocr) v0.9.2 (Rust, `ort`
+bindings) on a 40-image SROIE2019 stem sample: identical PP-OCRv6 weights and
+dicts, matched config (det 0.3/0.5/1.6, limit-side 960 ceiling-only, rec batch
+6, conf 0.5), CPU cold-spawn on both arms, char similarity vs box ground truth.
+arboOCR wins accuracy at every tier (+2.0/+1.6/+1.8 pts tiny/small/medium);
+oar-ocr wins engine latency at every tier — but the small-tier gap closed to
+near-parity after the ROI-crop fast path and the arena flag:
+
+| Engine (small) | Avg engine ms | Avg sim |
+|---|---|---|
+| oar small | 401 | 84.7% |
+| arbo small, arena off | 566 | 86.3% |
+| arbo small, arena on (`--enable-cpu-mem-arena`) | 419 | 86.3% |
+
+Arena on vs off is byte-identical output on 40/40 images — a pure runtime win
+(−26% engine) that matches oar's arena-on default. oar's remaining edge is ~5%
+engine time, which is noise territory on cold spawn, while arbo keeps +1.6 pts
+accuracy. Same advice as ever on sizes: small→medium buys ~+0.3–0.4 pts for
+~4× latency on either engine.
+
+Methodology notes: CPU only, one machine; n=40, single run, no thermal
+control — treat single-digit-percent latency deltas as noise. Similarity is
+character-level Levenshtein after lowercasing and whitespace collapse, not
+official SROIE metrics — ranking only. Both arms pay spawn + model reload per
+image, so neither engine is shown at warm steady-state.
+
 ## See also
 
 - [Accuracy defaults](models/accuracy-defaults.md) — the accuracy measurements, and why the defaults are what they are.

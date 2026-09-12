@@ -460,6 +460,7 @@ draws one box around both.
 | `--trt-cache-dir <dir>` | `models/trt_engines` | Where TensorRT caches built engines. Only used with `--tensorrt`. |
 | `--angle` | off | Enable orientation classification (0°/180°). Loads `_cls.onnx`. |
 | `--clahe` | off | CLAHE contrast enhancement before detection — for faded/low-contrast scans. |
+| `--enable-cpu-mem-arena` | off | Leave ORT's CPU memory arena on: faster, higher RSS. Matches oar-ocr's arena-on default — −26% engine latency on the small tier with byte-identical output. See [Memory footprint](models/accuracy-defaults.md#memory-footprint-the-onnxruntime-cpu-arena-is-off). |
 
 Requests are requests, not guarantees. The engine probes
 `Ort::GetAvailableProviders()` and degrades TensorRT → CUDA → CPU silently, so

@@ -65,6 +65,51 @@ missing model into an immediate error rather than a socket that hangs. See
     Single-config generator, so there is no `--config Release` — the preset
     already pins the build type.
 
+### Opt-in onnxruntime 1.28.0 prebuilt
+
+Both desktop presets default to onnxruntime **1.23.2** from vcpkg, and that
+default is unchanged — vcpkg has no 1.28 port, and CI stays on 1.23.2. The
+opt-in exists for when the remaining latency lives inside `Session::Run`
+itself rather than in pre/post-processing: oar-ocr v0.9.2 already ships ORT
+1.28.0, and a DLL-swap experiment (1.23.2 headers + 1.28.0 runtime, 6/6
+byte-identical outputs) showed no source changes are needed — only build
+wiring. See [Benchmarks](../benchmarks.md#arboocr-vs-oar-ocr). (Upstream this
+is the `perf/ort-1.28` branch — open PR at time of writing, so build from that
+branch until it merges.)
+
+```powershell
+$env:VCPKG_ROOT = "C:\vcpkg"
+cmake --preset windows-x64 -DARBOOCR_ORT_VERSION=1.28.0
+cmake --build build/windows-x64 --config Release
+```
+
+```bash
+export VCPKG_ROOT=/path/to/vcpkg
+cmake --preset linux-x64 -DARBOOCR_ORT_VERSION=1.28.0
+cmake --build build/linux-x64
+```
+
+At configure time CMake downloads the official Microsoft release archive for
+your OS, verifies its SHA-256 against the hash pinned in
+`cmake/ort_prebuilt.cmake`, extracts it under the build directory
+(`_deps/ort-prebuilt`), and links its headers and runtime instead of the vcpkg
+port. vcpkg still installs its own 1.23.2 copy in manifest mode, but nothing
+references it.
+
+Three limits. Windows/Linux x64 only — aarch64 keeps the [Jetson
+flow](jetson.md), which already pairs 1.27.1 headers against a 1.28.x runtime
+`.so`, and the two flags cannot combine (`ARBOOCR_ORT_VERSION=1.28.0` with
+`ARBOOCR_USE_SYSTEM_DEPS=ON` is a configure error). Only `1.23.2` and `1.28.0`
+are accepted; anything else fails at configure time. For an offline machine,
+`-DARBOOCR_ORT_ARCHIVE_FILE=<path>` substitutes a local copy of the exact
+archive (filename must match, hash still verified) for the download.
+
+Consumers change slightly: an install built this way records the prebuilt
+include/lib paths, so a downstream project still needs OpenCV and CURL from
+vcpkg but no longer resolves an `onnxruntime` package. Packaging needs no
+changes — the 1.28 archives ship `onnxruntime_providers_shared`, so the stock
+runtime globs pick it up.
+
 ## Jetson / aarch64
 
 vcpkg builds everything from source, which is impractical on a Jetson. That
