@@ -73,9 +73,27 @@ opt-in exists for when the remaining latency lives inside `Session::Run`
 itself rather than in pre/post-processing: oar-ocr v0.9.2 already ships ORT
 1.28.0, and a DLL-swap experiment (1.23.2 headers + 1.28.0 runtime, 6/6
 byte-identical outputs) showed no source changes are needed — only build
-wiring. See [Benchmarks](../benchmarks.md#arboocr-vs-oar-ocr). (Upstream this
-is the `perf/ort-1.28` branch — open PR at time of writing, so build from that
-branch until it merges.)
+wiring. Available since **v0.4.0**; no branch needed.
+
+!!! note "What the opt-in is actually worth: about 2%"
+
+    Measured properly after the fact — the same source tree built both ways,
+    40 SROIE2019 stems, one session, arena on both arms:
+
+    | arboOCR small | Avg engine ms | Avg sim |
+    |---|---|---|
+    | ORT 1.23.2 (default) | 373 | 86.40% |
+    | ORT 1.28.0 | **366** | 86.40% |
+
+    **−1.9% engine, −0.5% wall, byte-identical text on 40/40 stems.** Faster on
+    30 of 40 stems paired (median −9.9 ms), so the effect is real but small, and
+    it sits inside the single-digit-percent band that the
+    benchmark methodology says to treat as noise.
+
+    Worth switching if you are already chasing percent-level engine time; not
+    worth a rebuild on its own account. It also does **not** account for
+    arboOCR's latency position against the other engines — that comparison holds
+    at both runtime versions.
 
 ```powershell
 $env:VCPKG_ROOT = "C:\vcpkg"
