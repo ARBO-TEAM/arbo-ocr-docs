@@ -42,6 +42,7 @@ struct EngineConfig {
     bool        useFp16      = true;      // TensorRT only — FP16 kernels (default on)
     int         intraOpNumThreads = 0;    // ORT thread pools, all three sessions
     int         interOpNumThreads = 0;    // 0 = ORT default (machine-sized)
+    bool        enableCpuMemArena = false; // leave ORT CPU arena on: faster, higher RSS
     bool        useClahe     = false;     // CLAHE contrast boost before detection (faded/low-contrast docs)
     bool        splitOvermerged = false; // ink-gap split of wide fused det boxes (opt-in)
     float       minimumConfidence = 0.5f; // drop low-conf lines (0 = keep all)
@@ -180,9 +181,13 @@ container.
 !!! tip "Consistent with the arena decision"
 
     arboOCR takes a deliberately conservative stance on ONNX Runtime resource
-    defaults. The CPU memory arena is disabled for a closely related reason —
-    ORT's default is tuned for a process that owns the machine, and it never
-    returns memory to the OS. See
+    defaults. The CPU memory arena is disabled by default for a closely related
+    reason — ORT's default is tuned for a process that owns the machine, and it
+    never returns memory to the OS. Set `enableCpuMemArena = true`
+    (`--enable-cpu-mem-arena` on the CLI) to opt back into ORT's default arena:
+    ~26% lower engine latency on the small
+    tier with byte-identical output, at the cost of much higher high-water RSS.
+    See
     [Memory footprint: the ONNXRuntime CPU arena is off](../models/accuracy-defaults.md#memory-footprint-the-onnxruntime-cpu-arena-is-off).
 
 ### Three ways in: path, `cv::Mat`, encoded bytes
@@ -422,6 +427,7 @@ as `0.9`.
 | `useFp16` | `bool` | `true` | TensorRT only — FP16 kernels, on by default. See [Benchmarks](../benchmarks.md#tensorrt-precision-fp16). |
 | `intraOpNumThreads` | `int` | `0` | ORT intra-op pool size for all three sessions. `0` = ORT decides (sizes for the whole machine). Lower it when several workers or a CPU-quota'd container share a host. Negatives clamp to `0`. See [Thread pools](#thread-pools-intraop-and-interop). |
 | `interOpNumThreads` | `int` | `0` | ORT inter-op pool size. `0` = ORT decides. Largely inert today — arboOCR runs sessions in ORT's default sequential execution mode. Negatives clamp to `0`. |
+| `enableCpuMemArena` | `bool` | `false` | Leave ORT's CPU memory arena on: faster, higher RSS. Default off keeps `DisableCpuMemArena` on all three sessions (bounded RSS); `true` matches oar-ocr's arena-on default — −26% engine latency on the small tier, byte-identical output. Library-level *and* CLI (`--enable-cpu-mem-arena`). See [Memory footprint](../models/accuracy-defaults.md#memory-footprint-the-onnxruntime-cpu-arena-is-off). |
 | `useClahe` | `bool` | `false` | CLAHE contrast boost applied to the full image before detection, for faded/low-contrast docs. See [CLAHE](../models/clahe.md). |
 | `splitOvermerged` | `bool` | `false` | Opt-in ink-gap split of wide fused detector boxes. See [Accuracy defaults](../models/accuracy-defaults.md). |
 | `minimumConfidence` | `float` | `0.5f` | Drops low-confidence lines; `0` keeps every box. Also the green/red threshold in [`drawResult`](visualize.md). See [Accuracy defaults](../models/accuracy-defaults.md). |

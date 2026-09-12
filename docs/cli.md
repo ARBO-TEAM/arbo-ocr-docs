@@ -430,10 +430,35 @@ lives in [Accuracy defaults](models/accuracy-defaults.md).
 | `--det-box-thresh <float>` | `0.5` | Minimum mean score for a detected box to survive. Lower it to recover faint boxes. |
 | `--det-unclip-ratio <float>` | `1.6` | Box expansion applied after binarization. Raise it when crops clip ascenders/descenders. |
 | `--split-overmerged` | off | Split wide detection boxes that fused two side-by-side fields, using an ink-gap heuristic. |
+| `--min-det-box-area <float>` | `20` | Drop detection boxes smaller than this, in **detector-input** pixels (area, not a side length). `0` disables the filter. |
 
 `--split-overmerged` is the one to reach for on forms and tables, where a
 `label` and its `value` sit on the same baseline and the detector happily
 draws one box around both.
+
+`--min-det-box-area` runs *after* detection and *before* recognition: a box
+below the threshold never costs a crop or an inference, it is simply dropped.
+The threshold is in detector-input pixels, so it scales with
+`--det-limit-side-len` rather than with the source image — the same value means
+the same thing on a 300 DPI scan and on a phone photo. At its default it
+produced identical output on 40/40 test images versus disabled, so treat it as
+protection against detector noise (dust, JPEG artifacts, rule lines) rather
+than as a tuning knob. Raise it if speckle keeps showing up as one-character
+lines; set it to `0` when hunting for genuinely tiny text.
+
+!!! tip "To see what the filter dropped, turn on debug logging"
+
+    The drop count is logged at **debug** level, and the CLI is silent by
+    default, so you will not see it unless you ask:
+
+    ```bash
+    arboocr_demo --image scan.png --min-det-box-area 20 --log-level debug
+    # DEBUG: Dropped 3 det box(es) below minDetBoxArea=20 (in det input pixels)
+    ```
+
+    That line is what separates "the filter ate my line" from "the detector
+    never found it" — and crossing it with the `--min-confidence 0` tip below
+    covers both halves of the pipeline.
 
 ## Recognition tuning
 
@@ -441,6 +466,7 @@ draws one box around both.
 |---|---|---|
 | `--rec-batch-num <int>` | `6` | Crops per recognition inference call. Clamped to `>= 1`. |
 | `--min-confidence <float>` | `0.5` | Drop lines below this recognition confidence. `0` disables filtering entirely. |
+| `--space-recovery` | off | Re-insert inter-word spaces the recognizer dropped, when the space class is a strong CTC runner-up. |
 
 !!! tip "`--min-confidence 0` is a diagnostic, not a setting"
 
@@ -460,6 +486,7 @@ draws one box around both.
 | `--trt-cache-dir <dir>` | `models/trt_engines` | Where TensorRT caches built engines. Only used with `--tensorrt`. |
 | `--angle` | off | Enable orientation classification (0°/180°). Loads `_cls.onnx`. |
 | `--clahe` | off | CLAHE contrast enhancement before detection — for faded/low-contrast scans. |
+| `--enable-cpu-mem-arena` | off | Leave ORT's CPU memory arena on: faster, higher RSS. Matches oar-ocr's arena-on default — −26% engine latency on the small tier with byte-identical output. See [Memory footprint](models/accuracy-defaults.md#memory-footprint-the-onnxruntime-cpu-arena-is-off). |
 
 Requests are requests, not guarantees. The engine probes
 `Ort::GetAvailableProviders()` and degrades TensorRT → CUDA → CPU silently, so
