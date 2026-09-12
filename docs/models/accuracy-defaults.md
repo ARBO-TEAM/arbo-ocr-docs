@@ -182,6 +182,70 @@ engine latency on the small tier (566→419 ms avg cold-spawn) with
 byte-identical OCR output on 40/40 test images — a pure runtime win. See
 [Benchmarks](../benchmarks.md#arboocr-vs-oar-ocr).
 
+## v0.4.0: recognition batching, and output that now moves
+
+v0.4.0 is a recognition-performance release. Unlike the arena flag above, it
+**does change OCR output**. If you diff against a stored baseline, regenerate it.
+
+| Change | Old behaviour | New behaviour | Affects |
+|---|---|---|---|
+| Recognition batch strip width | Every batch padded up to a **320px floor** | Sized to the batch's own widest crop (32px minimum floor) | Latency drops sharply; logits for the last characters of a crop can shift |
+| CTC decode length | Decoded all `timeSteps` of the padded strip | Decoded only each crop's own share of it | Speed only — the trailing timesteps covered zero padding |
+| ORT session flags | Default execution mode, no memory pattern | `ORT_SEQUENTIAL` + `EnableMemPattern` on all three sessions | Speed and RSS only |
+| Detector box filter | Every detected box got a crop and an inference | Boxes under `minDetBoxArea` (default `20`, detector-input px²) are dropped first | Dust and speckle no longer produce one-character lines |
+
+### Why the strip width changes output
+
+The batched recognizer forces every crop in a batch to share one width, and it
+used to seed that width from the model's *reference* width — `rec_image_shape`'s
+320 — growing from there. Nothing required that floor: the crops' own widths are
+what the model actually reads. A batch of six ~90px line items was therefore
+running the conv stack over 320px of mostly zeros.
+
+The strip is now sized to the widest crop the batch actually holds. That is a
+large latency win, but a narrower strip feeds the convolutional stack different
+right-edge context, so the logits for the **last few characters of each crop**
+move slightly. Measured on a 40-image receipt sample: average similarity
+86.31% → 86.40%, but only **8 of 40** stems character-identical (20 better, 12
+worse, worst −0.46pp).
+
+!!! warning "This is not the free kind of speed change"
+
+    Compare it to the arena flag above, which was byte-identical on 40/40 images
+    and therefore safe to enable blind. This one is not: it is a genuine
+    decode-path change with a small, mixed, corpus-dependent effect on output.
+    Net flat-to-slightly-up on the sample it was measured on — but **measure on
+    your own corpus before adopting it**, and never adopt it in a pipeline that
+    diffs against a frozen baseline without regenerating that baseline.
+
+    The unit tests cannot warn you about this. They feed synthetic fixtures
+    through the decode, so they pin the decode *algebra* (padding must not move
+    content) but never touch real model logits, which is where the difference
+    actually appears.
+
+### `minDetBoxArea`
+
+Defaults to `20`, and measured **identical output on 40/40 images** versus
+disabled — so for ordinary documents it is not a behaviour change. It stops
+pathological detection noise from paying for a crop and a recognition call.
+
+It is expressed in **detector-input** pixels (area, not a side length), so it
+scales with `detLimitSideLen` and means the same thing at any source resolution.
+Set it to `0` when hunting for genuinely tiny text. See Detection tuning.
+
+### `spaceRecovery`
+
+Off by default, and opt-in for a reason. Recognition models routinely drop
+inter-word spaces, so "ATAS NAMA" can come back as "ATASNAMA". With this
+enabled, a timestep whose winner is a real character but whose *space* logit is
+a strong runner-up emits the space as well.
+
+It is a heuristic resting on a near-miss, which means it can also insert
+spurious spaces in dense symbol and number runs where the space class is a
+common runner-up. It showed **no benefit on this receipt corpus**, which is part
+of why it is off by default: treat it as a targeted fix for a specific
+run-together-words problem, not as a setting to flip on and forget.
+
 ## Typical production CPU defaults
 
 ```cpp
